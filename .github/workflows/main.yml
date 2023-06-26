@@ -11,6 +11,7 @@ jobs:
 
     env:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      ACTION_DEPLOY_KEY: ${{ secrets.HEXO_DEPLOY_PRI }}
 
     steps:
       - uses: actions/checkout@v3
@@ -41,6 +42,11 @@ jobs:
           git config --global user.email "VanDevon7478@gmail.com"
       - name: Deploy blog
         run: |
+          mkdir -p ~/.ssh/
+          echo "$ACTION_DEPLOY_KEY"> ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
           git clone https://github.com/LuckVd/hexoCode.git
           cp -r ./public/* ./LuckVd.github.io/
           cd LuckVd.github.io
