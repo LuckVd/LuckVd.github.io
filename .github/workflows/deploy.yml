@@ -1,0 +1,54 @@
+name: Hexo Blog
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Set up timezone
+        run: sudo timedatectl set-timezone 'Asia/Shanghai'
+
+      - name: Echo current time
+        run: timedatectl
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: 'yarn'
+
+      - name: Install Hexo CLI
+        run: npm install -g hexo-cli
+
+      - name: Install dependencies
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+      
+      - name: Generate pages
+        run: hexo generate
+
+      - name: Git config
+        run: |
+          git config --global user.name "LuckVd"
+          git config --global user.email "VanDevon7478@gmail.com"
+      - name: Deploy blog
+        run: |
+          git clone https://github.com/LuckVd/LuckVd.github.io.git
+          cp -r ./public/* ./LuckVd.github.io/
+          cd LuckVd.github.io
+          git add .
+          git commit -m "Github Action Automated Deployment $(date +'%Y-%m-%d %H:%M:%S')"
+          git push "https://${GH_TOKEN}@github.com/LuckVd/LuckVd.github.io.git" main
