@@ -104,6 +104,6 @@ theme: butterfly
 deploy:
   type: git
   repo: https://github.com/LuckVd/LuckVd.github.io.git
-  branch: master
+  branch: main
   
 
