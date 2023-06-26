@@ -14,8 +14,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - name: Set up timezone
         run: sudo timedatectl set-timezone 'Asia/Shanghai'
@@ -46,7 +44,7 @@ jobs:
           git config --global user.email "VanDevon7478@gmail.com"
       - name: Deploy blog
         run: |
-          git clone https://github.com/LuckVd/LuckVd.github.io.git
+          git clone https://github.com/LuckVd/hexoCode.git
           cp -r ./public/* ./LuckVd.github.io/
           cd LuckVd.github.io
           git add .
