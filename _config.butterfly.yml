@@ -44,7 +44,7 @@ favicon: /img/favicon.png
 
 # Avatar (頭像)
 avatar:
-  img: https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png
+  img: https://s2.loli.net/2023/06/27/Fvj8mWkUtroHTly.jpg
   effect: false
 
 # Disable all banner image
@@ -157,9 +157,10 @@ toc:
 post_copyright:
   enable: true
   decode: false
-  author_href:
+  author_href: https://github.com/
   license: CC BY-NC-SA 4.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  copyright_content：VanDevon 
 
 # Sponsor/reward
 reward:

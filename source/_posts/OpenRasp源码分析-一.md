@@ -42,19 +42,19 @@ public static void premain(String agentArg, Instrumentation inst) {
 
 > <div class="image-with-text" style="display: flex;">   <img src="https://s2.loli.net/2023/06/27/MejYH1fhSCJ5ncT.png" alt="gpt.png" style="zoom:10%;display: inline-block;vertical-align: bottom;">   <span class="text" >sun.misc.Launcher$ExtClassLoader的作用和使用方法</span> </div>
 >
-> >**`sun.misc.Launcher$ExtClassLoader`**是Java虚拟机中的一个类加载器，它是扩展类加载器（Extension Class Loader）的具体实现。
+> >`sun.misc.Launcher$ExtClassLoader`是Java虚拟机中的一个类加载器，它是扩展类加载器（Extension Class Loader）的具体实现。
 > >
-> >作为类加载器的一种，**`sun.misc.Launcher$ExtClassLoader`**主要用于加载Java虚拟机的扩展类库。扩展类库是指由Java虚拟机提供的，位于JRE的**`lib/ext`**目录下的一些核心类库和扩展功能的实现。
+> >作为类加载器的一种，`sun.misc.Launcher$ExtClassLoader`主要用于加载Java虚拟机的扩展类库。扩展类库是指由Java虚拟机提供的，位于JRE的`lib/ext`目录下的一些核心类库和扩展功能的实现。
 > >
-> >扩展类加载器在Java类加载的委派模型中处于中间位置，位于应用类加载器和引导类加载器之间。当需要加载某个类时，扩展类加载器首先尝试自己去加载，如果找不到则委托给引导类加载器来加载。它负责加载**`java.ext.dirs`**系统属性指定的扩展类库路径下的类。
+> >扩展类加载器在Java类加载的委派模型中处于中间位置，位于应用类加载器和引导类加载器之间。当需要加载某个类时，扩展类加载器首先尝试自己去加载，如果找不到则委托给引导类加载器来加载。它负责加载`java.ext.dirs`系统属性指定的扩展类库路径下的类。
 > >
 > >扩展类加载器的作用包括：
 > >
-> >1. 加载扩展类库：它加载位于**`lib/ext`**目录下的类库，为Java虚拟机提供一些核心功能的扩展和补充。
+> >1. 加载扩展类库：它加载位于`lib/ext`目录下的类库，为Java虚拟机提供一些核心功能的扩展和补充。
 > >2. 提供自定义的扩展类库：开发人员可以将自己编写的类库放置在扩展类库路径下，由扩展类加载器进行加载和管理。
 > >3. 实现类加载的委派机制：扩展类加载器在加载类时会先尝试自己加载，如果找不到则委托给引导类加载器，通过这种委派机制可以保证类的唯一性和一致性。
 > >
-> >如果需要加载自定义的类或资源，可以使用应用类加载器或自定义的类加载器来完成。例如，可以使用**`ClassLoader.getSystemClassLoader()`**来获取应用类加载器，然后使用它的方法（如**`loadClass()`**和**`getResource()`**）来加载类或资源
+> >如果需要加载自定义的类或资源，可以使用应用类加载器或自定义的类加载器来完成。例如，可以使用`ClassLoader.getSystemClassLoader()`来获取应用类加载器，然后使用它的方法（如`loadClass()`和`getResource()`）来加载类或资源
 
 
 
