@@ -6,7 +6,7 @@ categories:
 tags:
 - rasp
 - 扫描器
-cover: https://rasp.baidu.com/assets/logo/large.png
+cover: ../images/OpenRasp源码分析-一/openrasp.png
 ---
 
 # Agent

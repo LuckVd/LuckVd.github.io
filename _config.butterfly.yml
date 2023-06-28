@@ -157,7 +157,7 @@ toc:
 post_copyright:
   enable: true
   copyright_content: VanDevon
-  decode: false
+  decode: true
   author_href: https://github.com/
   license: CC BY-NC-SA 4.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
