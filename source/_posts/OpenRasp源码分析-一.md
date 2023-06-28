@@ -102,12 +102,14 @@ public static void ConfigFileAppender() throws Exception {
 - CloudUtils.checkCloudControlEnter()：检查云控配置信息
 - LogConfig.syslogManager()：读取配置信息，初始化syslog服务连接
 
+### 插件加载
+
 然后JS插件初始化`JS.Initialize()`
 
 ```java
 #加载插件
 UpdatePlugin();
-#利用文件监视器监视插件文件夹中插件的变动，试试添加
+#利用文件监视器监视插件文件夹中插件的变动,插件的路径为openrasp\plugins\official
 InitFileWatcher();
 ```
 
@@ -133,6 +135,58 @@ start:70, EngineBoot (com.baidu.openrasp)
 CheckerManager.*init*();
 
 从`com.baidu.openrasp.plugin.checker.CheckParameter.Type`中获得`(type,checker)`并且加入`CheckerManager.checker`
+
+检测器有三种
+
+- js插件检测
+- java本地检测
+- 安全基线检测
+
+区别在于，js插件检测的checker来自于插件目录下的plugin.js，java本地检测的checker来自于源码checker/local路径下，这样做的目的是方便扩展。添加/更新插件可以直接通过修改js文件实现。插件的开发文档：[OpenRasp插件开发](https://rasp.baidu.com/doc/dev/main.html ) 
+
+### JS插件检测
+
+在CheckerManager初始化时，遍历`Type`类，并将其中所有的checker加入到CheckerManager的checkers中，
+
+![image-20230628152341298](../images/OpenRasp源码分析-一/image-20230628152341298.png)
+
+如下图所示，js插件的checker类都是V8AttackChecker，而java本地检测的cheker都是单独实现的类。
+
+![image-20230628152546709](../images/OpenRasp源码分析-一/image-20230628152546709.png)
+
+以ssrf为例，来看OpenRasp插件检测的流程。在plugin.js.JS的Check函数第一行下断点，然后触发SSRF。
+
+![image-20230628155705829](../images/OpenRasp源码分析-一/image-20230628155705829.png)
+
+此时堆栈如下
+
+```
+Check:161, JS (com.baidu.openrasp.plugin.js)
+checkParam:50, V8AttackChecker (com.baidu.openrasp.plugin.checker.v8)
+check:45, AbstractChecker (com.baidu.openrasp.plugin.checker)
+check:43, CheckerManager (com.baidu.openrasp.plugin.checker)
+doRealCheckWithoutRequest:304, HookHandler (com.baidu.openrasp)
+doCheckWithoutRequest:361, HookHandler (com.baidu.openrasp)
+doCheck:379, HookHandler (com.baidu.openrasp)
+checkHttpUrl:64, AbstractSSRFHook (com.baidu.openrasp.hook.ssrf)
+checkHttpUri:179, HttpClientHook (com.baidu.openrasp.hook.ssrf)
+```
+
+可以看到在进行url请求时首先触发了`HttpClientHook`，接着调用`checkHttpUrl`之后一路到
+
+`isBlock = CheckerManager.check(type, parameter);`
+
+通过CheckerManager根据type进一步调用了SSRF js插件的检测方法。具体的检测在JS类的Check函数中(js插件的检测都在这里触发)，涉及到V8引擎。
+
+![image-20230628161504776](../images/OpenRasp%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80/image-20230628161504776.png)
+
+返回结果转码后是一个json数组，包含可信度，插件名等。
+
+```json
+[{"action":"log","message":"SSRF - Requesting known DNSLOG address: 127.0.0.1.xip.io","confidence":100,"algorithm":"ssrf_common","name":"official"}]
+```
+
+
 
 ## 插桩
 
@@ -180,3 +234,10 @@ for (final AbstractClassHook hook : hooks) {
 
 
 
+
+
+# 总结
+
+OpenRasp通过java agent的premain 方式，**在程序执行之前加载rasp，hook住一些可能触发恶意行为的函数，通过Javaassit修改jvm中的类，然后checker进行进一步的检测**。
+
+OpenRasp的checker主要使用js插件的方式实现，方便扩展。在openrasp\plugins\official\plugin.js中是官方实现的checker函数。可以据此参考实现自定义checker。在不方便使用V8引擎或需要深度自定义开发的情况下，可以使用java本地检测的方式实现checker。
