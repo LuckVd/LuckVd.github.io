@@ -105,5 +105,6 @@ deploy:
   type: git
   repo: git@github.com:LuckVd/LuckVd.github.io.git
   branch: main
-  
-
+#音乐相关  
+aplayer:
+  meting: true
