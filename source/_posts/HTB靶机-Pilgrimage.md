@@ -1,15 +1,13 @@
 ---
-title: HTB-Pilgrimage
+title: HTB靶机-Pilgrimage
 date: 2023-06-29 20:28:36
 categories: 
 - 靶场WriteUP
 tags:
 - 靶场WriteUP
 - HacktheBox
+cover: ../images/HTB-Pilgrimage/HTB_Pilgrimage.png
 ---
-
-
-
 
 
 
