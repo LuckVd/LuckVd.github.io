@@ -83,7 +83,7 @@ XSS主要分为反射型、存储型和DOM型。但是这三个类型的分类�
 - contents中
 
   - 普通tag的contents
-  - script tag中的contents
+  - script 等tag中的contents
 
 - attribute中
 
@@ -132,23 +132,117 @@ parser.feed(html.text)
 
 - 普通tag的contents
 
-  普通tag的contents是指非`<script>`等tag中的contents，例如
+  普通tag的contents是指非`<script>`等tag中的contents，对于这类注入点，要实现xss注入的话必须闭合该tag，要闭合tag必须使用到尖括号`<>`，因此`<>`不能被转义。
+
+  例如靶场xss/1.php和xss/2.php
 
   ```html
-  <h2 align=center>injection</h2>
+  //xss/1.php 无过滤
+  <h2 align=center>".$str."</h2>;
   ```
 
-  对于这类注入点，要实现xss注入的话必须闭合该tag，要闭合tag必须使用到尖括号`<>`，因此`<>`不能被转义。
+  ```html
+  //xss/2.php 尖括号过滤
+  $str = str_replace("<", "&lt;", $str);
+  $str = str_replace(">", "&gt;", $str);
+  echo "<h2 align=center>".$str."</h2>";
+  ```
 
-- 可执行tag中的contents
+  注入payload：`<script>alert(123)</script>`
 
-  可执行tag的contents是指`<script>` 等tag中的contents，例如：
+  
+
+- 可执行tag中无包裹的contents
+
+  可执行tag的contents是指`<script>` 等tag中的contents，靶场xss/3.php和xss/4.php：
 
   ```html
-   <script>injection</script>
+  //xss/3.php 无过滤
+  echo "<script>".$str."</script>";
+  ```
+
+  ```html
+  //xss/4.php htmlspecialchars过滤
+  echo "<script>".htmlspecialchars($str)."</script>";
   ```
 
   这类注入点相当于是用户直接控制js代码。不管如何过滤都不能保证用户输入完全安全。
+
+  注入payload：`alert(123)`
+
+  
+
+- 普通属性
+
+  在attribute中，可以利用伪协议，因此不需要构造`<script>`。但是普通属性无法利用伪协议，因此需要闭合该属性。如果能够闭合该属性则可以触发xss。例如靶场xss/5.php和xss/6.php，前者没有过滤可以利用，后者对双引号进行了过滤。
+
+  ```html
+  // xss/3.php无过滤
+  <input name=keyword  value="'.$str.'">
+  ```
+
+  ```html
+  //xss/4.php 双引号过滤
+  $str = str_replace("\"", "&quot;", $str);
+  <input name=keyword  value="'.$str.'">
+  ```
+
+  注入payload：`" onmouseover="alert(123)`
+
+  同样的，靶场xss/7.php和xss/8.php则是单引号包含属性。
+
+  
+
+- on、src、href等属性
+
+  如果用户可以控制这类属性，则一般的过滤无法防止XSS。
+
+  例如靶场9-14，分别是三类属性未过滤的例子和使用`htmlspecialchars`过滤的例子，这些都能够触发xss。
+
+  
+
+- 可执行tag中有包裹的contents
+
+  和xss/3.php、xss/4.php中不同的是。如果用户的输入被引号包裹，那么需要绕过引号才能触发XSS。要么闭合引号，要么闭合尖括号。
+
+  xss/15.php是无过滤的情况，xss/16.php是引号过滤，xss/17.php是引号、尖括号过滤。
+
+  ```html
+  xss/15.php
+  $str = $_GET["keyword"];
+  echo "<script>\"".$str."\";</script>";
+  ```
+
+  因此这个14，15的payload如下：
+
+  ```html
+  //引号闭合
+  ";alert(1);"
+  //script标签闭合
+  </script><iframe src='javascript:alert(1)'>click</iframe><script>
+  ```
+
+  ## 总结
+
+   经过上述的例子，就可以不同触发点的XSS对应的过滤条件也不同，`htmlspecialchars()`的 作用是把预定义字符转换成html实体，防止在DOM树构建时被用户输入所影响，但是如果用户的输入在可执行的tag和可以构造javascript伪协议的点时，行为发生在DOM树构造之后，因此这种过滤也就不起效果。总得来说，XSS的防护便可分为两部分:
+
+  - 防止用户对html结构造成修改。
+
+  - 防止用户对可执行的点进行修改。
+
+    
+
+  # XSS防护
+
+  对于XSS的防护，需要从上章提到的两部分着手。首先使用htmlspecialchars()对用户的输入进行转义。防止用户的输入对html结构造成更改。然后对上文提到的特定的点做特定的防护。例如对于href检测输入时候符合url格式。
+
+  
+
+  
+
+  
+
+  
 
   
 
