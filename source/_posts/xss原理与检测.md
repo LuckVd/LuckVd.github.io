@@ -130,9 +130,9 @@ parser.feed(html.text)
 
 
 
-因此XSS触发，就是看后端是否对我们构造这几种payload做出限制。
+因此XSS触发，就是看后端是否对我们构造这几种payload做出限制。我们以[xsslab](https://github.com/LuckVd/xsslab)靶场中的case为例子。
 
-那么对几种位置的注入点依次判断：
+对几种位置的注入点依次判断：
 
 - 普通tag的contents
 
