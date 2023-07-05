@@ -1,7 +1,11 @@
 ---
 title: xss原理与检测
 date: 2023-07-03 19:58:57
+categories: 
+- 安全基础
 tags:
+- XSS
+cover: ../images/xss原理与检测/XSS.png
 ---
 
 
