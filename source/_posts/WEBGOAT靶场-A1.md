@@ -6,7 +6,7 @@ categories:
 tags:
 - 靶场WriteUP
 - HacktheBox
-cover: ../images/WEBGOAT靶场(A1)/WEBGOAT.png
+cover: ../images/WEBGOAT靶场-A1/WEBGOAT.png
 ---
 
 ## 简介
