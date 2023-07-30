@@ -54,7 +54,7 @@ jobs:
                     git config --global user.email "VanDevon7478@gmail.com"
                     npm install hexo-cli -g
                     npm install hexo-deployer-git --save
-                    npm install hexo-renderer-pug hexo-renderer-stylus --save
+                    npm install hexo-renderer-pug hexo-renderer-stylus hexo-generator-feed --save
                     npm install
       - name: Deploy
         run: |
