@@ -612,3 +612,153 @@ class MultipleOfThree extends int {
 相比之下，select子句就像一个匿名谓词，因此不能以后调用它。
 
 当您调试代码时，将查询注释添加到谓词中也会有所帮助
+
+
+
+# 公式(Formulas)
+
+**公式定义了表达式中使用的自由变量之间的逻辑关系。**
+
+公式的种类有如下几种
+
+## 比较(Comparisons)
+
+比较公式的形式是`<expression> <operator> <expression>`
+
+### 比较运算符
+
+要使用这些运算符中的一个来比较两个表达式，每个表达式必须有一个类型，而且这些类型必须是兼容和可排序的。
+
+| Name                     | Symbol |
+| :----------------------- | :----- |
+| Greater than             | `>`    |
+| Greater than or equal to | `>=`   |
+| Less than                | `<`    |
+| Less than or equal to    | `<=`   |
+
+### 相等运算符
+
+要使用=比较两个表达式，至少其中一个表达式必须有一个类型。如果两个表达式都有一个类型，那么它们的类型必须是兼容的。
+
+要使用 != 比较两个表达式，两个表达式必须有一个类型。这些类型也必须是兼容的。
+
+| Name         | Symbol |
+| :----------- | :----- |
+| Equal to     | `=`    |
+| Not equal to | `!=`   |
+
+对于表达式 A 和 B，如果有一对值，一个来自 A，一个来自 B，两个值相同，则公式 A = B 成立。换句话说，A和B至少有一个共同的值。例如，[1 ... 2]=[2 ... 5]成立，因为两个表达式的值都是2。
+
+因此，A !=B与否定式not A = B [1]的意义截然不同:
+
+如果有一对不同的值(一个来自A, 一个来自B), 则A != B成立.
+
+如果不存在一对数值相同的情况，则not A = B成立。换句话说，A和B没有共同的值。
+
+
+
+## 类型检查(Type checks)
+
+类型检查的公式为
+
+`<expression> instanceof <type>`
+
+可以使用类型检查公式来检查一个表达式是否具有某种类型。例如，如果变量x的类型为Person，则x instanceof Person成立。
+
+
+
+## 范围检查(Range checks)
+
+可以使用范围检查公式来检查一个数字表达式是否在给定的范围内。例如，x在[2.1 ... 10.5]中，如果变量x在值2.1和10.5之间（包括2.1和10.5本身），则该变量成立。
+
+`<expression> in <range>`和 `<expression> = <range>`.相同
+
+
+
+## 调用谓词(Calls to predicates)
+
+调用是一个公式或表达式，它由对谓词的引用和一些参数组成。
+
+例如，isThree(x)可能是对一个谓词的调用，如果参数x是3，这个谓词就成立；
+
+如果调用解析到一个没有结果的谓词，那么这个调用就是一个公式。
+
+
+
+对谓词的调用也可以包含一个闭合操作符，即 * 或 +。例如，a.isChildOf+(b)是对isChildOf()的转义闭包的调用，所以如果a是b的后裔，它就成立。
+
+使用 * 或 +相当于重复调用， * 和+不同的区别在于，+相当于调用一次或多次，*相当于调用本身或多次。
+
+```java
+例如
+如下getAnAncestor() 相当于getAParent+()
+Person getAnAncestor() {
+  result = this.getAParent()
+  or
+  result = this.getAParent().getAnAncestor()
+}
+
+如下getAnAncestor2() 相当于getAParent*()
+Person getAnAncestor2() {
+  result = this
+  or
+  result = this.getAParent().getAnAncestor2()
+}
+```
+
+## 显式量词(Explicit quantifiers)
+
+### exists
+
+该量词的语法为：
+
+`exists(<variable declarations> | <formula>)`
+
+也有
+
+`exists(<variable declarations> | <formula 1> | <formula 2>)` 这等于 `exists(<variable declarations> | <formula 1> and <formula 2>)`
+
+这个量化公式引入了一些新变量(variable)。如果至少有一组变量的值可以使正文中的公式成立，那么它就成立。
+
+### forall
+
+该量词的语法为：
+
+`forall(<variable declarations> | <formula 1> | <formula 2>)`
+
+forall 引入了一些新变量，其正文中通常有两个公式。如果 < 公式 2> 对 < 公式 1> 的所有值都成立，那么它就成立。
+
+例如，如果 OneTwoThree 类中的所有整数也小于 5，则 forall(int i | i instanceof OneTwoThree | i < 5) 成立。换句话说，如果 OneTwoThree 中存在大于或等于的值5、则公式不成立。
+
+`forall(<vars> | <formula 1> | <formula 2>)` 在逻辑上与 `not exists(<vars> | <formula 1> | not <formula 2>)` 相同。
+
+### forex
+
+该量词的语法为：
+
+`forex(<variable declarations> | <formula 1> | <formula 2>)`
+
+这个量词是以下内容的简称：
+
+`forall(<vars> | <formula 1> | <formula 2>) and`
+`exists(<vars> | <formula 1> | <formula 2>)`
+
+
+
+## 逻辑连接词
+
+逻辑连接词从最高到最低的优先顺序如下：
+
+1. not
+
+2. if … then … else
+
+3. and
+
+4. or
+
+5. implies： `A implies B = (not A) or B`
+
+例如 A and not if B then C else D等于A and (not (if B then C else D))
+
+还有两个连接词any()和none()，any()恒成立，none()恒不成立。
