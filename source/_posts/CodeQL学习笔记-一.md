@@ -522,3 +522,93 @@ from string s
 where s = "hello".charAt(_)
 select s
 ```
+
+
+
+# 查询(Queries)
+
+Queries是QL程序的输出，执行的结果集合。
+
+有两种Queries。对于给定的查询模块，该模块中的查询是
+
+- select 子句（如果有的话）在该模块中定义。
+- 在该模块的谓词空间中的任何查询谓词，也就是说，它们可以在模块本身定义，也可以从其他模块导入
+
+## 选择子句(Select clauses)
+
+格式如下
+
+```java
+from /* ... variable declarations ... */
+where /* ... logical formula ... */
+select /* ... expressions ... */
+```
+
+还可以用其他keywords，如：
+
+- as，as关键字，后面跟着一个名字。这给一列结果打上了 "标签"，并允许你在随后的选择表达式中使用它们。
+- order by，ORDER BY关键字，后跟结果列的名称，还可以选择关键字`asc`或`desc` 。这决定了显示结果的顺序。
+
+例如:
+
+```java
+from int x, int y
+where x = 3 and y in [0 .. 2]
+select x, y, x * y as product, "product: " + product
+```
+
+select clauses的返回结果为
+
+| x    | y    | product |            |
+| ---- | ---- | :------ | :--------: |
+| 3    | 0    | 0       | product: 0 |
+| 3    | 1    | 3       | product: 3 |
+| 3    | 2    | 6       | product: 6 |
+
+如果加上order by y desc，那么返回结果为：
+
+| x    | y    | product |            |
+| ---- | ---- | ------- | ---------- |
+| 3    | 2    | 6       | product: 6 |
+| 3    | 1    | 3       | product: 3 |
+| 3    | 0    | 0       | product: 0 |
+
+## 查询谓词(Query predicates)
+
+查询谓词是带有查询注释的非成员谓词。它返回谓词评估为真的所有元组.
+
+例如：
+
+```java
+query int getProduct(int x, int y) {
+  x = 3 and
+  y in [0 .. 2] and
+  result = x * y
+}
+```
+
+返回的结果为：
+
+| x    | y    | result |
+| ---- | ---- | ------ |
+| 3    | 0    | 0      |
+| 3    | 1    | 3      |
+| 3    | 2    | 6      |
+
+| x    | y    | result |
+| ---- | ---- | ------ |
+| 3    | 0    | 0      |
+| 3    | 1    | 3      |
+| 3    | 2    | 6      |
+
+使用查询谓词而不是选择子句的一个好处是您还可以在代码的其他部分调用该谓词。例如，您可以在类的主体中调用getProduct：
+
+```java
+class MultipleOfThree extends int {
+  MultipleOfThree() { this = getProduct(_, _) }
+}
+```
+
+相比之下，select子句就像一个匿名谓词，因此不能以后调用它。
+
+当您调试代码时，将查询注释添加到谓词中也会有所帮助
