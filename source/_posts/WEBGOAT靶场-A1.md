@@ -5,7 +5,7 @@ categories:
 - 靶场WriteUP
 tags:
 - 靶场WriteUP
-- HacktheBox
+- WEBGOAT
 cover: ../images/WEBGOAT靶场-A1/WEBGOAT.png
 ---
 
