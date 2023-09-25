@@ -5,7 +5,7 @@ categories:
 - 学习笔记
 tags:
 - 前端
-- React
+- Vue
 cover: ../images/Vue学习笔记/vuelogo.png
 ---
 
@@ -533,3 +533,44 @@ const greeting = ref('Hello from parent')
 
 ```
 
+
+
+## Emits(子组件向父组件触发事件)
+
+```vue
+<!--ChildComp-->
+<script setup>
+const emit = defineEmits(['response'])
+
+emit('response', 'hello from child')
+</script>
+
+<template>
+  <h2>Child component</h2>
+</template>
+```
+
+
+
+```vue
+<!--App.vue-->
+<script setup>
+import { ref } from 'vue'
+import ChildComp from './ChildComp.vue'
+
+const childMsg = ref('No child msg yet')
+</script>
+
+<template>
+  <ChildComp @response="(msg) => childMsg = msg" />
+  <p>{{ childMsg }}</p>
+</template>
+```
+
+
+
+
+
+## 插槽
+
+在子组件中，可以使用 `<slot>` 元素作为插槽出口 (slot outlet) 渲染父组件中的插槽内容 (slot content)：
