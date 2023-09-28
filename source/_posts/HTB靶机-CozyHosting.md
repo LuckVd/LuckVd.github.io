@@ -9,8 +9,6 @@ tags:
 cover: ../images/icon/HTB.png
 ---
 
-zhishidi
-
 ## 知识点
 
 - actuator未授权
