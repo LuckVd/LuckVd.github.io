@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HTB靶机-Pilgrimage | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="首先扫一下top1000 nmap -Pn 10.10.11.219 -vv (本来一般是扫全量的)但是htb网络环境太慢，所以先扫top1000。 nmap -Pn  -p- --min-rate&#x3D;10000 10.10.11.219 -vv 1234567891011121314151617Starting Nmap 7.93 ( https:&#x2F;&#x2F;nmap.org ) at 2023-06-2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB靶机-Pilgrimage">
+<meta property="og:url" content="https://luckvd.github.io/2023/06/29/HTB%E9%9D%B6%E6%9C%BA-Pilgrimage/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="首先扫一下top1000 nmap -Pn 10.10.11.219 -vv (本来一般是扫全量的)但是htb网络环境太慢，所以先扫top1000。 nmap -Pn  -p- --min-rate&#x3D;10000 10.10.11.219 -vv 1234567891011121314151617Starting Nmap 7.93 ( https:&#x2F;&#x2F;nmap.org ) at 2023-06-2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/HTB-Pilgrimage/HTB_Pilgrimage.png">
+<meta property="article:published_time" content="2023-06-29T12:28:36.000Z">
+<meta property="article:modified_time" content="2024-01-07T09:14:21.884Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="靶场WriteUP">
+<meta property="article:tag" content="HacktheBox">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/HTB-Pilgrimage/HTB_Pilgrimage.png"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2023/06/29/HTB%E9%9D%B6%E6%9C%BA-Pilgrimage/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTB靶机-Pilgrimage',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-01-07 17:14:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/../images/HTB-Pilgrimage/HTB_Pilgrimage.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HTB靶机-Pilgrimage</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-29T12:28:36.000Z" title="发表于 2023-06-29 20:28:36">2023-06-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-07T09:14:21.884Z" title="更新于 2024-01-07 17:14:21">2024-01-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9D%B6%E5%9C%BAWriteUP/">靶场WriteUP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTB靶机-Pilgrimage"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>首先扫一下top1000</p>
+<p><code>nmap -Pn 10.10.11.219 -vv</code></p>
+<p>(本来一般是扫全量的)但是htb网络环境太慢，所以先扫top1000。</p>
+<p><code>nmap -Pn  -p- --min-rate=10000 10.10.11.219 -vv</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.93 ( https://nmap.org ) at 2023-06-29 16:08 CST</span><br><span class="line">Initiating Connect Scan at 16:08</span><br><span class="line">Scanning pilgrimage.htb (10.10.11.219) [1000 ports]</span><br><span class="line">Discovered open port 80/tcp on 10.10.11.219</span><br><span class="line">Discovered open port 22/tcp on 10.10.11.219</span><br><span class="line">Increasing send delay <span class="keyword">for</span> 10.10.11.219 from 0 to 5 due to max_successful_tryno increase to 4</span><br><span class="line">Completed Connect Scan at 16:09, 56.40s elapsed (1000 total ports)</span><br><span class="line">Nmap scan report <span class="keyword">for</span> pilgrimage.htb (10.10.11.219)</span><br><span class="line">Host is up, received user-set (0.35s latency).</span><br><span class="line">Scanned at 2023-06-29 16:08:41 CST <span class="keyword">for</span> 56s</span><br><span class="line">Not shown: 998 closed tcp ports (conn-refused)</span><br><span class="line">PORT   STATE SERVICE REASON</span><br><span class="line">22/tcp open  ssh     syn-ack</span><br><span class="line">80/tcp open  http    syn-ack</span><br><span class="line"></span><br><span class="line">Read data files from: /usr/bin/../share/nmap</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 56.45 seconds</span><br></pre></td></tr></table></figure>
+
+<p>80和22开放，查看web页面</p>
+<p><img src="/../images/HTB-Pilgrimage/image-20230629204213006.png" alt="image-20230629204213006"></p>
+<p>主要功能有登录，注册，图片上传。</p>
+<p>随便注册一个账号登录上去，图片上传是后端校验的，nginx 1.18.0也不存在可利用的解析漏洞。继续扫描22和80端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">nmap -sCV 10.10.11.219 -p22,80 -vv</span><br><span class="line"></span><br><span class="line">PORT   STATE SERVICE REASON  VERSION</span><br><span class="line">22/tcp open  ssh     syn-ack OpenSSH 8.4p1 Debian 5+deb11u1 (protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   3072 20be60d295f628c1b7e9e81706f168f3 (RSA)</span><br><span class="line">| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnPDlM1cNfnBOJE71gEOCGeNORg5gzOK/TpVSXgMLa6Ub/7KPb1hVggIf4My+cbJVk74fKabFVscFgDHtwPkohPaDU8XHdoO03vU8H04T7eqUGj/I2iqyIHXQoSC4o8Jf5ljiQi7CxWWG2t0n09CPMkwdqfEJma7BGmDtCQcmbm36QKmUv6Kho7/LgsPJGBP1kAOgUHFfYN1TEAV6TJ09OaCanDlV/fYiG+JT1BJwX5kqpnEAK012876UFfvkJeqPYXvM0+M9mB7XGzspcXX0HMbvHKXz2HXdCdGSH59Uzvjl0dM+itIDReptkGUn43QTCpf2xJlL4EeZKZCcs/gu8jkuxXpo9lFVkqgswF/zAcxfksjytMiJcILg4Ca1VVMBs66ZHi5KOz8QedYM2lcLXJGKi+7zl3i8+adGTUzYYEvMQVwjXG0mPkHHSldstWMGwjXqQsPoQTclEI7XpdlRdjS6S/WXHixTmvXGTBhNXtrETn/fBw4uhJx4dLxNSJeM=</span><br><span class="line">|   256 0eb6a6a8c99b4173746e70180d5fe0af (ECDSA)</span><br><span class="line">| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOaVAN4bg6zLU3rUMXOwsuYZ8yxLlkVTviJbdFijyp9fSTE6Dwm4e9pNI8MAWfPq0T0Za0pK0vX02ZjRcTgv3yg=</span><br><span class="line">|   256 d14e293c708669b4d72cc80b486e9804 (ED25519)</span><br><span class="line">|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILGkCiJaVyn29/d2LSyMWelMlcrxKVZsCCgzm6JjcH1W</span><br><span class="line">80/tcp open  http    syn-ack nginx 1.18.0</span><br><span class="line">| http-cookie-flags: </span><br><span class="line">|   /: </span><br><span class="line">|     PHPSESSID: </span><br><span class="line">|_      httponly flag not <span class="built_in">set</span></span><br><span class="line">| http-git: </span><br><span class="line">|   10.10.11.219:80/.git/</span><br><span class="line">|     Git repository found!</span><br><span class="line">|     Repository description: Unnamed repository; edit this file <span class="string">&#x27;description&#x27;</span> to name the...</span><br><span class="line">|_    Last commit message: Pilgrimage image shrinking service initial commit. <span class="comment"># Please ...</span></span><br><span class="line">|_http-title: Pilgrimage - Shrink Your Images</span><br><span class="line">|_http-server-header: nginx/1.18.0</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Supported Methods: GET HEAD POST</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure>
+
+<p><strong>10.10.11.219:80&#x2F;.git&#x2F;</strong> 发现web目录下的git，用git-dumper拉下来看看</p>
+<p>目录结构为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── assets</span><br><span class="line">│   ├── bulletproof.php</span><br><span class="line">│   ├── css</span><br><span class="line">│   │   ├── animate.css</span><br><span class="line">│   │   ├── custom.css</span><br><span class="line">│   │   ├── flex-slider.css</span><br><span class="line">│   │   ├── fontawesome.css</span><br><span class="line">│   │   ├── owl.css</span><br><span class="line">│   │   └── templatemo-woox-travel.css</span><br><span class="line">│   ├── images</span><br><span class="line">│   │   ├── banner-04.jpg</span><br><span class="line">│   │   └── cta-bg.jpg</span><br><span class="line">│   ├── js</span><br><span class="line">│   │   ├── custom.js</span><br><span class="line">│   │   ├── isotope.js</span><br><span class="line">│   │   ├── isotope.min.js</span><br><span class="line">│   │   ├── owl-carousel.js</span><br><span class="line">│   │   ├── popup.js</span><br><span class="line">│   │   └── tabs.js</span><br><span class="line">│   └── webfonts</span><br><span class="line">│       ├── fa-brands-400.ttf</span><br><span class="line">│       ├── fa-brands-400.woff2</span><br><span class="line">│       ├── fa-regular-400.ttf</span><br><span class="line">│       ├── fa-regular-400.woff2</span><br><span class="line">│       ├── fa-solid-900.ttf</span><br><span class="line">│       ├── fa-solid-900.woff2</span><br><span class="line">│       ├── fa-v4compatibility.ttf</span><br><span class="line">│       └── fa-v4compatibility.woff2</span><br><span class="line">├── dashboard.php</span><br><span class="line">├── index.php</span><br><span class="line">├── login.php</span><br><span class="line">├── logout.php</span><br><span class="line">├── magick</span><br><span class="line">├── register.php</span><br><span class="line">└── vendor</span><br><span class="line">    ├── bootstrap</span><br><span class="line">    │   ├── css</span><br><span class="line">    │   │   └── bootstrap.min.css</span><br><span class="line">    │   └── js</span><br><span class="line">    │       └── bootstrap.min.js</span><br><span class="line">    └── jquery</span><br><span class="line">        ├── jquery.js</span><br><span class="line">        ├── jquery.min.js</span><br><span class="line">        ├── jquery.min.map</span><br><span class="line">        ├── jquery.slim.js</span><br><span class="line">        ├── jquery.slim.min.js</span><br><span class="line">        └── jquery.slim.min.map</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>图片上传的代码为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_SERVER</span>[<span class="string">&#x27;REQUEST_METHOD&#x27;</span>] === <span class="string">&#x27;POST&#x27;</span>) &#123;</span><br><span class="line">  <span class="variable">$image</span> = <span class="keyword">new</span> <span class="title class_">Bulletproof\Image</span>(<span class="variable">$_FILES</span>);</span><br><span class="line">  <span class="keyword">if</span>(<span class="variable">$image</span>[<span class="string">&quot;toConvert&quot;</span>]) &#123;</span><br><span class="line">    <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">setLocation</span>(<span class="string">&quot;/var/www/pilgrimage.htb/tmp&quot;</span>);</span><br><span class="line">    <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">setSize</span>(<span class="number">100</span>, <span class="number">4000000</span>);</span><br><span class="line">    <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">setMime</span>(<span class="keyword">array</span>(<span class="string">&#x27;png&#x27;</span>,<span class="string">&#x27;jpeg&#x27;</span>));</span><br><span class="line">    <span class="variable">$upload</span> = <span class="variable">$image</span>-&gt;<span class="title function_ invoke__">upload</span>();</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$upload</span>) &#123;</span><br><span class="line">      <span class="variable">$mime</span> = <span class="string">&quot;.png&quot;</span>;</span><br><span class="line">      <span class="variable">$imagePath</span> = <span class="variable">$upload</span>-&gt;<span class="title function_ invoke__">getFullPath</span>();</span><br><span class="line">      <span class="keyword">if</span>(<span class="title function_ invoke__">mime_content_type</span>(<span class="variable">$imagePath</span>) === <span class="string">&quot;image/jpeg&quot;</span>) &#123;</span><br><span class="line">        <span class="variable">$mime</span> = <span class="string">&quot;.jpeg&quot;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="variable">$newname</span> = <span class="title function_ invoke__">uniqid</span>();</span><br><span class="line">      <span class="title function_ invoke__">exec</span>(<span class="string">&quot;/var/www/pilgrimage.htb/magick convert /var/www/pilgrimage.htb/tmp/&quot;</span> . <span class="variable">$upload</span>-&gt;<span class="title function_ invoke__">getName</span>() . <span class="variable">$mime</span> . <span class="string">&quot; -resize 50% /var/www/pilgrimage.htb/shrunk/&quot;</span> . <span class="variable">$newname</span> . <span class="variable">$mime</span>);</span><br><span class="line">      <span class="title function_ invoke__">unlink</span>(<span class="variable">$upload</span>-&gt;<span class="title function_ invoke__">getFullPath</span>());</span><br><span class="line">      <span class="variable">$upload_path</span> = <span class="string">&quot;http://pilgrimage.htb/shrunk/&quot;</span> . <span class="variable">$newname</span> . <span class="variable">$mime</span>;</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>])) &#123;</span><br><span class="line">        <span class="variable">$db</span> = <span class="keyword">new</span> <span class="title function_ invoke__">PDO</span>(<span class="string">&#x27;sqlite:/var/db/pilgrimage&#x27;</span>);</span><br><span class="line">        <span class="variable">$stmt</span> = <span class="variable">$db</span>-&gt;<span class="title function_ invoke__">prepare</span>(<span class="string">&quot;INSERT INTO `images` (url,original,username) VALUES (?,?,?)&quot;</span>);</span><br><span class="line">        <span class="variable">$stmt</span>-&gt;<span class="title function_ invoke__">execute</span>(<span class="keyword">array</span>(<span class="variable">$upload_path</span>,<span class="variable">$_FILES</span>[<span class="string">&quot;toConvert&quot;</span>][<span class="string">&quot;name&quot;</span>],<span class="variable">$_SESSION</span>[<span class="string">&#x27;user&#x27;</span>]));</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: /?message=&quot;</span> . <span class="variable">$upload_path</span> . <span class="string">&quot;&amp;status=success&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: /?message=Image shrink failed&amp;status=fail&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: /?message=Image shrink failed&amp;status=fail&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中利用了magick进行图片上传，查看一下magick的版本。对web路径下的magick求md5值，<img src="/../images/HTB-Pilgrimage/image-20230629210144207.png" alt="image-20230629210144207"></p>
+<p>查询得到是版本为imagemagick-7.1.0-49<img src="/../images/HTB-Pilgrimage/image-20230629210258961.png" alt="image-20230629210258961"></p>
+<p>查询magick是否有可以利用的漏洞， 该版本存在CVE-2022-44268 任意文件读取漏洞</p>
+<p><img src="/../images/HTB-Pilgrimage/image-20230629210047393.png" alt="image-20230629210047393"></p>
+<p>在github上搜到利用脚本<a target="_blank" rel="noopener" href="https://github.com/voidz0r/CVE-2022-44268">CVE-2022-44268 poc</a>，使用该脚本生成payload，查看&#x2F;etc&#x2F;passwd。将生成的PNG图片上传。</p>
+<p><img src="/../images/HTB-Pilgrimage/image-20230629210811058.png" alt="image-20230629210811058"></p>
+<p>然后下载下来</p>
+<p><code>identify -verbose 649d518081d36.png</code> 查看图片详细信息。在最后看到输出的内容。</p>
+<p><img src="/../images/HTB-Pilgrimage/image-20230629211309916.png" alt="image-20230629211309916"></p>
+<p>转码后得到：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line"><span class="built_in">sync</span>:x:4:65534:<span class="built_in">sync</span>:/bin:/bin/sync</span><br><span class="line">games:x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">man:x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">mail:x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">news:x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">proxy:x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">backup:x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">irc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin</span><br><span class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">_apt:x:100:65534::/nonexistent:/usr/sbin/nologin</span><br><span class="line">systemd-network:x:101:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin</span><br><span class="line">systemd-resolve:x:102:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin</span><br><span class="line">messagebus:x:103:109::/nonexistent:/usr/sbin/nologin</span><br><span class="line">systemd-timesync:x:104:110:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin</span><br><span class="line">emily:x:1000:1000:emily,,,:/home/emily:/bin/bash</span><br><span class="line">systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin</span><br><span class="line">sshd:x:105:65534::/run/sshd:/usr/sbin/nologin</span><br><span class="line">_laurel:x:998:998::/var/log/laurel:/bin/false</span><br></pre></td></tr></table></figure>
+
+<p>得到用户名emily，然后爆破一波。</p>
+<p><code>hydra -l emily -P /usr/share/wordlists/rockyou.txt ssh://10.10.11.219 -s 22 -vV</code></p>
+<p>跑了一会儿没有结果，回头看源码，在存图片时连接了数据库<code>$db = new PDO(&#39;sqlite:/var/db/pilgrimage&#39;);</code>这里给出sqlite数据库的绝对路径。那么可以继续用刚才的方法把数据库读下来。读下来之后新建一个sqlite3文件，用Hex Editor打开，填入读到的数据。</p>
+<p><img src="/../images/HTB-Pilgrimage/image-20230629211925314.png" alt="image-20230629211925314"></p>
+<p>然后打开数据库，其中有两个表，一个用来存图片路径，另外一个就是我们需要的users。其中emily的密码明文存储。</p>
+<p><img src="/../images/HTB-Pilgrimage/image-20230629212014020.png" alt="image-20230629212014020"></p>
+<p>ssh登录，拿到user flag。</p>
+<p><img src="/../images/HTB-Pilgrimage/image-20230629212144655.png" alt="image-20230629212144655"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2023/06/29/HTB%E9%9D%B6%E6%9C%BA-Pilgrimage/">https://luckvd.github.io/2023/06/29/HTB靶机-Pilgrimage/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E5%9C%BAWriteUP/">靶场WriteUP</a><a class="post-meta__tags" href="/tags/HacktheBox/">HacktheBox</a></div><div class="post_share"><div class="social-share" data-image="/../images/HTB-Pilgrimage/HTB_Pilgrimage.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/03/xss%E5%8E%9F%E7%90%86%E4%B8%8E%E6%A3%80%E6%B5%8B/" title="xss原理与检测"><img class="cover" src="/../images/xss%E5%8E%9F%E7%90%86%E4%B8%8E%E6%A3%80%E6%B5%8B/XSS.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">xss原理与检测</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/28/%E4%BD%BF%E7%94%A8Flowdroid%E7%94%9F%E6%88%90Android%E7%A8%8B%E5%BA%8FAPI%E8%B0%83%E7%94%A8%E5%BA%8F%E5%88%97/" title="使用Flowdroid生成Android程序API调用序列"><img class="cover" src="/../images/%E4%BD%BF%E7%94%A8Flowdroid%E7%94%9F%E6%88%90Android%E7%A8%8B%E5%BA%8FAPI%E8%B0%83%E7%94%A8%E5%BA%8F%E5%88%97/flowdroid.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用Flowdroid生成Android程序API调用序列</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/09/HTB-C-O-P-Shop/" title="HTB-C.O.P Shop"><img class="cover" src="/../images/icon/HTB.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-09</div><div class="title">HTB-C.O.P Shop</div></div></a></div><div><a href="/2023/10/12/HTB%E9%9D%B6%E6%9C%BA-Analytics/" title="HTB靶机-Analytics"><img class="cover" src="/../images/HTB-Analytics/Analytics.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-12</div><div class="title">HTB靶机-Analytics</div></div></a></div><div><a href="/2023/09/26/HTB%E9%9D%B6%E6%9C%BA-CozyHosting/" title="HTB靶机-CozyHosting"><img class="cover" src="/../images/icon/HTB.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-26</div><div class="title">HTB靶机-CozyHosting</div></div></a></div><div><a href="/2023/09/24/HTB%E9%9D%B6%E6%9C%BA-Keeper/" title="HTB靶机-Keeper"><img class="cover" src="/../images/icon/HTB.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-24</div><div class="title">HTB靶机-Keeper</div></div></a></div><div><a href="/2023/07/16/HTB%E9%9D%B6%E6%9C%BA-LoveTok/" title="HTB靶机-LoveTok"><img class="cover" src="/../images/icon/HTB.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-16</div><div class="title">HTB靶机-LoveTok</div></div></a></div><div><a href="/2023/07/11/HTB%E9%9D%B6%E6%9C%BA-Phonebook/" title="HTB靶机-Phonebook"><img class="cover" src="/../images/icon/HTB.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-11</div><div class="title">HTB靶机-Phonebook</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">19</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/07/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C/" title="go学习笔记(二)">go学习笔记(二)</a><time datetime="2024-01-07T08:39:41.000Z" title="发表于 2024-01-07 16:39:41">2024-01-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/13/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/" title="go学习笔记(一)">go学习笔记(一)</a><time datetime="2023-12-13T12:30:47.000Z" title="发表于 2023-12-13 20:30:47">2023-12-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/12/HTB%E9%9D%B6%E6%9C%BA-Analytics/" title="HTB靶机-Analytics"><img src="/../images/HTB-Analytics/Analytics.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTB靶机-Analytics"/></a><div class="content"><a class="title" href="/2023/10/12/HTB%E9%9D%B6%E6%9C%BA-Analytics/" title="HTB靶机-Analytics">HTB靶机-Analytics</a><time datetime="2023-10-12T12:05:51.000Z" title="发表于 2023-10-12 20:05:51">2023-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/09/offsec-Lab-Sar/" title="offsec-Lab-Sar"><img src="/../images/offsec-Lab-Sumo/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="offsec-Lab-Sar"/></a><div class="content"><a class="title" href="/2023/10/09/offsec-Lab-Sar/" title="offsec-Lab-Sar">offsec-Lab-Sar</a><time datetime="2023-10-09T12:06:42.000Z" title="发表于 2023-10-09 20:06:42">2023-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/09/28/HTB%E9%9D%B6%E6%9C%BA-RenderQuest/" title="HTB靶机-RenderQuest"><img src="/../images/icon/HTB.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTB靶机-RenderQuest"/></a><div class="content"><a class="title" href="/2023/09/28/HTB%E9%9D%B6%E6%9C%BA-RenderQuest/" title="HTB靶机-RenderQuest">HTB靶机-RenderQuest</a><time datetime="2023-09-28T09:18:16.000Z" title="发表于 2023-09-28 17:18:16">2023-09-28</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/../images/HTB-Pilgrimage/HTB_Pilgrimage.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline-2jpd71hnp-luckvd.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
