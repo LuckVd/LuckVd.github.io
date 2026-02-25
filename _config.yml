@@ -14,7 +14,7 @@ timezone: 'Asia/Shanghai'
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://luckvd.github.io
-root: /hexoCode/
+root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -102,10 +102,6 @@ theme: butterfly
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: git
-  repo: git@github.com:LuckVd/LuckVd.github.io.git
-  branch: main
 #音乐相关  
 aplayer:
   meting: true
