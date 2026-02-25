@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write   # 允许 GITHUB_TOKEN 推送 gh-pages
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
+        with:
+          submodules: true   # ⭐ 关键
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
