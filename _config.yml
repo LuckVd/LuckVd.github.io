@@ -118,3 +118,11 @@ feed:
   icon: icon.png
   autodiscovery: true
   template:
+
+  # 配置 markdown-it 渲染器
+markdown:
+  render:
+    html: true
+    breaks: true
+  plugins:
+    - markdown-it-mathjax3
