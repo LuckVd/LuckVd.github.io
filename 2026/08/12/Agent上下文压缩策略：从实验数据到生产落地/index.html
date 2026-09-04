@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地 | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="做过 Agent 的人大概都遇到过这一幕:任务跑到第五轮,上下文窗口满了,任务直接失败。不是模型不够聪明,是对话历史里堆了几十万字符的工具输出——搜索结果、网页正文、代码片段,绝大多数在读完那一刻就成了占地方的噪声。 但你有没有好奇过:Claude Code、ChatGPT、Deep Research 这些主流 Agent,到底是怎么处理这个问题的?大多数人对压缩的认知停留在两句口诀:一句是&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地">
+<meta property="og:url" content="https://luckvd.github.io/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="做过 Agent 的人大概都遇到过这一幕:任务跑到第五轮,上下文窗口满了,任务直接失败。不是模型不够聪明,是对话历史里堆了几十万字符的工具输出——搜索结果、网页正文、代码片段,绝大多数在读完那一刻就成了占地方的噪声。 但你有没有好奇过:Claude Code、ChatGPT、Deep Research 这些主流 Agent,到底是怎么处理这个问题的?大多数人对压缩的认知停留在两句口诀:一句是&amp;qu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/icon/avatar.jpg">
+<meta property="article:published_time" content="2026-08-12T08:50:00.000Z">
+<meta property="article:modified_time" content="2026-09-04T09:23:43.747Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="上下文工程">
+<meta property="article:tag" content="上下文压缩">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/icon/avatar.jpg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-04 17:23:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/all/top_image.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-12T08:50:00.000Z" title="发表于 2026-08-12 16:50:00">2026-08-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-04T09:23:43.747Z" title="更新于 2026-09-04 17:23:43">2026-09-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>做过 Agent 的人大概都遇到过这一幕:任务跑到第五轮,上下文窗口满了,任务直接失败。不是模型不够聪明,是对话历史里堆了几十万字符的工具输出——搜索结果、网页正文、代码片段,绝大多数在读完那一刻就成了占地方的噪声。</p>
+<p>但你有没有好奇过:Claude Code、ChatGPT、Deep Research 这些主流 Agent,到底是怎么处理这个问题的?大多数人对压缩的认知停留在两句口诀:一句是&quot;上下文超过阈值就自动压缩&quot;,另一句是&quot;把脏活累活拆给子 Agent,只回传结论&quot;。可真要追问下去——超过阈值之后具体做了什么?摘要怎么写的,丢了什么、留了什么?除了压缩和子 Agent,还有没有别的招?能说清楚的人就不多了。</p>
+<p>这些问题的答案,藏在一本开源书里:《AI Agents in Depth》第二章「上下文工程」。作者用一组对照实验把压缩这件事拆得很彻底:六种压缩策略逐一对测,token 消耗、压缩率、任务成功率摆在一起对比;又给了一套生产环境的分层压缩方案,外加一张&quot;什么能删、什么绝不能动&quot;的保留优先级清单。这篇把核心结论提炼给你:压缩到底在做什么、有哪些策略、怎么压才不会破坏 KV Cache,以及为什么子 Agent 隔离比压缩更聪明。</p>
+<h2 id="为什么要压缩-不只是窗口不够用">为什么要压缩:不只是窗口不够用</h2>
+<p>压缩上下文有两个动机,第一个人人都懂,第二个才是重点。</p>
+<p><strong>动机一:长度和成本。</strong> 上下文窗口有限,128K token 看着不小,但一次网页搜索就可能返回几万字符。书中实验里,Agent 追踪一位 OpenAI 联创的职业状态,做了 7 次搜索,累计拿到约 36.7 万字符——到第 5 次迭代就把 128K 窗口撑爆了,任务失败。token 多,还意味着 API 账单和推理延迟一起涨。</p>
+<p><strong>动机二:总结后的知识,比原始信息更好用。</strong> 这是更深的一层。作者反复强调一个观点:上下文学习本质是「检索」而不是「推理」。注意力机制擅长从几万 token 里捞出相关片段,但不擅长在一次前向传播里做统计归纳。</p>
+<p>书里有个生动的例子:上下文里有 100 个笼子的巡查记录,90 只黑猫、10 只白猫。你问模型&quot;笼子 37 里是什么猫&quot;,它秒回;你问&quot;黑猫白猫各多少只&quot;,它就得开思维链从头数一遍,而且每次被问到都要重数。但如果你提前在上下文里写一句&quot;当前统计:黑猫 90,白猫 10&quot;,它就只是检索一个现成结论。</p>
+<p>这引出一个配套概念:<strong>上下文腐化(Context Rot)</strong>。窗口没满,但 Agent 突然找不到关键信息了,反复纠结一个早已解决的问题。溢出是&quot;装不下了&quot;,腐化是&quot;装得下但找不到了&quot;,后者更隐蔽——表面正常,决策质量却在悄悄下滑。</p>
+<p>所以压缩的设计原则是:别指望模型从冗长上下文里自己提炼,主动把提炼好的高密度知识喂给它。</p>
+<h2 id="压缩与-KV-Cache-看似矛盾-实则互补">压缩与 KV Cache:看似矛盾,实则互补</h2>
+<p>前面章节强调过,系统提示词和工具定义是&quot;静态前缀&quot;,必须保持字节级不变,才能命中 KV Cache——模型每生成一个 token 都要看前文,缓存住前文的中间结果,新请求只算新增部分。</p>
+<p>那压缩不是要改上下文中间的内容吗?不矛盾,关键在于<strong>压缩发生在两次 API 调用之间,由框架对消息列表做预处理</strong>:</p>
+<ul>
+<li>System Prompt 和工具定义永远不动,缓存持续命中;</li>
+<li>压缩对象是对话历史里的 tool results——用摘要替换原始输出时,替换位置之后的缓存会失效,之前的仍然有效。</li>
+</ul>
+<p>这是个有意识的权衡:不压,上下文爆掉任务失败;压了,损失部分缓存但换回可控的长度和更高的信息密度。因此压缩的频次要克制——<strong>接近阈值时批量压缩,而不是每轮都压</strong>。</p>
+<h2 id="六种压缩策略的实测对比">六种压缩策略的实测对比</h2>
+<p>书中实验 2-10 用 Kimi K3(刻意把上下文预算限制在 128K 以触发压缩)实现了六种策略,下图是各策略的 Token 用量对比,数据很有参考价值:</p>
+<p><img src="/images/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5/fig2-16.png" alt="六种压缩策略的 Token 用量对比"></p>
+<p><strong>无压缩</strong>就不用说了,几次搜索就耗尽窗口(166,043 token,超过 128K 限制,任务失败)。<strong>个体摘要</strong>给每个搜索结果独立写 2-3 段摘要,问题是碎片化——多个页面重复描述同一事件,白白浪费空间。<strong>组合摘要</strong>把所有结果合并成一份综合摘要,好一些,但输入超长时必须截断,末尾信息可能丢。</p>
+<p><strong>上下文感知压缩</strong>是这轮实验的亮点。它的核心创新:把&quot;当前的查询意图&quot;和&quot;已积累的信息&quot;纳入压缩决策。压缩提示里带上 <code>Given the search query: &#123;query&#125;</code> 和 <code>Current context: &#123;context&#125;</code>,让模型知道该保什么。实测一次把 147,877 字符压到 1,963 字符(约 1.3%),创始人的姓名和职位变动这些关键信息一点没丢。这背后是个重要洞察:多步骤任务的不同阶段需要的信息密度不同——初期要广收集,中期要核验事实,后期要综合整合。压缩策略跟着阶段走,价值最大化。</p>
+<p><strong>带引用的上下文感知压缩</strong>在智能压缩基础上给每条事实附上来源 URL,让有损压缩和无损索引结合——内容压掉了,但随时可以回溯原始信息。</p>
+<p><strong>自适应窗口化</strong>换了个思路:前期空间充足就不急着压,直到 token 数超过窗口 80%(128K 即 102,400)才触发,然后一次性批量压缩所有未标记的工具结果,并用 [COMPRESSED] 标记防止重复处理。总 token 偏高,但前几轮保留了完整原始信息,给初期探索最大灵活性。</p>
+<h2 id="生产环境-五层分层压缩">生产环境:五层分层压缩</h2>
+<p>单个策略不够,成熟系统把多种策略组合成分层机制。书中以 Claude Code 为参照,列出五个层次:</p>
+<ol>
+<li><strong>工具结果预算控制</strong>:大体积工具输出落盘,模型只看摘要预览;替换决策一旦做出就冻结,保证缓存一致性;</li>
+<li><strong>噪声直接删除</strong>:低价值内容直接移除,不做摘要——给噪声做摘要就是浪费 token;</li>
+<li><strong>API 层微压缩</strong>:用 API 的上下文编辑能力,让服务端从前缀移除指定工具结果,本地消息不动。适合上下文即将溢出、反正要付出一次缓存重建代价的场景;</li>
+<li><strong>归档式摘要</strong>:逐轮做结构化摘要,像 git log 那样保留每轮独立记录(而不是 git squash 合并成一条),保住对话的逻辑脉络;</li>
+<li><strong>全量压缩</strong>:LLM 驱动的最后手段,分两阶段——先压会话记忆,不行再全量压缩,并配熔断器。为什么需要熔断?生产数据表明大量会话会困在&quot;反复压缩失败&quot;的死循环里,熔断避免在这些会话上持续烧钱。</li>
+</ol>
+<h2 id="四条设计原则和一份保留优先级清单">四条设计原则和一份保留优先级清单</h2>
+<p>作者提炼了四条原则:信息价值非均匀分布(关键决策点 &gt; 支撑性证据 &gt; 冗余噪声)、语义完整性(“Sutskever 于 2024 年 5 月离开 OpenAI” 不能压成 “Sutskever 离开”)、任务相关性(同样内容在不同任务下应压出不同结果)、压缩即理解(有效的压缩需要接近主模型的语义理解能力,形成&quot;模型调用模型&quot;的递归架构)。</p>
+<p>生产级系统建议显式定义保留优先级:</p>
+<ul>
+<li>架构决策和关键约束:不得摘要</li>
+<li>已修改文件列表和关键变更记录:完整保留</li>
+<li>验证状态(pass/fail):必须保留</li>
+<li>未解决的 TODO 和回滚笔记:必须保留</li>
+<li>工具输出:可以删除,只留 pass/fail 结论</li>
+</ul>
+<h2 id="比压缩更聪明-隔离">比压缩更聪明:隔离</h2>
+<p>最后这个思路值得单独说。压缩是信息已经进入上下文之后做减法——有损、还要额外花一次 LLM 调用。更釜底抽薪的办法是:让大体积的中间信息根本不进主上下文。</p>
+<p>这就是<strong>子 Agent 上下文隔离</strong>。主 Agent 把&quot;在代码库里大范围搜索&quot;这类会产生海量中间内容的任务,委派给独立的子 Agent;子 Agent 在自己的上下文里完成探索,只回传几百 token 的结论性摘要(“函数位于 src/payment/callbacks.py 的 handle_callback,另有两处调用点”)。中间那几万 token 随子 Agent 的上下文一起被丢弃,主 Agent 的 KV Cache 前缀完全不受影响。</p>
+<p>代价是子 Agent 看不到主 Agent 的完整上下文,任务描述必须自包含、目标明确——这又回到了上下文工程的核心命题:上下文的质量决定能力上限,对子 Agent 同样成立。Claude Code 的 Task 工具、各类 Deep Research 系统的检索子 Agent,都是这个模式的生产实现。</p>
+<h2 id="写在最后">写在最后</h2>
+<p>把这套东西串起来看,主线是清晰的:显式地管理信息,而不是让模型在堆积如山的原始记录里自己捞。压缩是其中一环——在保留决策、约束、失败记录和来源的前提下,把历史信息压成高密度知识;隔离则更进一步,让噪声从源头就不进上下文。</p>
+<p>如果你的 Agent 也经常跑到一半&quot;失忆&quot;或者被长历史拖慢,建议从两件事做起:一是给历史工具输出设一个压缩阈值,接近窗口 80% 时批量压缩,并显式声明保留优先级;二是把会产生海量中间结果的任务拆给子 Agent 做。这两步的投入产出比,通常比换更大的模型高得多。</p>
+<hr>
+<p><em>本文基于开源书籍《AI Agents in Depth》(<a target="_blank" rel="noopener" href="http://bojieli.github.io/ai-agent-book">bojieli.github.io/ai-agent-book</a>)第二章「上下文工程」整理,实验数据与结论均引自该书实验 2-10 与生产实践章节。</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/">https://luckvd.github.io/2026/08/12/Agent上下文压缩策略：从实验数据到生产落地/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Agent/">Agent</a><a class="post-meta__tags" href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/">上下文工程</a><a class="post-meta__tags" href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9/">上下文压缩</a></div><div class="post_share"><div class="social-share" data-image="/images/icon/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/" title="代码图结构化工具与知识库是否能够帮助AI理解代码?"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">代码图结构化工具与知识库是否能够帮助AI理解代码?</div></div></a></div><div class="next-post pull-right"><a href="/2026/04/07/%E5%AF%B9%E6%8A%97AI%E7%9A%84Java%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%9F%BA%E5%87%86/" title="对抗AI的Java安全测试基准"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">对抗AI的Java安全测试基准</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/" title="代码图结构化工具与知识库是否能够帮助AI理解代码?"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-03</div><div class="title">代码图结构化工具与知识库是否能够帮助AI理解代码?</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%8E%8B%E7%BC%A9-%E4%B8%8D%E5%8F%AA%E6%98%AF%E7%AA%97%E5%8F%A3%E4%B8%8D%E5%A4%9F%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">为什么要压缩:不只是窗口不够用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E4%B8%8E-KV-Cache-%E7%9C%8B%E4%BC%BC%E7%9F%9B%E7%9B%BE-%E5%AE%9E%E5%88%99%E4%BA%92%E8%A1%A5"><span class="toc-number">2.</span> <span class="toc-text">压缩与 KV Cache:看似矛盾,实则互补</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E7%A7%8D%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%E7%9A%84%E5%AE%9E%E6%B5%8B%E5%AF%B9%E6%AF%94"><span class="toc-number">3.</span> <span class="toc-text">六种压缩策略的实测对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83-%E4%BA%94%E5%B1%82%E5%88%86%E5%B1%82%E5%8E%8B%E7%BC%A9"><span class="toc-number">4.</span> <span class="toc-text">生产环境:五层分层压缩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E6%9D%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%E5%92%8C%E4%B8%80%E4%BB%BD%E4%BF%9D%E7%95%99%E4%BC%98%E5%85%88%E7%BA%A7%E6%B8%85%E5%8D%95"><span class="toc-number">5.</span> <span class="toc-text">四条设计原则和一份保留优先级清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E5%8E%8B%E7%BC%A9%E6%9B%B4%E8%81%AA%E6%98%8E-%E9%9A%94%E7%A6%BB"><span class="toc-number">6.</span> <span class="toc-text">比压缩更聪明:隔离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">7.</span> <span class="toc-text">写在最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景"><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 代码扫描与安全检测全景"/></a><div class="content"><a class="title" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景">AI 代码扫描与安全检测全景</a><time datetime="2026-09-04T09:30:00.000Z" title="发表于 2026-09-04 17:30:00">2026-09-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/" title="代码图结构化工具与知识库是否能够帮助AI理解代码?">代码图结构化工具与知识库是否能够帮助AI理解代码?</a><time datetime="2026-09-03T04:51:38.000Z" title="发表于 2026-09-03 12:51:38">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/" title="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地">Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地</a><time datetime="2026-08-12T08:50:00.000Z" title="发表于 2026-08-12 16:50:00">2026-08-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E5%AF%B9%E6%8A%97AI%E7%9A%84Java%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%9F%BA%E5%87%86/" title="对抗AI的Java安全测试基准">对抗AI的Java安全测试基准</a><time datetime="2026-04-07T16:28:17.000Z" title="发表于 2026-04-08 00:28:17">2026-04-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/21/ClaudeDevKit%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%9D%A2%E5%90%91%20Claude%20Code%20CLI%20%E7%9A%84%E8%BD%BB%E9%87%8F%20AI%20%E5%8D%8F%E4%BD%9C%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%9E%E8%B7%B5/" title="ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践">ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践</a><time datetime="2026-03-21T11:34:25.000Z" title="发表于 2026-03-21 19:34:25">2026-03-21</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/all/top_image.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline-2jpd71hnp-luckvd.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

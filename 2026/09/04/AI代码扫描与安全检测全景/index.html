@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI 代码扫描与安全检测全景 | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="AI 写的代码 45% 带漏洞，&quot;审 AI&quot;成了安全行业一条拥挤的新赛道。  安全公司 Veracode 在 2025 年做过一组实验：让 100 多个大模型完成 80 个常见编码任务，45% 的任务生成了带 OWASP Top 10 漏洞的代码。XSS 防护失败率 86%，日志注入 88%，Java 语言的失败率超过 70%。更早的 2022 年，NYU 那篇《Asleep">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 代码扫描与安全检测全景">
+<meta property="og:url" content="https://luckvd.github.io/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="AI 写的代码 45% 带漏洞，&quot;审 AI&quot;成了安全行业一条拥挤的新赛道。  安全公司 Veracode 在 2025 年做过一组实验：让 100 多个大模型完成 80 个常见编码任务，45% 的任务生成了带 OWASP Top 10 漏洞的代码。XSS 防护失败率 86%，日志注入 88%，Java 语言的失败率超过 70%。更早的 2022 年，NYU 那篇《Asleep">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg">
+<meta property="article:published_time" content="2026-09-04T09:30:00.000Z">
+<meta property="article:modified_time" content="2026-09-04T09:23:43.747Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="代码安全">
+<meta property="article:tag" content="SAST">
+<meta property="article:tag" content="Code Review">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI 代码扫描与安全检测全景',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-04 17:23:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI 代码扫描与安全检测全景</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-04T09:30:00.000Z" title="发表于 2026-09-04 17:30:00">2026-09-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-04T09:23:43.747Z" title="更新于 2026-09-04 17:23:43">2026-09-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AI 代码扫描与安全检测全景"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>AI 写的代码 45% 带漏洞，&quot;审 AI&quot;成了安全行业一条拥挤的新赛道。</p>
+</blockquote>
+<p>安全公司 Veracode 在 2025 年做过一组实验：让 100 多个大模型完成 80 个常见编码任务，45% 的任务生成了带 OWASP Top 10 漏洞的代码。XSS 防护失败率 86%，日志注入 88%，Java 语言的失败率超过 70%。更早的 2022 年，NYU 那篇《Asleep at the Keyboard》就测出 GitHub Copilot 生成的程序约四成带安全缺陷。</p>
+<p>写代码的速度翻了几倍，审代码的人手没变多。卡点在哪，不用说也知道。这就是过去一年&quot;AI 代码扫描&quot;突然卷起来的原因。</p>
+<h2 id="一、AI-代码扫描时间线">一、AI 代码扫描时间线</h2>
+<p><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/fig-timeline.png" alt="四年演进时间线"></p>
+<p>2023 年那批工具的做法很简单：GitHub 收到 pull request，webhook 触发脚本，把 diff 拉下来整段塞进 ChatGPT，让它挑毛病。cr-gpt 这类开源 bot 一夜之间冒出来，几百行代码就能搭一个。新鲜感过去得也快，模型经常一本正经地指出根本不存在的漏洞，或者纠结一个无关紧要的命名。幻觉和误报太多，多数工程师两周后就把它关了。</p>
+<p>第一次转折发生在 2024 年，思路变了：不让 LLM 裸奔。纯 LLM 不可靠，传统静态扫描（SAST）也不争气：预置规则永远追不上新框架，污点分析跑一次项目要几十分钟，漏报和误报一抓一把，根本进不了代码评审这种要求秒级判断的场景。把两边拼起来，长处正好互补。这一年 8 月，GitHub 发布 Copilot Autofix：CodeQL 的数据流查询查出漏洞，大模型生成补丁，混合范式有了第一个平台级样板。</p>
+<p>2025 年，Agent 登场。模型不再是一次性调用，而是多轮调用工具：上代码库翻调用链，跑分析器，动手写验证脚本。告警分诊在这一年规模化落地，修复环节也开始接进流水线。</p>
+<p>到 2026 年，分诊、修复、回验连成了一条自动流水线。GitHub 的 agentic autofix 把一条告警&quot;指派&quot;给 Copilot，它自己读代码、改代码、重跑 CodeQL 确认告警关闭，再开一个草稿 PR 等人审，还能把一批同类告警打包成一个 PR 一次修完。四年前需要安全工程师逐条确认的告警积压，现在由 AI 先过一遍，人只处理剩下的硬骨头。</p>
+<h2 id="二、静态引擎检出，LLM-生成修复补丁">二、静态引擎检出，LLM 生成修复补丁</h2>
+<p>路线走完，进入正题。三种做法的核心区别只有一个：AI 在链路里干什么。先看第一种：静态引擎负责把漏洞找出来，LLM 只干一件事，生成补丁。</p>
+<p><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/fig-github-autofix.jpg" alt="GitHub agentic autofix：把告警指派给 Copilot"></p>
+<p>（图源：GitHub 官方博客）</p>
+<p>以 GitHub Copilot Autofix 为例。CodeQL 的数据流查询定位到漏洞之后，大模型读取告警上下文，生成修改，以 PR 评论的形式给出补丁和解释，最后由开发者审核合并。Veracode Fix 也是这个路数，扫描器出告警，IDE 里 AI 给修复建议。</p>
+<p>这一代的 Copilot 还在往里加东西：把告警&quot;指派&quot;给 Copilot 之后，它会自己探索相关文件，而不是只盯着告警那一行；支持选中一批同类告警合并成一个 PR 一次修完；每个 PR 附上修复摘要和验证步骤，说明它做了什么、为什么这样改。</p>
+<p>修复的质量取决于三件事。一是上下文给得够不够：只看告警那一行写不出补丁，模型需要读漏洞所在的完整函数、同文件里同类操作的老写法，照着项目既有习惯改。参数化要落在项目数据库框架的 API 上，而不是手拼一条 SQL，框架不对，改了等于没改。二是解释要不要生成：附一段&quot;改了什么、为什么这样改&quot;，审核的人一眼看懂意图，合并速度完全不一样。三是改动的影响面：好的修复只动必要的地方，差的修复会顺手重构，把不相关的代码卷进 diff，这种 PR 审起来很痛苦。</p>
+<p>特点：链路最短，工程量最小，把关权完整留在人手里，出了问题人随时能拦。短板也在这：LLM 只负责改代码，链路里没有裁决和回验环节。修 SQL 注入的参数化改写通常靠谱，但拿通用转义去修框架上下文里的 XSS、修授权问题，经常修出一个&quot;看起来对&quot;的补丁，能通过复扫，换个利用姿势照样绕。所以这种做法有条纪律：自动合并是禁忌。</p>
+<h2 id="三、静态引擎检出，LLM-分诊，引擎回验补丁">三、静态引擎检出，LLM 分诊，引擎回验补丁</h2>
+<p><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/fig-mode2.png" alt="静态引擎检出，LLM 分诊，引擎回验补丁"></p>
+<p>这是当前的主流架构，AI 不直接修代码，而是充当裁决者。流水线五层：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>干什么</th>
+<th>关键机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>触发与解析</td>
+<td>webhook 拉取 diff，拆文件和代码块</td>
+<td>测试文件、生成代码先过滤</td>
+</tr>
+<tr>
+<td>引擎检出</td>
+<td>规则匹配 + 污点数据流分析</td>
+<td>高召回、含误报（Semgrep、CodeQL）</td>
+</tr>
+<tr>
+<td>LLM 分诊</td>
+<td>判真/假阳性，给出理由</td>
+<td>上下文：规则元数据 + 历史结论 + 数据流片段</td>
+</tr>
+<tr>
+<td>修复</td>
+<td>生成补丁，可批量处理</td>
+<td>引擎回验通过才算数</td>
+</tr>
+<tr>
+<td>反馈</td>
+<td>点踩、复核沉淀为记忆</td>
+<td>越用越准</td>
+</tr>
+</tbody>
+</table>
+<p>逐层拆开。入口是触发与解析：仓库里发生变更，webhook 把事件交给扫描服务，diff 拆成文件和代码块，测试文件、自动生成的代码、锁文件在这里先被过滤掉。</p>
+<p>第二层引擎检出，传统 SAST 的地盘。Semgrep 的规则匹配快，适合已知模式；CodeQL 把代码建成数据库，用数据流查询追踪&quot;用户输入从哪进来、到了哪个危险函数&quot;。拿 SQL 注入来说，引擎会标出哪一行是外部输入、哪一行执行了查询，中间每一步赋值和拼接串成一条污点路径。产出是一份告警列表：召回高，误报也多，最常见的一种是&quot;路径看起来通，业务上不成立&quot;，参数在上游早就被校验过了，规则不知道而已。</p>
+<p><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/fig-semgrep-traces.png" alt="Semgrep 告警里的 Source-Traces-Sink 污点路径"></p>
+<p>（图源：Semgrep 官方博客）</p>
+<p>第三层 LLM 分诊，这套做法的价值核心。送给模型的材料是一组精心准备的上下文：告警的规则元数据、同一条规则的历史分诊结论、正反例样本，以及告警周边几十行代码和数据流每一步的代码片段。模型只回答一个问题：真漏洞还是误报，给出裁决和理由。这一层的铁律是保守：把真漏洞标成误报的代价，远大于让开发者多修一条。</p>
+<p>第四层修复带回验，补丁生成后重跑引擎，告警真的关闭才算数。第五层反馈，开发者点踩、工程师复核，信号沉淀回历史结论，下一轮分诊直接受益，整条流水线越用越准。</p>
+<p>分诊的工程细节比想象中多。上下文里之所以要给数据流每一步的代码，是因为模型得沿着污点路径逐步走，只看 sink 那一行，判断不了&quot;数据是怎么来的&quot;。历史结论按作用域存放，同一条规则、同一类漏洞、同一个项目各有各的记忆，项目级的记忆最有价值，因为每个代码库的校验习惯都不一样。这套机制的妙处在于记忆是自然语言：人看得懂、能改、能积累，新项目接进来还能继承公共记忆，不用从零冷启动。回验也不只是重跑一遍：补丁可能关掉了旧告警，又带出两条新的，要对比修复前后的告警集合，确认净效果是收敛的。</p>
+<p>落地的例子有三个。Semgrep Assistant 给模型喂每条规则的人工置信度，还发明了&quot;分诊记忆&quot;：把历史判定结论变成可检索的自然语言记忆，按规则、漏洞类别、项目三个作用域存放，下次遇到同一规则的告警，先查记忆再判断；送给模型的数据也做了最小化，只带告警周边代码和数据流片段。Snyk 的 DeepCode AI 用符号分析加机器学习的混合引擎打底，Agent Fix 用动态 few-shot 的方式生成修复，补丁全部要过静态引擎复验，通不过就出不来。腾讯悟空团队把它搬进代码评审场景，prompt 三件套：思维链显式推理；&quot;大模型结构化提取 + 固定模式规则&quot;混合消误报，明文账密这类误判交规则兜底；强制 JSON 结构化输出，行号、类型、描述直接进平台。这种做法的特点：LLM 只做裁决不做主，主要收益在误报治理，落地的案例也多。</p>
+<h2 id="四、LLM-原生扫描，多-Agent-对抗验证">四、LLM 原生扫描，多 Agent 对抗验证</h2>
+<p><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/fig-mode3.png" alt="LLM 原生扫描，多 Agent 对抗验证"></p>
+<p>更激进的做法：连规则都不写了。ZeroPath 的管线是，先用 tree-sitter 解析出 AST 和调用图，把代码变成结构化视图，然后让 LLM 直接在上面找问题；找到候选，再用多个 Agent 交叉验证，通过才自动开 PR。Corgea 的 BLAST 是同一思路的变体，LLM 加 AST 加传统静态分析，主攻业务逻辑、认证授权这类规则写不出来的漏洞。</p>
+<p>为什么规则写不出这类漏洞？拿越权来说，判断一个接口有没有漏洞，得知道&quot;哪些资源属于哪个用户&quot;，这是业务约定，不是代码结构，规则引擎的污点分析在这里天然失明。LLM 读得懂业务语义，恰好补的就是这块。</p>
+<p>这一路线里有两个技术支点。一个是结构化视图：有了调用图，模型不用通读整个仓库，顺着调用边走就能从入口找到汇聚点，大仓库的扫描在算力上才变得可行。另一个是多 Agent 验证，它是这条路线的胜负手。常见的分工是一个 Agent 站攻击者视角，论证漏洞怎么利用、需要什么前提；另一个站防御者视角，找反证：入口有没有被网关挡住、参数有没有在上游被清洗。两边都给出证据链，裁决只在证据上做，验证通过的候选才轮到修复和 PR。</p>
+<p>特点：它能覆盖规则到不了的盲区。代价也明确：验证链路长，多 Agent 交叉验证吃算力，误报控制完全押在验证环节的设计上。它出现得晚，也更依赖模型本身的进化。</p>
+<h2 id="五、产品级混合架构">五、产品级混合架构</h2>
+<p><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/fig7-hybrid-arch.png" alt="产品级混合架构：CodeBuddy Security 扫描流水线"></p>
+<p>分析时可以把三种做法分开讲，落到产品上，几种做法正在被装进同一条流水线。以腾讯云 CodeBuddy Security 为例：检出层双引擎并扫，TCA-Xcheck 静态分析负责传统引擎检出，VulnAgent 深度审计用强推理模型直接读代码找漏洞、强代码模型负责写 PoC 和补丁，对应 LLM 原生扫描的路线；扫描前先做威胁建模，按架构、语言和攻击面把算力压到高风险位置，不搞全库泛扫。验证环节堵两头：多 Agent 独立审查且互不共享上下文，审查 prompt 开局就默认“这是误报，请证伪”，专治模型自己说服自己；过了对抗审查的候选再进隔离沙箱实跑 PoC，用执行结果代替推理结论。验证过的漏洞还会反向沉淀成 SAST 规则，下次扫描静态引擎直接接住，整条流水线自我增强。战果里有 LiteLLM 一个横跨 22 个版本没人发现的未授权 SQL 注入，漏洞藏在只占代码量 0.01% 的异常路径里；还有 React 一行 BigInt 解析引发的拒绝服务，喂一个五百万位的数字就能把 CPU 卡住三秒以上。</p>
+<p>这种混合不是孤例。GitHub agentic autofix 以引擎检出加补丁生成起家，2026 年补上了告警回验的闭环：告警指派给 Copilot，它改完重跑 CodeQL 确认告警关闭，才开草稿 PR。Snyk 的 DeepCode AI 在检出层就是混合架构，符号分析和机器学习双路并用，Agent Fix 出的补丁全部要过静态引擎复验。Corgea 的 BLAST 走 LLM 原生扫描的路线，引擎层同样保留传统静态分析。Mobb 换了个切法：不做检出，作为独立修复引擎接在 Checkmarx、Fortify、Snyk 这些扫描器后面，先替告警做一遍分诊滤掉误报，再在 GitHub/GitLab 的 PR 里给出修复；传统 SAST 大厂也在跟进，Checkmarx 一边给自家引擎加混合架构，一边把 Mobb 集成进 SAST 自动修复。</p>
+<p>融合的动因不难解释：三种做法各管一段，规则引擎的召回有天花板，LLM 原生扫描的算力成本和误报控制押在验证环节，修复和回验又各自是独立的技术活。产品之间的比较，正在从站哪条路线，变成检出、分诊、修复、回验四段各能做到几分。三种做法是分析框架，不是产品边界。</p>
+<h2 id="六、总结">六、总结</h2>
+<p>效果数据各家公布了一些：Semgrep Assistant 的分诊结论与自家安全研究员一致率 96%，六成入站告警由 AI 自动承接，客户一周分诊工作量下降四成；Copilot Autofix 把 SQLi 修复提速 12 倍，口径是速度；Snyk 的修复建议 73% 可被采纳；腾讯悟空把检出准确率从 26% 拉到 95%，日均阻断 300 多个风险；CodeBuddy Security 自报已知漏洞测试集召回率提升超 80%，真实业务代码上的准确率提升超 70%，平均每个仓库烧 1300 万 Token，缓存命中超七成。</p>
+<p>串起来就是这条线的全貌：AI 生成代码把漏洞带进了门，传统扫描接不住，四年时间行业把&quot;引擎检出、LLM 分诊、自动修复、引擎回验&quot;焊成了一条流水线，产品级混合架构是当前产品形态的主线。它现在能替人扛掉大部分告警，几分钟能出一个经过验证的补丁，但裁决权和安全兜底还留在人手里。AI 一审、人终审，是这个阶段稳妥的分工。</p>
+<hr>
+<p><strong>参考来源</strong></p>
+<ol>
+<li>Veracode《2025 GenAI Code Security Report》：<a target="_blank" rel="noopener" href="http://veracode.com/resources/analyst-reports/2025-genai-code-security-report/">veracode.com/resources/analyst-reports/2025-genai-code-security-report/</a></li>
+<li>NYU《Asleep at the Keyboard》（IEEE S&amp;P 2022）：<a target="_blank" rel="noopener" href="http://arxiv.org/abs/2108.09293">arxiv.org/abs/2108.09293</a></li>
+<li>GitHub《Secure code more than three times faster with Copilot autofix》：github.blog/news-insights/product-news/secure-code-more-than-three-times-faster-with-copilot-autofix/</li>
+<li>GitHub Changelog《Agentic autofix for code scanning alerts in public preview》（2026-07）：github.blog/changelog/2026-07-10-agentic-autofix-for-code-scanning-alerts-in-public-preview/</li>
+<li>Semgrep《How we built an AppSec AI that security researchers agree with 96% of the time》：semgrep.dev/blog/2025/building-an-appsec-ai-that-security-researchers-agree-with-96-of-the-time/</li>
+<li>Semgrep《Confidently handing 60% of all triage》：semgrep.dev/blog/2025/semgrep-is-confidently-handing-60-of-all-triage-for-users-without-reducing-coverage/</li>
+<li>Snyk《AI code security: Snyk autofix &amp; DeepCode AI》：<a target="_blank" rel="noopener" href="http://snyk.io/blog/ai-code-security-snyk-autofix-deepcode-ai/">snyk.io/blog/ai-code-security-snyk-autofix-deepcode-ai/</a></li>
+<li>ZeroPath《How ZeroPath works》：<a target="_blank" rel="noopener" href="http://researcher.branch.zeropath.com/blog/how-zeropath-work">researcher.branch.zeropath.com/blog/how-zeropath-work</a></li>
+<li>Corgea《BLAST: AI-powered SAST scanner 白皮书》：<a target="_blank" rel="noopener" href="http://corgea.com/blog/whitepaper-blast-ai-powered-sast-scanner">corgea.com/blog/whitepaper-blast-ai-powered-sast-scanner</a></li>
+<li>腾讯安全悟空团队《大模型应用实践（一）：AI 助力 Code Review 安全漏洞发现》：<a target="_blank" rel="noopener" href="http://security.tencent.com/index.php/blog/msg/210">security.tencent.com/index.php/blog/msg/210</a></li>
+<li>腾讯云《Codebuddy Security 产品简介》：<a target="_blank" rel="noopener" href="http://cloud.tencent.com/document/product/1827/133881">cloud.tencent.com/document/product/1827/133881</a></li>
+<li>《CodeBuddy Security：通过“威胁建模+双引擎+对抗验证”提升代码漏洞召回率超80%》（2026 腾讯云 AI 产业应用大会，谢飞演讲整理）：<a target="_blank" rel="noopener" href="http://cloud.tencent.com/developer/article/2694981">cloud.tencent.com/developer/article/2694981</a></li>
+<li>Mobb《From False Positives to Fixed Code: AI’s Role in SAST Triage》：<a target="_blank" rel="noopener" href="http://mobb.ai/blog/ai-false-positive-fixing">mobb.ai/blog/ai-false-positive-fixing</a></li>
+<li><a target="_blank" rel="noopener" href="http://DevOps.com">DevOps.com</a>《Checkmarx Adds Hybrid SAST Engine to Improve AppSec in AI Era》：<a target="_blank" rel="noopener" href="http://devops.com/checkmarx-adds-hybrid-sast-engine-to-improve-appsec-in-ai-era/">devops.com/checkmarx-adds-hybrid-sast-engine-to-improve-appsec-in-ai-era/</a></li>
+<li>Global Security Mag《Checkmarx Expands Auto-Remediation with New Mobb Integration for SAST》：<a target="_blank" rel="noopener" href="http://globalsecuritymag.com/Checkmarx-Expands-Auto-Remediation-with-New-Mobb-Integration-for-SAST.html">globalsecuritymag.com/Checkmarx-Expands-Auto-Remediation-with-New-Mobb-Integration-for-SAST.html</a></li>
+<li>悬镜 AI Coding 安全治理：<a target="_blank" rel="noopener" href="http://xmirror.cn/aiCoding%EF%BC%9B%E5%A5%87%E5%AE%89%E4%BF%A1%EF%BC%9Aqianxin.com">xmirror.cn/aiCoding；奇安信：qianxin.com</a></li>
+<li>《AI-Assisted Code Scanning: Evaluating Fix Quality》：<a target="_blank" rel="noopener" href="http://systemshardening.com/articles/ai-landscape/ai-code-scanning-autofix/">systemshardening.com/articles/ai-landscape/ai-code-scanning-autofix/</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/">https://luckvd.github.io/2026/09/04/AI代码扫描与安全检测全景/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/">代码安全</a><a class="post-meta__tags" href="/tags/SAST/">SAST</a><a class="post-meta__tags" href="/tags/Code-Review/">Code Review</a></div><div class="post_share"><div class="social-share" data-image="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/" title="代码图结构化工具与知识库是否能够帮助AI理解代码?"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">代码图结构化工具与知识库是否能够帮助AI理解代码?</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/04/CodeQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/" title="CodeQL学习笔记(一)"><img class="cover" src="/../images/CodeQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/CodeQL.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-04</div><div class="title">CodeQL学习笔记(一)</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81AI-%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E6%97%B6%E9%97%B4%E7%BA%BF"><span class="toc-number">1.</span> <span class="toc-text">一、AI 代码扫描时间线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%9D%99%E6%80%81%E5%BC%95%E6%93%8E%E6%A3%80%E5%87%BA%EF%BC%8CLLM-%E7%94%9F%E6%88%90%E4%BF%AE%E5%A4%8D%E8%A1%A5%E4%B8%81"><span class="toc-number">2.</span> <span class="toc-text">二、静态引擎检出，LLM 生成修复补丁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%9D%99%E6%80%81%E5%BC%95%E6%93%8E%E6%A3%80%E5%87%BA%EF%BC%8CLLM-%E5%88%86%E8%AF%8A%EF%BC%8C%E5%BC%95%E6%93%8E%E5%9B%9E%E9%AA%8C%E8%A1%A5%E4%B8%81"><span class="toc-number">3.</span> <span class="toc-text">三、静态引擎检出，LLM 分诊，引擎回验补丁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81LLM-%E5%8E%9F%E7%94%9F%E6%89%AB%E6%8F%8F%EF%BC%8C%E5%A4%9A-Agent-%E5%AF%B9%E6%8A%97%E9%AA%8C%E8%AF%81"><span class="toc-number">4.</span> <span class="toc-text">四、LLM 原生扫描，多 Agent 对抗验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BA%A7%E5%93%81%E7%BA%A7%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84"><span class="toc-number">5.</span> <span class="toc-text">五、产品级混合架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">六、总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景"><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 代码扫描与安全检测全景"/></a><div class="content"><a class="title" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景">AI 代码扫描与安全检测全景</a><time datetime="2026-09-04T09:30:00.000Z" title="发表于 2026-09-04 17:30:00">2026-09-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/" title="代码图结构化工具与知识库是否能够帮助AI理解代码?">代码图结构化工具与知识库是否能够帮助AI理解代码?</a><time datetime="2026-09-03T04:51:38.000Z" title="发表于 2026-09-03 12:51:38">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/" title="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地">Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地</a><time datetime="2026-08-12T08:50:00.000Z" title="发表于 2026-08-12 16:50:00">2026-08-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E5%AF%B9%E6%8A%97AI%E7%9A%84Java%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%9F%BA%E5%87%86/" title="对抗AI的Java安全测试基准">对抗AI的Java安全测试基准</a><time datetime="2026-04-07T16:28:17.000Z" title="发表于 2026-04-08 00:28:17">2026-04-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/21/ClaudeDevKit%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%9D%A2%E5%90%91%20Claude%20Code%20CLI%20%E7%9A%84%E8%BD%BB%E9%87%8F%20AI%20%E5%8D%8F%E4%BD%9C%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%9E%E8%B7%B5/" title="ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践">ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践</a><time datetime="2026-03-21T11:34:25.000Z" title="发表于 2026-03-21 19:34:25">2026-03-21</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline-2jpd71hnp-luckvd.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

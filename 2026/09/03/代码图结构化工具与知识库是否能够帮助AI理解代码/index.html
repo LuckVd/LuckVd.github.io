@@ -1,0 +1,488 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>代码图结构化工具与知识库是否能够帮助AI理解代码? | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="摘要:Agent 写对了每一行代码,系统还是出了事故。我们用 Django、CPython、Kafka 三个仓库出题、跑了 480 个 run,想验证代码图能不能让 Agent 更懂代码,结果没有得到一个简单的「能」——它真正改善的是探索效率,而会话本身是另一个被低估的变量。  产品要做一个「用户活跃度周报」。Agent 接到需求后的表现,挑不出毛病:复用了项目里现成的 getActiveUse">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码图结构化工具与知识库是否能够帮助AI理解代码?">
+<meta property="og:url" content="https://luckvd.github.io/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="摘要:Agent 写对了每一行代码,系统还是出了事故。我们用 Django、CPython、Kafka 三个仓库出题、跑了 480 个 run,想验证代码图能不能让 Agent 更懂代码,结果没有得到一个简单的「能」——它真正改善的是探索效率,而会话本身是另一个被低估的变量。  产品要做一个「用户活跃度周报」。Agent 接到需求后的表现,挑不出毛病:复用了项目里现成的 getActiveUse">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/icon/avatar.jpg">
+<meta property="article:published_time" content="2026-09-03T04:51:38.000Z">
+<meta property="article:modified_time" content="2026-09-04T09:23:43.750Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="上下文工程">
+<meta property="article:tag" content="代码图">
+<meta property="article:tag" content="知识库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/icon/avatar.jpg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '代码图结构化工具与知识库是否能够帮助AI理解代码?',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-04 17:23:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/all/top_image.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">代码图结构化工具与知识库是否能够帮助AI理解代码?</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-03T04:51:38.000Z" title="发表于 2026-09-03 12:51:38">2026-09-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-04T09:23:43.750Z" title="更新于 2026-09-04 17:23:43">2026-09-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="代码图结构化工具与知识库是否能够帮助AI理解代码?"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>摘要:Agent 写对了每一行代码,系统还是出了事故。我们用 Django、CPython、Kafka 三个仓库出题、跑了 480 个 run,想验证代码图能不能让 Agent 更懂代码,结果没有得到一个简单的「能」——它真正改善的是探索效率,而会话本身是另一个被低估的变量。</p>
+</blockquote>
+<p>产品要做一个「用户活跃度周报」。Agent 接到需求后的表现,挑不出毛病:复用了项目里现成的 <code>getActiveUsers()</code>,直接读取 email/phone,接入了现成的 <code>RateLimiter.check()</code>,测试全绿。</p>
+<p>两周后,线上出了三件事。</p>
+<p>已删除用户混进了周报,活跃度被虚假拉高。低权限角色拿到了明文手机号。真实用户登录被限流——周报的批量轮询,把和登录模块共用的那个限流配额池耗光了。</p>
+<p>三段代码单拎出来都算合格:复用的方法别的模块一直在用,工具是现成的,测试也通过了。问题都不在这些代码本身,而在它们周围——在那些没写在函数体里的事实里。</p>
+<p>第一次接这个需求,Agent 用了 37 次 grep、读了 21 个文件、花了 12 分钟,最后靠人把坑一个个揪出来。一周后第二个类似需求,新会话从零开始:34 次 grep、11 分钟,同样的坑再踩一遍。</p>
+<p>局部代码正确,不等于系统行为正确。这个道理不难懂。真正让我在意的是另一个问题:代码里明明已经包含了这么多信息,为什么 Agent 每次进入仓库,都处于冷启动状态,从零探索一遍?</p>
+<h2 id="问题拆解-代码理解的四个子问题">问题拆解:代码理解的四个子问题</h2>
+<p>模型窗口从 8K 涨到 200K,再涨到百万级,Agent 进入仓库的冷启动状态却没有改变。原因并不神秘:上下文长度和代码理解本来就是两个层面的事——前者解决容量,后者要求组织。「让 AI 理解代码」从来不是一个问题,而是四个:</p>
+<ul>
+<li><strong>表示</strong>:信息以什么形式保存;</li>
+<li><strong>检索</strong>:需要的信息怎么找到;</li>
+<li><strong>证据</strong>:结论能不能回溯到代码行;</li>
+<li><strong>更新</strong>:代码变了,已有知识什么时候失效。</li>
+</ul>
+<p>长上下文只回答了「能放多少」,管不了哪些信息值得看、怎么找到、怎么证明、什么时候失效。这个区分不是在说「长上下文没用」——它是容量,而容量解决不了组织问题。</p>
+<p>按这四个协议去对照,现有工具其实各站一层:</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>回答的问题</th>
+<th>代表项目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 文本与符号骨架</td>
+<td>有哪些文件、类、函数、签名?</td>
+<td>Aider</td>
+</tr>
+<tr>
+<td>L2 符号语义导航</td>
+<td>定义、引用在哪里?</td>
+<td>Serena</td>
+</tr>
+<tr>
+<td>L3 仓库关系</td>
+<td>谁调用谁?改动影响哪里?</td>
+<td>RepoGraph · CBMM</td>
+</tr>
+<tr>
+<td>L4 意图与约束</td>
+<td>为什么这样设计?什么不能一起做?</td>
+<td>CodeWiki</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig1-layers.png" alt="图1|四层代码理解模型"></p>
+<p>Aider 的 repo map 站在 L1,Serena 的 LSP 导航站在 L2,RepoGraph 和 CBMM 这类属性图站在 L3,CodeWiki 这类知识库站在 L4。名字不重要,方向很清楚:从看见符号,到发现关系,再到记录约束。</p>
+<p>所以这篇文章分两部分,回答两个不同的问题:上篇用实验回答 L3——代码图到底给 Agent 带来了什么;下篇单独回答 L4——那些「为什么不能这么连」的知识,应该放在哪里。两个问题不同,工具不同,答案也不同。</p>
+<hr>
+<h2 id="上篇-代码图的对照实验">上篇:代码图的对照实验</h2>
+<h3 id="实验对象与总体设计">实验对象与总体设计</h3>
+<p>实验对象选了 codebase-memory-mcp(下文简称 CBMM):把源码解析成 SQLite 属性图,通过 MCP typed tools 暴露查询,支持 158 种语言,图查询亚毫秒级;文件变了只重建变化节点,记忆可以跨会话存活。选它没有特别深的理由,同类工具里它工程上最省心。</p>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig2-cbm-arch.png" alt="图2|CBMM 架构"></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>仓库</td>
+<td>Django(Python,~156K LOC)· CPython(C,~528K LOC)· Kafka(Java,~537K LOC)</td>
+</tr>
+<tr>
+<td>题目</td>
+<td>每仓库 40 题,共 120 道;方向:基础 / 影响分析 / Code Review / 重构</td>
+</tr>
+<tr>
+<td>条件</td>
+<td>baseline(仅 grep/read 等通用工具)vs hybrid(额外可用 CBMM 图工具)</td>
+</tr>
+<tr>
+<td>模式</td>
+<td>单题模式 vs 会话模式(见下文)</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>执行:DeepSeek V4 Flash;独立评审:GLM-5.2 与 GPT-5.6 Sol</td>
+</tr>
+<tr>
+<td>规模</td>
+<td>480 个 run(有效 479),约 1.6 亿 token</td>
+</tr>
+</tbody>
+</table>
+<p>先交代总账:120 道题 × 2 种工具条件 × 2 种模式 = 480 个 run。其中 1 个 run(Django 的 RP04 题,baseline 条件,会话模式)未在题库预算的 240 秒内完成,记为超时,有效 479。完整配对:单题模式 120 组,会话模式 119 组。后文所有对比都来自这批数据。</p>
+<p>评审怎么判分:两套评审均为独立逐题打分,并对证据锚点做源码回查。GLM-5.2 从正确性、覆盖度、证据质量、表达与格式、效率五个维度各打 0–5 分,满分 25,总分差大于 1 分才记胜负;GPT-5.6 Sol 的质量均分只取前四个维度(满分 5 分),均分差低于 0.25 判平,效率单独记录、不计入质量分。</p>
+<h3 id="题目构成-四个方向与难度梯度">题目构成:四个方向与难度梯度</h3>
+<p>120 道题按四个方向出,每个仓库每个方向各 10 道:</p>
+<ul>
+<li><strong>基础</strong>(30 道):定位与描述——公共 API、类型层级、符号定义、反向引用、模块职责,以及跨模块的数据流与契约;</li>
+<li><strong>影响分析</strong>(30 道):给定真实或假设的变更、故障场景,考查影响面分析、错误链、回归计划与最小修复方案——产出带证据的书面分析,不产出代码;</li>
+<li><strong>Code Review</strong>(30 道):指定模块、指定风险维度的定向审查——十道题各对应一类风险点:边界校验、错误契约、资源生命周期、并发状态、API 兼容……;</li>
+<li><strong>重构</strong>(30 道):重构方案的规划与安全评估——拆分、迁移、特性移除,强调兼容性约束、回滚点与测试缝隙,同样落到书面方案。</li>
+</ul>
+<p>每个方向内部难度从 L1 到 L3 递增。难度是题库逐题标注的字段,没有更细的成文定义;从标注分布看大致是:L1 单文件可答(每仓库只有 2 道),L2 单模块内追踪,L3 跨模块、跨文件。</p>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig3-questions.png" alt="图3|题目构成:四个方向与难度梯度"></p>
+<p>光列题型还是抽象。真题题面为英文,下面每个方向转述一道:</p>
+<p><strong>基础|Django F01(L1)</strong>:在固定提交的 <code>django/template/__init__.py</code> 里,精确列出 <code>django.template.__all__</code> 中的名字,给出每个名字的定义模块与职责;再找出那些仍可属性访问、但不在 <code>__all__</code> 里的导入名。题面甚至专门提醒:不要把 <code># NOQA isort:skip</code> 当成 API 稳定的证据,不要把内部子模块当成公共 API。</p>
+<p><strong>影响分析|Kafka I01(L3)</strong>:审计「bootstrap.servers 不带显式端口会被拒绝」这条既有行为——题面明确要求不要把它当成新变更;追踪 <code>CommonClientConfigs</code> 里的声明、<code>ProducerConfig</code>/<code>ConsumerConfig</code> 里的注册、<code>ClientUtils.parseAndValidateAddresses</code> 里 null host/port 抛 <code>ConfigException</code> 的校验,并覆盖五个直接生产调用点(KafkaProducer、ClassicKafkaConsumer、AsyncKafkaConsumer、ShareConsumerImpl、AdminBootstrapAddresses)。</p>
+<p><strong>Code Review|CPython CR01</strong>:圈定 <code>Python/getargs.c</code> 的一条具体解析路径、列出四个审查点,考 <code>O&amp;</code> converter 失败时到底抛什么异常——后文会看到,就是这道题,在两种模式下得到了完全不同的答案。</p>
+<p><strong>重构|Kafka RP09(L3)</strong>:为一次「混合模式支持结束后的主版本移除」做盘点:生产代码中的 <code>kafka.zk</code> 导入、broker 启动参数、指定的 ZK 迁移测试;把最后一个回滚点定义为源码删除前的那个版本,排除线上混合集群回滚。</p>
+<h3 id="两种实验模式-单题模式与会话模式">两种实验模式:单题模式与会话模式</h3>
+<p>工具条件之外,还有第二个变量:上下文连不连续。</p>
+<p><strong>单题模式(per-question)</strong>:每道题都开一个全新会话,做完立刻清空上下文。Agent 做第 5 题时,不记得第 4 题探索过什么——它衡量的是零记忆状态下的裸性能。</p>
+<p><strong>会话模式(session)</strong>:同一方向的 10 道题在同一个连续对话里依次完成,前面翻过的代码、犯过的错,后面都记得——它衡量的是记忆累积之后的表现。</p>
+<p>单题模式是断开的十个点,会话模式是连成线的十个点。这个设计后面会反复用到:它让我们能同时看清两个变量的效果——开不开图,以及上下文连不连续。</p>
+<h3 id="单题模式结果-质量持平-工具错误减少-46">单题模式结果:质量持平,工具错误减少 46%</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>baseline</th>
+<th>hybrid</th>
+<th>Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>质量评分(GLM-5.2,/25)</td>
+<td>23.48</td>
+<td>23.46</td>
+<td>持平</td>
+</tr>
+<tr>
+<td>质量评分(GPT-5.6 Sol,/5)</td>
+<td>4.62</td>
+<td>4.59</td>
+<td>−0.03</td>
+</tr>
+<tr>
+<td>平均耗时</td>
+<td>205s</td>
+<td>202s</td>
+<td>−2%</td>
+</tr>
+<tr>
+<td>平均 token</td>
+<td>530,578</td>
+<td>586,636</td>
+<td>+10.6%</td>
+</tr>
+<tr>
+<td>工具错误(次/题)</td>
+<td>0.57</td>
+<td>0.31</td>
+<td>−46%</td>
+</tr>
+</tbody>
+</table>
+<p>质量基本没动,token 却多了 10.6%。真正稳定变化的是工具错误率,从 0.57 降到 0.31——Agent 少走了弯路,但走对路之后,答案没有变好。</p>
+<p>每道题都清空上下文,图工具很容易退化成一个更高级的 grep:帮你更快找到位置,仅此而已。</p>
+<p>这不算孤例。RepoGraph 的论文(ICLR 2025)里有一个更刺眼的对照:SWE-bench Lite 上,基线解决率 27.33%,接入 RepoGraph 后升到 29.7%;把同一张图的 2-hop 子图直接展平塞进 prompt,反而掉到 26.0%,低于什么图都不给的基线。</p>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig4-repograph.png" alt="图4|RepoGraph 三条件对比"></p>
+<p>同一张图,调用方式不同,结果相差悬殊。图的价值不在信息多,而在按需可查。</p>
+<p>这一结果与图工具的定位一致:它本来就不是为单题搜索设计的。因此,更关键的检验在会话模式。</p>
+<h3 id="会话模式结果-耗时下降-24-质量基本持平">会话模式结果:耗时下降 24%,质量基本持平</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>baseline</th>
+<th>hybrid</th>
+<th>Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>质量(GLM-5.2,/25)</td>
+<td>23.4</td>
+<td>23.8</td>
+<td>+0.4(胜/平/负 37/67/15)</td>
+</tr>
+<tr>
+<td>质量(GPT-5.6 Sol,/5)</td>
+<td>4.61</td>
+<td>4.61</td>
+<td>持平</td>
+</tr>
+<tr>
+<td>平均耗时</td>
+<td>123s</td>
+<td>94s</td>
+<td>−24%</td>
+</tr>
+<tr>
+<td>工具错误(次/题)</td>
+<td>0.34</td>
+<td>0.22</td>
+<td>−35%</td>
+</tr>
+<tr>
+<td>单题 token</td>
+<td>117,016</td>
+<td>127,435</td>
+<td>+9%</td>
+</tr>
+</tbody>
+</table>
+<p>质量方面的变化有限:GLM 评分 +0.4(约 1.6%),GPT-5.6 Sol 整体持平;分项里有亮点——CPython 仓库 4.55→4.69(10 胜/29 平/1 负),code review 方向 4.47→4.70(11 胜/19 平/0 负)——但这个幅度的差异,与两个评审模型之间的给分差在同一量级,不足以称为稳定收益。</p>
+<p>耗时方面的变化更大:123 秒对 94 秒,而且越到后段差距越大。</p>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig5-session-curve.png" alt="图5|会话模式轮次耗时曲线"></p>
+<p>token 随轮次近乎线性增长(末题约为首题的 5–6 倍,因为携带全部历史),耗时却一路下降:第 1 题 114 秒,第 10 题 71 秒。前几道题探索过的代码区域,后面直接复用了。同条件对比,会话模式比单题模式少了 40–65% 的耗时、60–78% 的单题 token。</p>
+<p>质量维度上还有一个值得单独说的案例。CPython 的 CR01 题,考 <code>O&amp;</code> converter 失败时抛什么异常——源码 <code>Python/getargs.c:474</code> 有个隐藏分支:错误消息以 <code>(</code> 开头时抛 <code>SystemError</code>,而不是大多数人以为的 <code>TypeError</code>。单题模式下,hybrid 被图工具带到了附近,读了源码仍然判错 TypeError(78 vs 基线的 98/100);会话模式下,同一个模型借着前几道题对 <code>seterror()</code>/<code>converterr()</code> 错误处理的讨论,判对了(94 vs 84/100)。</p>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig6-cr01.png" alt="图6|CR01 四象限对比"></p>
+<p>这是全部 120 道题中唯一的关键事实错误案例,样本量为 1,说明不了统计意义上的任何事情。但它直观地展示了一种机制:图负责发现关系,累积的上下文负责验证和修正关系——两者碰上,才有「知识修正」这回事。</p>
+<p>像 CR01 这样题目级、经源码核验的「前题修正后题」案例,只有这一个;方向级的证据更粗,但同向。Kafka 的 code review 方向,GLM 评审记录里写道:「连续对话中前置 CR 题已建立的模块认知,加上图工具的精准索引,让后续题几乎『秒答』」——这个方向 baseline 平均每题 319 秒,hybrid 108 秒。评审还专门抽查了反向风险——前题的错误结论被后题继承的「上下文污染」——没有发现明显案例,但样本有限。</p>
+<p>可靠性方面:240 条会话模式答案做了全量源码核验,没有发现伪造的符号或路径,缺陷集中在个别行号 off-by-one;evidence 锚点命中率 78.3%,两种条件持平;JSON 畸形 1 例。</p>
+<h3 id="归因分析-会话与图工具的贡献拆分">归因分析:会话与图工具的贡献拆分</h3>
+<p>−24% 不能直接归因于图工具。轮次耗时曲线显示,baseline 自己也在提速:第 1 题 138 秒,第 10 题 94 秒,降了 32%;hybrid 从 114 降到 71,降了 38%。两条线的降幅相差不大——图工具的边际贡献可能只有几个百分点,代价却是 token 多了 9–11%。</p>
+<p>更合理的拆法是:会话提供了工作记忆,让前置探索的成果可以被复用;图工具降低了单次探索和定位的成本;两个变量叠加,才有效率收益。会话化本来就是一个值得做的工程改造,如果把它当成基线的一部分,图工具的净贡献比合并数字给人的直觉小得多。</p>
+<p>仓库维度的数据支持这种拆法:</p>
+<table>
+<thead>
+<tr>
+<th>仓库(图规模)</th>
+<th>baseline → hybrid 耗时</th>
+<th>质量(GLM 胜/负)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Django(51k 节点)</td>
+<td>61s → 65s(↑7%)</td>
+<td>4 胜/6 负</td>
+</tr>
+<tr>
+<td>CPython(110k 节点)</td>
+<td>98s → 82s(↓16%)</td>
+<td>13 胜/6 负</td>
+</tr>
+<tr>
+<td>Kafka(163k 节点)</td>
+<td>210s → 136s(↓35%)</td>
+<td>20 胜/3 负</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig7-scale-effect.png" alt="图7|仓库规模效应"></p>
+<p>Django 上图反而更慢,Kafka 上省了三分之一的时间。任务类型同样:Code Review 方向整体降幅最大(−39%,161s→98s),但拆开看,这份收益全部由 Kafka 贡献——CPython 和 Django 的 CR 方向,hybrid 反而更慢(+18% 和 +8%)。基础查找类的降幅最小。什么任务最依赖跨模块追踪,什么任务收益就最大——图省的是探索成本,探索不构成瓶颈的地方,它就是纯开销。</p>
+<h3 id="上篇小结-代码图的价值边界">上篇小结:代码图的价值边界</h3>
+<p>到这里,可以给这次实验一个结论:代码图目前最可信的价值是效率,不是已经被充分证明的理解能力。它让 Agent 更少 grep、更少调用错工具、更快定位跨模块关系,但没有稳定地让最终答案的质量上一个台阶。这个观察和外部研究是一个方向——Lost in the Middle 的 U 形曲线、Chroma 的 Context Rot、SWE-agent 把收益归因于接口设计、Anthropic 披露 Claude Code 刻意只用 glob/grep——不同团队从不同角度得到同一个判断:更多上下文,不等于更多有效利用。</p>
+<p>但我不想把「图不是理解引擎」说成「图没价值」。更贴近数据的话是:它降低的是理解之前的探索成本,而探索成本是真实存在的成本。</p>
+<hr>
+<h2 id="下篇-知识库与知识回写机制">下篇:知识库与知识回写机制</h2>
+<h3 id="图的边界-显式结构之外的约束">图的边界:显式结构之外的约束</h3>
+<p>上篇的结论是图省「探索」,但开头那三个事故,一个都不是探索不够造成的。我把它们重新过了一遍。</p>
+<p><code>deleted_at</code> 的过滤藏在 middleware——图可以告诉你 <code>getActiveUsers()</code> 被谁调用、依赖哪些配置,但「返回结果已经过中间件过滤,Service 层不能再依赖这个事实」不在图的任何一条边上。脱敏同理——图会如实告诉你 Model 和 Serializer 之间有依赖,但不会告诉你绕过它取数是危险的。限流配额更远——「周报和登录不能共享这个 Redis 前缀」是两个模块之间的系统级约束,局部代码不会说,调用关系也不会说。</p>
+<p>图知道怎么连,但通常不知道为什么不能这么连。</p>
+<p>这不是图的缺陷,是它的边界:它表达的是代码里显式存在的结构。而真正危险的约束,常常在代码关系之外——历史事故里,设计决策里,或者某个老员工的脑子里。把这些约束记下来、管起来,是另一类工具要回答的问题。</p>
+<h3 id="CodeWiki-的两层知识模型">CodeWiki 的两层知识模型</h3>
+<p>在公开资料里,高德技术团队的 CodeWiki 是这个问题上相对完整的一条工程路径。它把知识分成两层,并且明确两层不能用同一种方式维护:cross-ref 记录代码显式做了什么——入参校验、条件分支、异常路径、调用与配置,用 tree-sitter 加 LLM 自动生成,随源码更新;domain-knowledge 记录代码没写的东西——为什么这样设计、什么不能一起做、历史事故——由研发 <code>[suggest-wiki]</code> 标注触发,人审通过才能归档,LLM 不能自己决定什么值得被固化成团队知识。</p>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig8-codewiki.png" alt="图8|CodeWiki 两层知识模型"></p>
+<p>高德团队报告过一个数据点:一个「投放时段智能调控」需求的 9 个约束检查点,纯 OpenSpec 覆盖 0.5,加 cross-ref 后 4.5,再加 domain-knowledge 后到 7.5;功能互斥、Tair 幂等、投放节奏冻结、状态生命周期这 4 项,只有 domain-knowledge 能覆盖,代码里根本找不到。这是团队自己的工程数据,单一需求样本,我不会把它当成统计证明——但它和开头三个事故完全同构:会出事的约束,大多在 domain-knowledge 那一侧。</p>
+<h3 id="知识回写闭环与人审闸门">知识回写闭环与人审闸门</h3>
+<p>知识库容易让人想到「先建个大库」。CodeWiki 实践里更要紧的是一条闭环:任务探索中发现约束 → 研发附证据标注 → 人审 → 归档 → 后续任务复用。</p>
+<p><img src="/images/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93/fig9-flywheel.png" alt="图9|知识回写闭环"></p>
+<p>人审这一环省不掉。一条错误知识一旦进入长期记忆,会被后续所有任务反复复用——LLM 的一次幻觉,会被固化成「团队共识」,误导每一个人。归档动作可以自动化,领域规则的最终判断不能。</p>
+<p>支撑这条闭环的是几个朴素的机制,共同目标只有一个——知识可追溯、可更新、可审核:每条断言附 field / type / quote / reason 四要素代码证据(含文件与行号),confidence 低于 0.8 强制标记 candidate 回源验证;Merkle Tree 三层哈希做增量检测,改一个方法只重算所属子树,日常变更只触发个位数 LLM 调用。它们回答了知识库最常见的两种死法:全量跑 LLM 太贵,以及没人知道库里哪句是真的。</p>
+<hr>
+<h2 id="结论-三种记忆的组合">结论:三种记忆的组合</h2>
+<p>完整地看,Agent 要摆脱每次进入仓库都从零开始的冷启动状态,需要继承三种记忆:</p>
+<p><strong>结构记忆</strong>——代码怎么连接。图、LSP、索引提供的是这一种,上篇实验检验的就是它。<strong>工作记忆</strong>——这个会话已经探索过什么。连续上下文承担,实验显示它的贡献可能比图工具的边际贡献还大。<strong>经验记忆</strong>——团队踩过什么坑、哪些设计有隐含约束。知识库承担,目前还没有严格对照实验,只有工程实践在支撑。</p>
+<p>这是从这批实验和别人的工程实践里长出来的工作模型,不是被验证过的定律。</p>
+<p>所以回到标题的问题:代码图和知识库,能不能帮助 AI 理解代码?我的答案是克制的版本。代码图是一种仓库探索效率基础设施——仓库够大、对话够长、任务跨模块时,它实打实省时间、减少工具错误,这次实验能支撑的到这里为止。知识库覆盖图够不着的隐式约束,方向合理,但「知识回写提升后续任务质量」这条因果链,还没有被任何严格实验验证过,包括我们这次。</p>
+<p>所以我不会把代码图叫做「代码理解引擎」。至于「让 Agent 对仓库的认知可以跨会话沉淀」这个目标——它需要的不是更长的上下文,也不是更大的一张图,而是三种记忆的组合。</p>
+<p>回到开头那个周报需求:现在的 Agent 会从图上查到 <code>getActiveUsers()</code> 的调用链,会话里积累的探索会帮它快很多——但「这个方法不能绕过中间件单独用」这条知识,依然要等某个人踩坑之后,把它标注进团队的记忆里。</p>
+<p>那一天还没到,但路径比实验开始前清楚了。</p>
+<hr>
+<h2 id="引用与出处">引用与出处</h2>
+<p><strong>论文与技术报告:</strong></p>
+<ul>
+<li>Nelson F. Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, Percy Liang. <em>Lost in the Middle: How Language Models Use Long Contexts</em>. TACL 2024, 12:157–173. doi:10.1162/tacl_a_00638(arXiv:2307.03172)</li>
+<li>Kelly Hong, Anton Troynikov, Jeff Huber. <em>Context Rot: How Increasing Input Tokens Impacts LLM Performance</em>. Chroma Technical Report, 2025-07-14. <a target="_blank" rel="noopener" href="http://trychroma.com/research/context-rot">trychroma.com/research/context-rot</a></li>
+<li>John Yang, Carlos E. Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao, Karthik R. Narasimhan, Ofir Press. <em>SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>. NeurIPS 2024(arXiv:2405.15793)</li>
+<li><em>RepoGraph: Enhancing AI Software Engineering with Repository-level Code Graph</em>. ICLR 2025</li>
+</ul>
+<p><strong>工程实践:</strong></p>
+<ul>
+<li>Anthropic. <em>Effective Context Engineering for AI Agents</em>. 2025-09-29</li>
+<li>codebase-memory-mcp:github.com/DeusData/codebase-memory-mcp</li>
+<li>CodeWiki:高德技术公众号《CodeWiki:为 LLM 自动生成代码知识库的工程实践》,2026-07-28</li>
+<li>Aider:github.com/Aider-AI/aider · aider.chat/docs/repomap.html</li>
+<li>Serena:github.com/oraios/serena</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/">https://luckvd.github.io/2026/09/03/代码图结构化工具与知识库是否能够帮助AI理解代码/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Agent/">Agent</a><a class="post-meta__tags" href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/">上下文工程</a><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%A0%81%E5%9B%BE/">代码图</a><a class="post-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/">知识库</a></div><div class="post_share"><div class="social-share" data-image="/images/icon/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景"><img class="cover" src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AI 代码扫描与安全检测全景</div></div></a></div><div class="next-post pull-right"><a href="/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/" title="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/" title="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-12</div><div class="title">Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%8B%86%E8%A7%A3-%E4%BB%A3%E7%A0%81%E7%90%86%E8%A7%A3%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%AD%90%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">问题拆解:代码理解的四个子问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E7%AF%87-%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%9A%84%E5%AF%B9%E7%85%A7%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.</span> <span class="toc-text">上篇:代码图的对照实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%AF%B9%E8%B1%A1%E4%B8%8E%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.1.</span> <span class="toc-text">实验对象与总体设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%9E%84%E6%88%90-%E5%9B%9B%E4%B8%AA%E6%96%B9%E5%90%91%E4%B8%8E%E9%9A%BE%E5%BA%A6%E6%A2%AF%E5%BA%A6"><span class="toc-number">2.2.</span> <span class="toc-text">题目构成:四个方向与难度梯度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E5%AE%9E%E9%AA%8C%E6%A8%A1%E5%BC%8F-%E5%8D%95%E9%A2%98%E6%A8%A1%E5%BC%8F%E4%B8%8E%E4%BC%9A%E8%AF%9D%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">两种实验模式:单题模式与会话模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E9%A2%98%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%9C-%E8%B4%A8%E9%87%8F%E6%8C%81%E5%B9%B3-%E5%B7%A5%E5%85%B7%E9%94%99%E8%AF%AF%E5%87%8F%E5%B0%91-46"><span class="toc-number">2.4.</span> <span class="toc-text">单题模式结果:质量持平,工具错误减少 46%</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%9C-%E8%80%97%E6%97%B6%E4%B8%8B%E9%99%8D-24-%E8%B4%A8%E9%87%8F%E5%9F%BA%E6%9C%AC%E6%8C%81%E5%B9%B3"><span class="toc-number">2.5.</span> <span class="toc-text">会话模式结果:耗时下降 24%,质量基本持平</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E5%9B%A0%E5%88%86%E6%9E%90-%E4%BC%9A%E8%AF%9D%E4%B8%8E%E5%9B%BE%E5%B7%A5%E5%85%B7%E7%9A%84%E8%B4%A1%E7%8C%AE%E6%8B%86%E5%88%86"><span class="toc-number">2.6.</span> <span class="toc-text">归因分析:会话与图工具的贡献拆分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E7%AF%87%E5%B0%8F%E7%BB%93-%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%9A%84%E4%BB%B7%E5%80%BC%E8%BE%B9%E7%95%8C"><span class="toc-number">2.7.</span> <span class="toc-text">上篇小结:代码图的价值边界</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E7%AF%87-%E7%9F%A5%E8%AF%86%E5%BA%93%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%9B%9E%E5%86%99%E6%9C%BA%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">下篇:知识库与知识回写机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%9A%84%E8%BE%B9%E7%95%8C-%E6%98%BE%E5%BC%8F%E7%BB%93%E6%9E%84%E4%B9%8B%E5%A4%96%E7%9A%84%E7%BA%A6%E6%9D%9F"><span class="toc-number">3.1.</span> <span class="toc-text">图的边界:显式结构之外的约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CodeWiki-%E7%9A%84%E4%B8%A4%E5%B1%82%E7%9F%A5%E8%AF%86%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">CodeWiki 的两层知识模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%9B%9E%E5%86%99%E9%97%AD%E7%8E%AF%E4%B8%8E%E4%BA%BA%E5%AE%A1%E9%97%B8%E9%97%A8"><span class="toc-number">3.3.</span> <span class="toc-text">知识回写闭环与人审闸门</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA-%E4%B8%89%E7%A7%8D%E8%AE%B0%E5%BF%86%E7%9A%84%E7%BB%84%E5%90%88"><span class="toc-number">4.</span> <span class="toc-text">结论:三种记忆的组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E4%B8%8E%E5%87%BA%E5%A4%84"><span class="toc-number">5.</span> <span class="toc-text">引用与出处</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景"><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 代码扫描与安全检测全景"/></a><div class="content"><a class="title" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景">AI 代码扫描与安全检测全景</a><time datetime="2026-09-04T09:30:00.000Z" title="发表于 2026-09-04 17:30:00">2026-09-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/" title="代码图结构化工具与知识库是否能够帮助AI理解代码?">代码图结构化工具与知识库是否能够帮助AI理解代码?</a><time datetime="2026-09-03T04:51:38.000Z" title="发表于 2026-09-03 12:51:38">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/" title="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地">Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地</a><time datetime="2026-08-12T08:50:00.000Z" title="发表于 2026-08-12 16:50:00">2026-08-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E5%AF%B9%E6%8A%97AI%E7%9A%84Java%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%9F%BA%E5%87%86/" title="对抗AI的Java安全测试基准">对抗AI的Java安全测试基准</a><time datetime="2026-04-07T16:28:17.000Z" title="发表于 2026-04-08 00:28:17">2026-04-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/21/ClaudeDevKit%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%9D%A2%E5%90%91%20Claude%20Code%20CLI%20%E7%9A%84%E8%BD%BB%E9%87%8F%20AI%20%E5%8D%8F%E4%BD%9C%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%9E%E8%B7%B5/" title="ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践">ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践</a><time datetime="2026-03-21T11:34:25.000Z" title="发表于 2026-03-21 19:34:25">2026-03-21</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/all/top_image.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline-2jpd71hnp-luckvd.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

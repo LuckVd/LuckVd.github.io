@@ -1,0 +1,576 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI辅助开发大型项目管理框架 | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="项目地址：ClaudeDevKit AI辅助开发大型项目管理框架 一、项目是什么 ClaudeDevKit 是一个专为 AI 编程助手设计的项目治理框架。 一句话概括：让 AI 在帮你写代码的同时，不会乱改你的核心代码、不会破坏你的 API、不会忘记当前在做什么任务。 解决的问题    痛点 场景 ClaudeDevKit 的解决方案     代码被乱改 AI &quot;顺手&quot;修改了核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI辅助开发大型项目管理框架">
+<meta property="og:url" content="https://luckvd.github.io/2026/02/25/AI%E8%BE%85%E5%8A%A9%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/AI%E8%BE%85%E5%8A%A9%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="项目地址：ClaudeDevKit AI辅助开发大型项目管理框架 一、项目是什么 ClaudeDevKit 是一个专为 AI 编程助手设计的项目治理框架。 一句话概括：让 AI 在帮你写代码的同时，不会乱改你的核心代码、不会破坏你的 API、不会忘记当前在做什么任务。 解决的问题    痛点 场景 ClaudeDevKit 的解决方案     代码被乱改 AI &quot;顺手&quot;修改了核">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/icon/avatar.jpg">
+<meta property="article:published_time" content="2026-02-25T17:22:16.000Z">
+<meta property="article:modified_time" content="2026-09-04T09:23:43.747Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/icon/avatar.jpg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/02/25/AI%E8%BE%85%E5%8A%A9%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/AI%E8%BE%85%E5%8A%A9%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI辅助开发大型项目管理框架',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-09-04 17:23:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/all/top_image.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI辅助开发大型项目管理框架</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-25T17:22:16.000Z" title="发表于 2026-02-26 01:22:16">2026-02-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-04T09:23:43.747Z" title="更新于 2026-09-04 17:23:43">2026-09-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AI辅助开发大型项目管理框架"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/LuckVd/ClaudeDevKit"><strong>ClaudeDevKit</strong></a></p>
+<h1>AI辅助开发大型项目管理框架</h1>
+<h2 id="一、项目是什么">一、项目是什么</h2>
+<p><strong>ClaudeDevKit</strong> 是一个专为 AI 编程助手设计的项目治理框架。</p>
+<p><strong>一句话概括</strong>：让 AI 在帮你写代码的同时，不会乱改你的核心代码、不会破坏你的 API、不会忘记当前在做什么任务。</p>
+<h3 id="解决的问题">解决的问题</h3>
+<table>
+<thead>
+<tr>
+<th>痛点</th>
+<th>场景</th>
+<th>ClaudeDevKit 的解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代码被乱改</td>
+<td>AI &quot;顺手&quot;修改了核心模块导致崩溃</td>
+<td>三级文件保护机制</td>
+</tr>
+<tr>
+<td>API 被破坏</td>
+<td>AI 改了接口参数，调用方全挂</td>
+<td>Breaking Change 自动检测</td>
+</tr>
+<tr>
+<td>状态混乱</td>
+<td>每次新会话都要重新解释项目</td>
+<td><a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a> 统一状态管理</td>
+</tr>
+<tr>
+<td>提交不规范</td>
+<td>AI 生成的 commit message 看不懂</td>
+<td>Conventional Commits 自动生成</td>
+</tr>
+<tr>
+<td>目标跑偏</td>
+<td>AI 改着改着就偏离了当前任务</td>
+<td>目标追踪系统</td>
+</tr>
+</tbody>
+</table>
+<h3 id="失败场景：没有-ClaudeDevKit-会怎样">失败场景：没有 ClaudeDevKit 会怎样</h3>
+<table>
+<thead>
+<tr>
+<th>缺失的机制</th>
+<th>失败场景</th>
+<th>后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>没有目标追踪</strong></td>
+<td>AI 在多个模块之间&quot;游走&quot;，改完 A 又去&quot;优化&quot; B</td>
+<td>任务碎片化，主目标迟迟无法完成</td>
+</tr>
+<tr>
+<td><strong>没有保护机制</strong></td>
+<td>AI 在 refactor 时&quot;顺手&quot;重构了核心模块</td>
+<td>稳定代码被破坏，引入难以排查的 bug</td>
+</tr>
+<tr>
+<td><strong>没有 API 检测</strong></td>
+<td>Breaking Change 被默默引入，无人知晓</td>
+<td>上线后调用方大面积报错</td>
+</tr>
+<tr>
+<td><strong>没有状态管理</strong></td>
+<td>每次新会话都要重新解释项目背景</td>
+<td>大量时间浪费在重复沟通上</td>
+</tr>
+<tr>
+<td><strong>没有提交规范</strong></td>
+<td>commit message 是 “fix bug”、“update code” 这类废话</td>
+<td>无法追溯变更原因，回滚困难</td>
+</tr>
+</tbody>
+</table>
+<p><strong>典型翻车案例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">用户：帮我优化一下用户模块的性能</span><br><span class="line">  │</span><br><span class="line">  ▼</span><br><span class="line">AI：好的，我优化了数据库查询...</span><br><span class="line">    顺便重构了认证逻辑...</span><br><span class="line">    还清理了一些&quot;冗余&quot;代码...</span><br><span class="line">  │</span><br><span class="line">  ▼</span><br><span class="line">结果：</span><br><span class="line">  • 用户模块确实快了 20%</span><br><span class="line">  • 但认证系统崩了（那不是冗余代码）</span><br><span class="line">  • 而且 API 参数被改了，前端全挂</span><br><span class="line">  • commit message: &quot;optimize user module&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>ClaudeDevKit 的防护</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">用户：帮我优化一下用户模块的性能</span><br><span class="line">  │</span><br><span class="line">  ▼</span><br><span class="line">AI：好的，我优化了数据库查询...</span><br><span class="line">  │</span><br><span class="line">  ▼</span><br><span class="line">/commit 时触发检查：</span><br><span class="line">  ✓ 用户模块是 active，允许修改</span><br><span class="line">  ✗ 认证模块是 core，禁止修改 → 阻止</span><br><span class="line">  ✗ API 参数变更检测 → Breaking Change 警告</span><br><span class="line">  │</span><br><span class="line">  ▼</span><br><span class="line">结果：</span><br><span class="line">  • 用户模块优化完成</span><br><span class="line">  • 核心代码安然无恙</span><br><span class="line">  • API 变更被记录，需用户确认</span><br><span class="line">  • commit message: &quot;perf(user): optimize database queries&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="二、核心设计理念">二、核心设计理念</h2>
+<h3 id="极简但可控">极简但可控</h3>
+<ul>
+<li><strong>极简</strong>：8 个文件实现完整治理能力</li>
+<li><strong>可控</strong>：三级保护 + API 保护 + 目标追踪</li>
+</ul>
+<h3 id="以-Git-提交为驱动">以 Git 提交为驱动</h3>
+<p>整个框架的自动化流程围绕 <code>/commit</code> 命令展开。每次提交时自动执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">代码检查 → 文件保护检查 → API 变更检测 → 目标进度检查</span><br><span class="line">    ↓</span><br><span class="line">生成规范提交信息 → 执行提交 → 自动更新项目状态文件 → 记录详细历史</span><br></pre></td></tr></table></figure>
+<h2 id="三、核心机制">三、核心机制</h2>
+<h3 id="3-1-三级文件保护">3.1 三级文件保护</h3>
+<p>这是框架最核心的机制。通过在 <a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a> 中定义模块等级，控制 AI 的修改权限：</p>
+<table>
+<thead>
+<tr>
+<th>等级</th>
+<th>含义</th>
+<th>AI 修改规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>active</code></td>
+<td>活跃开发中</td>
+<td>自由修改</td>
+</tr>
+<tr>
+<td><code>stable</code></td>
+<td>已稳定</td>
+<td>需用户确认后才能修改</td>
+</tr>
+<tr>
+<td><code>core</code></td>
+<td>核心模块</td>
+<td>禁止 AI 自动修改</td>
+</tr>
+</tbody>
+</table>
+<p><strong>工作原理</strong>：当 AI 执行 <code>/commit</code> 时，会自动检测变更文件所属的模块等级，根据等级决定是放行、询问还是阻止。</p>
+<h3 id="3-2-API-契约保护">3.2 API 契约保护</h3>
+<p>针对 API 相关文件（routes、controllers、endpoints 等），自动检测是否为 Breaking Change：</p>
+<table>
+<thead>
+<tr>
+<th>变更类型</th>
+<th>是否 Breaking</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>删除 API 路径</td>
+<td>是</td>
+<td>需确认</td>
+</tr>
+<tr>
+<td>删除/修改参数</td>
+<td>是</td>
+<td>需确认</td>
+</tr>
+<tr>
+<td>参数类型变更</td>
+<td>是</td>
+<td>需确认</td>
+</tr>
+<tr>
+<td>新增可选参数</td>
+<td>否</td>
+<td>放行，提示更新文档</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-3-目标追踪">3.3 目标追踪</h3>
+<p>采用<strong>单一焦点模式</strong>：一次只有一个主目标。</p>
+<ul>
+<li>AI 每次提交都会询问：当前目标是否完成？</li>
+<li>完成后提示设置下一个目标</li>
+<li>目标状态自动同步到项目文档</li>
+</ul>
+<h3 id="3-4-项目拆解与任务划分">3.4 项目拆解与任务划分</h3>
+<p>这是框架实现&quot;AI 可控&quot;的关键设计。</p>
+<p><strong>问题</strong>：大型项目动辄上百个文件，AI 的上下文窗口有限，如何让 AI 既能快速理解项目全貌，又能专注于当前任务？</p>
+<p><strong>解决方案</strong>：通过文件结构实现&quot;全局视野 + 局部专注&quot;的平衡。</p>
+<h4 id="两层视图设计">两层视图设计</h4>
+<table>
+<thead>
+<tr>
+<th>视图</th>
+<th>文件</th>
+<th>内容</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>全局视图</strong></td>
+<td><a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a></td>
+<td>模块列表、状态、保护等级</td>
+<td>30 秒内了解项目全貌</td>
+</tr>
+<tr>
+<td><strong>当前焦点</strong></td>
+<td>CURRENT_GOAL.md</td>
+<td>单一目标、进度、相关文件</td>
+<td>专注执行当前任务</td>
+</tr>
+</tbody>
+</table>
+<h4 id="工作原理">工作原理</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">新会话开始</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">/readproject  ────→ 读取 PROJECT.md</span><br><span class="line">    │               • 看到所有模块</span><br><span class="line">    │               • 知道哪些是 core/stable/active</span><br><span class="line">    │               • 了解项目整体架构</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">/goal  ───────────→ 读取 CURRENT_GOAL.md</span><br><span class="line">    │               • 聚焦单一任务</span><br><span class="line">    │               • 知道要改哪些文件</span><br><span class="line">    │               • 不被其他模块干扰</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">[AI 专注执行当前任务]</span><br></pre></td></tr></table></figure>
+<h4 id="模块拆分原则">模块拆分原则</h4>
+<p><a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a> 中的模块定义遵循以下原则：</p>
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>独立性</strong></td>
+<td>每个模块有明确的边界和职责</td>
+</tr>
+<tr>
+<td><strong>可追踪</strong></td>
+<td>每个模块有独立的状态（todo/dev/done）</td>
+</tr>
+<tr>
+<td><strong>可保护</strong></td>
+<td>每个模块有独立的保护等级（active/stable/core）</td>
+</tr>
+<tr>
+<td><strong>粒度适中</strong></td>
+<td>不太大（难以管理），也不太小（过于碎片化）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="对比传统方式">对比传统方式</h4>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统方式</th>
+<th>ClaudeDevKit 方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目理解</td>
+<td>AI 需要遍历大量文件</td>
+<td><a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a> 一览全局</td>
+</tr>
+<tr>
+<td>任务聚焦</td>
+<td>AI 容易&quot;顺手&quot;改其他模块</td>
+<td>CURRENT_GOAL.md 限定范围</td>
+</tr>
+<tr>
+<td>上下文消耗</td>
+<td>每次都要重新解释项目</td>
+<td>文件即文档，持久化状态</td>
+</tr>
+<tr>
+<td>协作效率</td>
+<td>人要反复说明&quot;不要改这个&quot;</td>
+<td>保护等级自动生效</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心价值</strong>：让 AI 在有限的上下文窗口内，既能&quot;看见森林&quot;（项目全貌），又能&quot;专注种树&quot;（当前任务）。</p>
+<h2 id="四、命令系统">四、命令系统</h2>
+<p>框架提供 4 个命令，覆盖 AI 辅助开发的全流程：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/readproject</code></td>
+<td>读取项目概览</td>
+<td>新会话开始时，让 AI 快速了解项目状态、模块、目标、历史</td>
+</tr>
+<tr>
+<td><code>/ask</code></td>
+<td>只读问答</td>
+<td>安全地分析代码、排查问题，AI 只能读不能改</td>
+</tr>
+<tr>
+<td><code>/goal</code></td>
+<td>目标管理</td>
+<td>设置/查看/完成当前开发目标</td>
+</tr>
+<tr>
+<td><code>/commit</code></td>
+<td>规范化提交</td>
+<td>核心命令，触发完整治理流程</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commit-命令详解"><code>/commit</code> 命令详解</h3>
+<p>这是框架的核心命令，完整流程：</p>
+<ol>
+<li><strong>Pre-commit 检查</strong>：执行 lint，失败则停止</li>
+<li><strong>清理临时文件</strong>：删除缓存、日志等无关文件</li>
+<li><strong>文件保护检查</strong>：根据模块等级决定放行/确认/阻止</li>
+<li><strong>API 变更检测</strong>：如有 API 变更，检测 Breaking Change</li>
+<li><strong>目标进度检查</strong>：询问当前目标是否完成</li>
+<li><strong>生成提交信息</strong>：Conventional Commits 格式，包含完整变更内容</li>
+<li><strong>执行提交</strong></li>
+<li><strong>自动更新状态</strong>：<a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a>、CURRENT_GOAL.md、<a target="_blank" rel="noopener" href="http://ROADMAP.md">ROADMAP.md</a></li>
+<li><strong>记录 Git 历史</strong>：<a target="_blank" rel="noopener" href="http://history.md">history.md</a> 摘要 + 详细日志文件</li>
+<li><strong>Push</strong></li>
+</ol>
+<h2 id="五、Skills-模块">五、Skills 模块</h2>
+<p>Skills 是可复用的治理模块，被 <code>/commit</code> 命令调用：</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>职责</th>
+<th>触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>workspace-governor</code></td>
+<td>文件保护</td>
+<td>所有文件变更</td>
+</tr>
+<tr>
+<td><code>api-governor</code></td>
+<td>API 契约保护</td>
+<td>API 相关文件变更</td>
+</tr>
+<tr>
+<td><code>goal-tracker</code></td>
+<td>目标进度追踪</td>
+<td>所有提交</td>
+</tr>
+</tbody>
+</table>
+<h2 id="六、项目结构">六、项目结构</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">.claude/</span><br><span class="line">├── PROJECT.md           # 核心：项目配置（模块定义、保护规则、历史）</span><br><span class="line">├── commands/            # 命令定义</span><br><span class="line">│   ├── readproject.md</span><br><span class="line">│   ├── ask.md</span><br><span class="line">│   ├── goal.md</span><br><span class="line">│   └── commit.md</span><br><span class="line">└── skills/              # 治理模块</span><br><span class="line">    ├── workspace-governor.md</span><br><span class="line">    ├── api-governor.md</span><br><span class="line">    └── goal-tracker.md</span><br><span class="line"></span><br><span class="line">docs/</span><br><span class="line">├── ROADMAP.md           # 项目路线图</span><br><span class="line">├── CURRENT_GOAL.md      # 当前目标</span><br><span class="line">├── api/API.md           # API 文档</span><br><span class="line">└── git/                 # Git 历史系统</span><br><span class="line">    ├── history.md       # 提交摘要</span><br><span class="line">    └── logs/            # 详细日志</span><br></pre></td></tr></table></figure>
+<h2 id="七、典型工作流">七、典型工作流</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">新会话开始</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">/readproject  ────→ AI 了解项目全貌</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">/goal  ───────────→ 确认当前目标</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">[开发工作...]</span><br><span class="line">    │</span><br><span class="line">    ▼</span><br><span class="line">/commit  ─────────→ 自动执行保护检查</span><br><span class="line">    │               自动生成规范提交</span><br><span class="line">    │               自动更新项目状态</span><br><span class="line">    │               自动记录历史</span><br><span class="line">    ▼</span><br><span class="line">/goal done  ──────→ 标记目标完成，设置下一个</span><br></pre></td></tr></table></figure>
+<h2 id="八、总结">八、总结</h2>
+<p>ClaudeDevKit 的核心价值：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统 AI 辅助开发</th>
+<th>使用 ClaudeDevKit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代码安全</td>
+<td>AI 可能乱改核心代码</td>
+<td>三级保护，核心代码安全</td>
+</tr>
+<tr>
+<td>API 稳定</td>
+<td>变更无感知</td>
+<td>Breaking Change 自动检测</td>
+</tr>
+<tr>
+<td>项目状态</td>
+<td>每次会话都要重新解释</td>
+<td><a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a> 统一管理</td>
+</tr>
+<tr>
+<td>提交规范</td>
+<td>依赖 AI 自觉</td>
+<td>强制 Conventional Commits</td>
+</tr>
+<tr>
+<td>开发焦点</td>
+<td>容易跑偏</td>
+<td>目标追踪，保持专注</td>
+</tr>
+<tr>
+<td><strong>上下文效率</strong></td>
+<td><strong>AI 需要遍历大量文件</strong></td>
+<td><strong>全局视野 + 局部专注</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心创新</strong>：</p>
+<ol>
+<li><strong>项目拆解</strong>：通过 <a target="_blank" rel="noopener" href="http://PROJECT.md">PROJECT.md</a> 的模块定义，让大型项目变成可管理的单元</li>
+<li><strong>任务聚焦</strong>：通过 CURRENT_GOAL.md，让 AI 专注当前任务，不被其他模块干扰</li>
+<li><strong>以 Git 提交为驱动</strong>：所有自动化围绕 <code>/commit</code> 展开，无需额外操作</li>
+</ol>
+<p>这套设计让开发者既能享受 AI 的效率提升，又能保持对项目的完整控制——<strong>AI 看得见全貌，但只动该动的地方</strong>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/02/25/AI%E8%BE%85%E5%8A%A9%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/AI%E8%BE%85%E5%8A%A9%E7%BC%96%E7%A8%8B%E6%8E%A2%E7%B4%A2/">https://luckvd.github.io/2026/02/25/AI辅助编程探索/AI辅助编程探索/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LLM/">LLM</a></div><div class="post_share"><div class="social-share" data-image="/images/icon/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/02/27/RAG%E4%B8%AD%E7%9A%84Embedding/" title="RAG中的Embedding"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">RAG中的Embedding</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/07/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8C/" title="go学习笔记(二)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">go学习笔记(二)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/03/21/ClaudeDevKit%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%9D%A2%E5%90%91%20Claude%20Code%20CLI%20%E7%9A%84%E8%BD%BB%E9%87%8F%20AI%20%E5%8D%8F%E4%BD%9C%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%9E%E8%B7%B5/" title="ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-21</div><div class="title">ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践</div></div></a></div><div><a href="/2026/02/27/RAG%E4%B8%AD%E7%9A%84Embedding/" title="RAG中的Embedding"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-27</div><div class="title">RAG中的Embedding</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">AI辅助开发大型项目管理框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.</span> <span class="toc-text">一、项目是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">解决的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%B1%E8%B4%A5%E5%9C%BA%E6%99%AF%EF%BC%9A%E6%B2%A1%E6%9C%89-ClaudeDevKit-%E4%BC%9A%E6%80%8E%E6%A0%B7"><span class="toc-number">1.1.2.</span> <span class="toc-text">失败场景：没有 ClaudeDevKit 会怎样</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="toc-number">1.2.</span> <span class="toc-text">二、核心设计理念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%81%E7%AE%80%E4%BD%86%E5%8F%AF%E6%8E%A7"><span class="toc-number">1.2.1.</span> <span class="toc-text">极简但可控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5-Git-%E6%8F%90%E4%BA%A4%E4%B8%BA%E9%A9%B1%E5%8A%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">以 Git 提交为驱动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6"><span class="toc-number">1.3.</span> <span class="toc-text">三、核心机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%B8%89%E7%BA%A7%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 三级文件保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-API-%E5%A5%91%E7%BA%A6%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 API 契约保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%9B%AE%E6%A0%87%E8%BF%BD%E8%B8%AA"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 目标追踪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E9%A1%B9%E7%9B%AE%E6%8B%86%E8%A7%A3%E4%B8%8E%E4%BB%BB%E5%8A%A1%E5%88%92%E5%88%86"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 项目拆解与任务划分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E5%B1%82%E8%A7%86%E5%9B%BE%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">两层视图设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E6%8B%86%E5%88%86%E5%8E%9F%E5%88%99"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">模块拆分原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">对比传统方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%91%BD%E4%BB%A4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.4.</span> <span class="toc-text">四、命令系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#commit-%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.4.1.</span> <span class="toc-text">&#x2F;commit 命令详解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Skills-%E6%A8%A1%E5%9D%97"><span class="toc-number">1.5.</span> <span class="toc-text">五、Skills 模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">六、项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%85%B8%E5%9E%8B%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">1.7.</span> <span class="toc-text">七、典型工作流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">1.8.</span> <span class="toc-text">八、总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景"><img src="/images/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI 代码扫描与安全检测全景"/></a><div class="content"><a class="title" href="/2026/09/04/AI%E4%BB%A3%E7%A0%81%E6%89%AB%E6%8F%8F%E4%B8%8E%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B%E5%85%A8%E6%99%AF/" title="AI 代码扫描与安全检测全景">AI 代码扫描与安全检测全景</a><time datetime="2026-09-04T09:30:00.000Z" title="发表于 2026-09-04 17:30:00">2026-09-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/09/03/%E4%BB%A3%E7%A0%81%E5%9B%BE%E7%BB%93%E6%9E%84%E5%8C%96%E5%B7%A5%E5%85%B7%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%98%AF%E5%90%A6%E8%83%BD%E5%A4%9F%E5%B8%AE%E5%8A%A9AI%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81/" title="代码图结构化工具与知识库是否能够帮助AI理解代码?">代码图结构化工具与知识库是否能够帮助AI理解代码?</a><time datetime="2026-09-03T04:51:38.000Z" title="发表于 2026-09-03 12:51:38">2026-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/12/Agent%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9%E7%AD%96%E7%95%A5%EF%BC%9A%E4%BB%8E%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%88%B0%E7%94%9F%E4%BA%A7%E8%90%BD%E5%9C%B0/" title="Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地">Agent 上下文越用越堵?6 种压缩策略,从实验数据到生产落地</a><time datetime="2026-08-12T08:50:00.000Z" title="发表于 2026-08-12 16:50:00">2026-08-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/07/%E5%AF%B9%E6%8A%97AI%E7%9A%84Java%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%9F%BA%E5%87%86/" title="对抗AI的Java安全测试基准">对抗AI的Java安全测试基准</a><time datetime="2026-04-07T16:28:17.000Z" title="发表于 2026-04-08 00:28:17">2026-04-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/21/ClaudeDevKit%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%9D%A2%E5%90%91%20Claude%20Code%20CLI%20%E7%9A%84%E8%BD%BB%E9%87%8F%20AI%20%E5%8D%8F%E4%BD%9C%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%AE%9E%E8%B7%B5/" title="ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践">ClaudeDevKit：一个面向 Claude Code CLI 的轻量 AI 协作工作流实践</a><time datetime="2026-03-21T11:34:25.000Z" title="发表于 2026-03-21 19:34:25">2026-03-21</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/all/top_image.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadWaline () {
+  function initWaline () {
+    const waline = Waline.init(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline-2jpd71hnp-luckvd.vercel.app/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+  }
+
+  if (typeof Waline === 'object') initWaline()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css').then(() => {
+      getScript('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js').then(initWaline)
+    })
+  }
+}
+
+if ('Waline' === 'Waline' || !false) {
+  if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+  else setTimeout(loadWaline, 0)
+} else {
+  function loadOtherComment () {
+    loadWaline()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
