@@ -1,6 +1,6 @@
 ---
 title: '一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解'
-date: 2026-10-22 00:14:56
+date: 2026-10-21 16:30:00
 categories:
   - AI 安全
 tags:
