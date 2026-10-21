@@ -1,0 +1,321 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解 | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="DeepSeek 开源了 DeepInfer 与 deepseek-recipe 两个项目。本文按项目分成两个大章节，分别讲清楚它们是什么、怎样工作、适合解决什么问题，以及代码里有哪些值得用的能力。 DeepInfer 处理模型运行，deepseek-recipe 处理 API 请求、提示词适配和结果解析。deepseek-recipe 是协议与提示词组件，模型计算由调用方提供的推理后端完成。 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解">
+<meta property="og:url" content="https://luckvd.github.io/2026/10/20/deepseek-inference-magic/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="DeepSeek 开源了 DeepInfer 与 deepseek-recipe 两个项目。本文按项目分成两个大章节，分别讲清楚它们是什么、怎样工作、适合解决什么问题，以及代码里有哪些值得用的能力。 DeepInfer 处理模型运行，deepseek-recipe 处理 API 请求、提示词适配和结果解析。deepseek-recipe 是协议与提示词组件，模型计算由调用方提供的推理后端完成。 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/deepseek-inference-magic/cover.png">
+<meta property="article:published_time" content="2026-10-20T15:04:00.000Z">
+<meta property="article:modified_time" content="2026-10-21T16:20:25.320Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="DeepSeek">
+<meta property="article:tag" content="推理引擎">
+<meta property="article:tag" content="大模型">
+<meta property="article:tag" content="开源项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/deepseek-inference-magic/cover.png"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/10/20/deepseek-inference-magic/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-22 00:20:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/../images/deepseek-inference-magic/cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-20T15:04:00.000Z" title="发表于 2026-10-20 23:04:00">2026-10-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-21T16:20:25.320Z" title="更新于 2026-10-22 00:20:25">2026-10-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>DeepSeek 开源了 DeepInfer 与 deepseek-recipe 两个项目。本文按项目分成两个大章节，分别讲清楚它们是什么、怎样工作、适合解决什么问题，以及代码里有哪些值得用的能力。</p>
+<p>DeepInfer 处理模型运行，deepseek-recipe 处理 API 请求、提示词适配和结果解析。deepseek-recipe 是协议与提示词组件，模型计算由调用方提供的推理后端完成。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">一条模型调用链</span><br><span class="line">客户端 → API服务 → 请求与提示词适配 → 推理后端 → 输出解析 → 客户端</span><br></pre></td></tr></table></figure>
+<h2 id="一、DeepInfer（模型运行时）">一、DeepInfer（模型运行时）</h2>
+<h3 id="项目定位">项目定位</h3>
+<p>DeepInfer 是面向 DeepSeek 模型的推理运行时。当前调研的固定版本重点支持 DeepSeek-V4.1-Flash，README 列出 NVIDIA SM100 与 Huawei Ascend 950。它提供 Python 离线推理入口，接收 prompt、运行模型并返回生成 token。</p>
+<p>固定版本列出的运行环境包括 Linux、Python 3.12、CUDA 13 或 CANN 9.2，以及较新的编译工具链。DeepInfer 围绕列出的模型和设备组织 kernel、缓存与调度；部署前要核对模型、驱动、CUDA/CANN 和设备型号。</p>
+<p>使用者通常从 <code>LLM.generate()</code> 开始。调用代码可以很短：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示意伪代码：具体参数以对应版本示例为准</span></span><br><span class="line">llm = LLM(model=MODEL_PATH, device=DEVICE_CONFIG)</span><br><span class="line">results = llm.generate(prompts, sampling_params)</span><br><span class="line"><span class="keyword">for</span> result <span class="keyword">in</span> results:</span><br><span class="line">    consume(result.outputs)</span><br></pre></td></tr></table></figure>
+<p>调用发生在 Python 程序里：<code>LLM</code> 会建立 <code>LLMEngine</code>，由调度器组织请求，再交给 Worker 和 ModelRunner 执行模型前向、采样与后处理。示例配置还会解析 Hugging Face 模型 ID 或本地目录，并设置设备可见性。使用者需要自行把网络请求接到这段推理入口。</p>
+<p><code>prompts</code> 可以是一组待处理文本，<code>sampling_params</code> 则控制生成长度和采样方式。调用方拿到的是模型生成结果，后续可写入评测文件、交给下游程序，或包装成自己的 API 响应。这个入口把模型运行直接放进 Python 工作流里，省去先搭建网络服务的步骤。</p>
+<h3 id="执行链路">执行链路</h3>
+<p>一次生成通常分成 prefill 和 decode。prefill 把整段输入 prompt 读入模型，建立生成阶段要复用的状态；decode 再逐步产出 token。长 prompt 会增加 prefill 工作量，长回答会让 decode 连续占用设备。前者通常影响首 token 等待，后者关系到后续生成速度。比如让模型先阅读一份长文再回答，阅读阶段对应 prefill；模型开始逐字生成总结后，进入 decode。两个阶段消耗不同，调度器才需要分别安排。</p>
+<p>调度器要在不同请求之间安排这两类工作。它维护 waiting 和 running 请求，还要看输入长度、批次容量和显存余量。DeepInfer 的 C++ scheduler 也协调数据并行组里的多个 rank（执行单元）：同组 rank 往往要保持相同的计算步型，否则集体通信可能无法对齐。</p>
+<p>代码设有 ALL 和 ANY 两类投票点。ALL 要求每个 rank 都有待处理输入，减少部分设备空等；ANY 则允许只要一个 rank 有请求，全组就进入 prefill，避免少数请求被长时间晾在队列里。调度器随后再次检查资源，因为序列槽位和 KV 块可能分配失败。若所有 rank 最终都没有请求排入，就退回 decode，避免空 prompt step 连续发生。</p>
+<p><img src="/images/deepseek-inference-magic/fig1-deepinfer-flow.png" alt="DeepInfer 的模型推理执行链"></p>
+<p>这张图把调用入口、引擎、调度器、Worker 和 token 输出连在一起。下半部分单独画出 prefill、decode 与 KV blocks 的关系：prefill 建立状态，decode 持续读写状态，序列完成后相关缓存才能回收。</p>
+<p>下面的伪代码把调度循环再压缩一层。真实实现还包含多 rank 同步、缓存申请、抢占和异步后处理，这里只展示请求如何被分批推进：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DeepInfer 内部调度循环的简化示意</span></span><br><span class="line"><span class="keyword">while</span> waiting <span class="keyword">or</span> running:</span><br><span class="line">    batch = scheduler.pick_next_step()</span><br><span class="line">    <span class="keyword">if</span> batch.phase == <span class="string">&quot;prefill&quot;</span>:</span><br><span class="line">        state = model.forward(batch.prompts)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        state = model.decode(batch.kv_blocks)</span><br><span class="line">    scheduler.update(batch, state)</span><br></pre></td></tr></table></figure>
+<p>这条链路的每一段都能在代码里找到对应实现：<code>LLM.generate()</code> 提供 Python 入口，<code>LLMEngine.step()</code> 推进请求状态，C++ scheduler 选本轮任务，Worker/ModelRunner 执行 forward 和 sample。研究者可以沿着调用路径定位等待、调度或模型执行方面的问题。</p>
+<h3 id="缓存与抢占">缓存与抢占</h3>
+<p>KV cache 保存模型生成时要反复使用的历史状态。没有它，每生成一个 token，模型就得重新计算大量已处理过的上下文。DeepInfer 的本地代码确实有 KV 管理：Worker 初始化 GPU cache，CacheEngine 分配压缩后的 KV blocks 和序列状态，C++ BlockManager 维护空闲块和引用计数，序列通过 block table 记录自己占用哪些块。部分状态还会配合 SWA 或压缩 ring buffer 保存；请求 fork/clone 时，管理器按引用关系决定什么时候能回收资源。</p>
+<p><img src="/images/deepseek-inference-magic/01-deepinfer-kv-bookmark.png" alt="DeepInfer 的 KV cache 书签示意"></p>
+<p>图里把 KV 状态画成书签，表示后续生成可以沿用上下文状态，省去重复读取整段 prompt。</p>
+<p>DeepInfer 的 KV block 管理运行在单个推理进程内。README 把完整 inference service 所需的 “A KV cache system” 列为未包含项，但没有说明它是否指共享、持久化等服务级缓存能力。仓库中的进程内 KV 管理仍然存在，两处描述涉及的层级不同。</p>
+<p>显存不足时，调度器还会抢占请求。普通请求可以清掉当前 KV 状态、重新排队计算；正在执行结构化输出约束的请求，当前实现无法安全重建约束状态，可能以 <code>FINISHED_PREEMPTED</code> 结束。显存压力有时会直接终止请求，响应变慢只是另一种表现。</p>
+<h3 id="优化机制">优化机制</h3>
+<p>DeepInfer 在推理热路径里提供几种针对性优化，分别处理不同负载。实际收益取决于请求、模型和设备。</p>
+<p><strong>ZOS（zero-overhead scheduling）</strong> 把部分前一步后处理延到下一轮，再利用 CUDA event 和异步释放安排工作重叠。设备继续跑当前批次时，CPU 可以收尾上一批结果，减少两边互相等待。</p>
+<p><strong>MTP/DFlash</strong> 用于投机解码。draft head 先提出一段候选 token，再由主模型批量验证；通过的 token 可以一次接受，遇到分歧则从错误位置继续。DeepInfer 的变长调度根据各序列前一步的 confidence，估算连续接受多个 draft token 的可能性，再结合实测 forward 和 sampler 耗时，决定本轮验证多少 token。草稿质量高的请求可能得到更多验证预算；这里的 confidence 仅作调度输入，没有经过概率校准。</p>
+<p>可以把它想成同时校对几份草稿：一份草稿的前几词得到主模型认可，系统可以继续验证后续候选；若较早出现分歧，就缩短该请求的验证长度。候选仍由主模型校验，最终接受多少 token 取决于请求。</p>
+<p><strong>EPLB（Expert Parallel Load Balancing）</strong> 面向混合专家模型（MoE）。模型会根据 token 路由到不同 expert；如果流量集中在少数专家，最忙的设备可能拖慢整个 step。EPLB 统计各层 expert 收到的 token 数，为热点 logical expert 增加 physical replica，再把副本分到不同 rank，尽量降低设备间负载峰值。</p>
+<p>路由器仍把 token 指向同一个 logical expert，EPLB 则可将该专家的 physical replica 放到不同设备分担计算。它调整的是模型并行中的专家负载。</p>
+<p><strong>YoCo/SWA bounded replay</strong> 让符合模型结构的层少重放一部分 prefill query，同时保留滑动窗口和回退所需的尾部 token。该路径只适用于匹配的模型层。README 配置用 140 个 token 描述保留尾部，实际值仍需覆盖 SWA window 和最大 backtracking 长度。项目示例核验 compact 与 mask 模式，并检查兼容 checkpoint 的 logprob 与 top-K 一致性。</p>
+<p>DeepInfer 还提供 batch-invariant 与 deterministic sampling 设置。batch-invariant 试图减少同一请求因 batch 组成不同而出现的输出差异；deterministic sampling 还要固定随机种子，并关闭 MTP 变长分配。它们处理的是不同来源的输出变化。</p>
+<p><img src="/images/deepseek-inference-magic/fig2-deepinfer-optimizations.png" alt="DeepInfer 运行时优化示意"></p>
+<p>图中把每种机制对应到它处理的运行时负载：ZOS处理CPU与设备的等待，MTP/DFlash处理逐token解码，EPLB处理专家热点，YoCo/SWA处理受支持模型的重放范围。源码能说明它们怎样工作，实际加速仍要用目标模型、设备和请求测量。测试时应固定模型版本和硬件，记录输入长度、输出长度、并发量与采样参数；否则不同请求组合的耗时很难直接说明是哪项优化带来的变化。</p>
+<h3 id="用途与优点">用途与优点</h3>
+<p>DeepInfer 适合离线批量生成、V4.1-Flash 模型验证、特定 GPU/NPU 上的推理优化，以及研究调度、MoE 负载和 speculative decoding 等运行时机制。模型工程师可以用固定 prompt 检查权重或采样配置的改动；运行时工程师可以观察批次、KV 块和并行设置如何改变执行路径；硬件适配人员可以检查模型专用 kernel 与设备支持。</p>
+<p>它的主要优点是<strong>能深入运行时内部</strong>。调度器如何组织 prefill/decode、KV 块怎样分配、专家副本如何部署、投机解码怎样分配验证长度，都能从项目代码追踪。Python 入口降低了离线实验门槛，硬件专用路径则让团队有机会围绕目标模型调整底层执行。</p>
+<p>长 prompt 的首 token 等待过长，可以检查 prefill 调度；长输出吞吐不理想，可以观察 decode 批次和 MTP；MoE 负载不均，可以查看 EPLB 统计与布局。沿着代码定位这些部件，能看清耗时出在哪一段。使用者仍要理解目标模型、显存布局和并行配置，并验证各项开关在目标环境中的作用。</p>
+<p>DeepInfer 的开源版本重点在离线推理。要把它用作在线服务后端，还需外接 HTTP API、认证授权、请求排队、取消与超时、监控和集群扩缩容。它适合模型与系统团队做底层推理工作，不应直接当成完整的生产 API 服务。</p>
+<h3 id="创新优化小结">创新优化小结</h3>
+<blockquote>
+<p><strong>从这份源码看，DeepInfer 最值得关注的运行时改进有四项：</strong></p>
+<ul>
+<li><strong>ZOS</strong>：把一部分后处理延后一轮，与当前计算重叠，减少 CPU 与设备的等待。</li>
+<li><strong>MTP/DFlash 变长验证</strong>：按草稿接受信号和实测耗时分配验证预算，不给每条请求固定长度。</li>
+<li><strong>EPLB</strong>：针对 MoE 热点专家创建物理副本并重新布局，缓解设备间负载峰值。</li>
+<li><strong>YoCo/SWA bounded replay</strong>：在受支持的模型层减少 prefill 重放，同时保留窗口和回退所需状态。</li>
+</ul>
+<p>这些是代码中实现的优化机制；实际加速效果以目标环境的基准测试为准。</p>
+</blockquote>
+<h2 id="二、deepseek-recipe（协议适配组件）">二、deepseek-recipe（协议适配组件）</h2>
+<h3 id="项目定位-2">项目定位</h3>
+<p>deepseek-recipe 是一组 Rust 组件，负责把不同 API 请求转换成 DeepSeek V4/V4.1 模型需要的会话与提示词，并解析生成结果。它支持 Chat Completions、Responses 和 Messages 等协议路径。项目本身不执行模型 forward，具体推理由调用方提供。</p>
+<p>仓库把请求协议、核心会话、模型编码、图像处理和流式解析拆成不同 crate。开发者可以把需要的组件嵌入自己的 Rust 服务，也可以参考 Python FastAPI 或 Rust Axum 示例了解接入方式；不必把整个仓库作为独立服务部署。</p>
+<p><img src="/images/deepseek-inference-magic/02-recipe-protocol-fold.png" alt="小黑把不同 API 请求折成统一会话"></p>
+<p>图里的小黑把不同形状的请求纸片整理成 <code>Conversation</code>，再交给调用方的推理回调。它概括的是协议归一过程，模型计算仍在回调接入的后端执行。</p>
+<h3 id="请求流程">请求流程</h3>
+<p>收到请求后，recipe 会先校验字段、解析模型别名、转换消息与工具定义，再把温度、最大 token 数和输出约束整理进 <code>InferenceOptions</code>。会话本身会归一为 <code>Conversation</code>，之后按模型版本渲染 prompt。准备好的输入交给调用方提供的推理回调，生成结果再进入流式解析器。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># deepseek-recipe 请求处理示意伪代码</span><br><span class="line">request = validate_and_normalize(api_request)</span><br><span class="line">conversation, options = to_conversation(request)</span><br><span class="line">prepared = encode_for_model(conversation, request.model_version)</span><br><span class="line">chunks = inference_callback(prepared, options)  # 调用方提供</span><br><span class="line">for chunk in chunks:</span><br><span class="line">    yield stream_parser.push(chunk)              # 转成协议事件</span><br></pre></td></tr></table></figure>
+<p>例如，客户端把 <code>messages</code>、工具定义、<code>max_tokens</code> 和 streaming 开关放在不同协议字段里，recipe 会先把消息与工具归一，再把采样参数交给推理回调。回调不需要自己解析每个客户端的原始 JSON；输出阶段再由 parser 把生成内容包装成对应的响应事件。</p>
+<p>默认模型名称会映射到 V4 Pro 或 V4.1-Flash；无法识别的名称会被拒绝，应用也可以配置别名。<code>max_tokens</code> 等限制要在 prompt 编码后核算，因为输入 token 数和图片都会占用 context budget，影响后端可生成的上限。</p>
+<p><img src="/images/deepseek-inference-magic/fig3-recipe-flow.png" alt="deepseek-recipe 的请求与输出流程"></p>
+<p>上图从 API 请求开始，经过字段归一、Conversation、版本化编码，交给应用提供的推理回调，最后解析输出流。图片 URL 会进入 ImageResolver；鉴权、工具执行和实际模型计算仍由接入服务决定。</p>
+<h3 id="编码与输出">编码与输出</h3>
+<p>Recipe 针对 DeepSeek 版本处理 prompt 编码。V4 与 V4.1 使用不同的 encoding，渲染结果还带有 <code>special_ranges</code>，标记模板插入的控制 token 区间。用户消息中即使出现 <code>&lt;/think&gt;</code> 这样的字面字符串，tokenizer 也应把它作为普通内容编码。接入方若只保留渲染后的纯字符串再自行编码，就可能丢失模板与用户文本的边界。这个机制处理 token 编码问题，语义层的提示词攻击仍需由应用防护。</p>
+<p>流式输出也要保留 token 身份。后端把 token ID 交给 parser，parser 就能区分真正的 special token 与拼写相同的普通文本；后端只提供解码后的文本时，部分标记只能按字符串匹配。网络分块也可能把一个标记拆开，例如工具调用标记的前半段和后半段落在不同 chunk。parser 会暂存未完成的尾部，继续识别 reasoning 边界、DSML 工具调用、JSON 内容和 stop 标记，再整理成响应事件。</p>
+<p>Recipe 会把模型流中的 tool call 解析成调用事件。应用需要检查参数和用户权限，再决定是否执行；工具返回结果后，应用把结果放回会话并再次请求模型。网页访问、文件读取和命令执行都由调用方授权。库也能把 JSON Schema、regex 等要求转换成 <code>OutputConstraint</code>，但只有实现 constrained decoding 的推理后端才能据此约束生成。接入方还需单独校验 JSON 输出。</p>
+<h3 id="图像处理">图像处理</h3>
+<p>Recipe 把图片来源和文本 prompt 分开处理。encoding 会记录 image sources，ImageResolver 再调用 fetcher 和图像预处理器，把 URL、data URL 或二进制内容转成模型可用的数据。V4.1 支持图像预处理；V4 不接收图像时，会返回 <code>[Unsupported Image]</code> 占位内容。</p>
+<p>图片组件设置了数量、字节和并发预算，默认单个请求最多 600 张，单图 32 MiB、总量 64 MiB，并发解析 8 个 source。普通聊天服务很少需要这么高的限额，实际部署应按业务收紧，同时限制原始 HTTP 请求体大小。</p>
+<p>图片 URL 还会带来服务端请求伪造风险。默认 <code>ReqwestImageFetcher</code> 没有目的地址过滤器并会跟随重定向。如果服务端替用户下载图片，恶意 URL 可能被用来探测回环地址、内网服务或云环境元数据端点。Recipe 提供 <code>DestinationFilter</code> 接口，过滤规则由调用方提供；生产服务应校验域名和解析 IP，并在每次重定向后重新检查，配合网络出口限制。</p>
+<h3 id="用途与优点-2">用途与优点</h3>
+<p>已经有模型后端或在线推理服务的团队，可以用 deepseek-recipe 处理 DeepSeek 协议适配、prompt 编码、图片输入和流式输出。服务端可以保留已有推理后端，只在请求入口与输出出口接入 recipe。比如，一套服务可以同时接收 Chat Completions 和 Messages 客户端，再把它们转换为同一种内部会话，后端不必分别理解每个客户端的字段习惯。</p>
+<p>它的主要优点是<strong>把模型格式细节集中管理</strong>：不同 API 方言有统一转换入口，V4/V4.1 的编码差异由版本选择处理，图片解析和输出流也有对应模块。开发者不必在每个 HTTP handler 里重复手写模板和特殊 token 规则。新增模型版本时，可以集中检查 encoding、special token 和停止条件，再把准备好的输入交给原有推理回调。</p>
+<p>仓库附带的 Python FastAPI 和 Rust Axum 服务示例默认接入 mock inference，会返回固定的 “Hello world!”；调用者可以替换成自己的推理回调。示例用于演示服务接入，真实模型推理与认证需由调用方接入。</p>
+<p>接入时可以做一组协议契约测试：覆盖普通文本、reasoning、tool call、停止标记被拆到多个 chunk、图片抓取失败和 context 超限等情况。这样能检查应用回调是否遵守 <code>InferenceChunk</code> 的边界，也能发现 API JSON 看起来正确、实际模型提示词却被编码错位的问题。</p>
+<h3 id="协议改进小结">协议改进小结</h3>
+<blockquote>
+<p><strong>从代码看，deepseek-recipe 最有辨识度的改进集中在适配与解析：</strong></p>
+<ul>
+<li><strong>多协议归一</strong>：把 Chat Completions、Responses、Messages 请求整理成内部会话和推理选项。</li>
+<li><strong>版本化 prompt 编码</strong>：分别处理 V4/V4.1 格式，并用 <code>special_ranges</code> 保留模板控制 token 与普通文本的边界。</li>
+<li><strong>增量流解析</strong>：能够处理 token 身份、跨 chunk 的标记，以及 reasoning、tool call、JSON 和 stop 事件。</li>
+<li><strong>图片接入组件</strong>：解析 URL、data URL 或二进制输入，并提供限额和 <code>DestinationFilter</code> 扩展点。</li>
+</ul>
+<p>这些改进把协议处理集中到适配层；模型计算与工具授权仍由接入服务完成。</p>
+</blockquote>
+<h2 id="组合与上线">组合与上线</h2>
+<p>如果应用需要同时使用两套代码，接入层可以把 recipe 整理好的 <code>PreparedRequest</code> 和 <code>InferenceOptions</code> 映射到 DeepInfer 的 prompt、图片输入和采样参数，再把引擎输出转换成 recipe 能消费的 <code>InferenceChunk</code>。连接参数、错误处理、取消、并发管理和模型版本映射都需要应用实现；仓库没有提供开箱即用的 adapter。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 组合方式示意伪代码：adapter 是应用自己写的胶合层</span><br><span class="line">prepared = recipe.prepare(api_request)</span><br><span class="line">engine_input = adapter.to_deepinfer(prepared, options)</span><br><span class="line">tokens = deepinfer.generate(engine_input)</span><br><span class="line">for token in tokens:</span><br><span class="line">    events = recipe.parse(token)</span><br><span class="line">    send_to_client(events)</span><br></pre></td></tr></table></figure>
+<p>部署 DeepInfer 时还要审查模型代码和 profiler 配置。示例 helper <code>create_llm()</code> 默认传入 <code>trust_remote_code=True</code>，调用者可以用 <code>llm_kwargs</code> 覆盖；模型下载调用没有指定 revision。底层 <code>LLM</code> 构造器默认 <code>trust_remote_code=False</code>、<code>revision=None</code>，所以风险来自示例 helper 的默认选择。沿用 helper 加载其他仓库时，远程模型代码可能在推理进程内执行。应固定可信仓库 revision，并检查实际加载的代码。</p>
+<p>DeepInfer 的 profiler HTTP 服务默认关闭；显式启用后，会监听 <code>0.0.0.0</code> 上的 <code>6070 + driver GPU ID</code>，端口基数可配置。代码没有认证或 TLS，请求还能指定 trace 输出目录；采集步数默认 20、范围 1 到 50，会占用引擎时间和磁盘空间。是否能从外网访问取决于宿主和容器网络，但生产环境不应把它直接暴露成普通 API。</p>
+<p>生产服务需在 API 层配置身份认证、请求限额、图片预算、网络出口和工具权限。Recipe 的图片抓取由调用方提供 <code>DestinationFilter</code>；DeepInfer 的示例服务也需要外层 API 安全控制。</p>
+<h2 id="总结建议">总结建议</h2>
+<p>DeepInfer 适合离线推理、模型验证和运行时优化，主要价值是对模型执行、调度和缓存有更直接的代码控制。deepseek-recipe 适合 API 协议、提示词、图像和流式输出适配，主要价值是把这些格式细节集中为可嵌入的 Rust 组件。项目章节分别讲清各自用途；需要组合时，再由应用补上 adapter 和生产服务能力。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>DeepSeek：DeepInfer 仓库与代码（commit <code>8b161497</code>，2026-10-20）</li>
+<li>DeepSeek：deepseek-recipe 仓库与代码（commit <code>935817c</code>，2026-10-20）</li>
+<li>DeepSeek：deepseek-recipe Python/Rust server README 与开发文档（2026-10-20）</li>
+<li>DeepInfer 与 deepseek-recipe 代码机制调研材料（固定源码快照及逐项路径，2026-10-20）</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/10/20/deepseek-inference-magic/">https://luckvd.github.io/2026/10/20/deepseek-inference-magic/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DeepSeek/">DeepSeek</a><a class="post-meta__tags" href="/tags/%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/">推理引擎</a><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><a class="post-meta__tags" href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a></div><div class="post_share"><div class="social-share" data-image="/../images/deepseek-inference-magic/cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"><img class="cover" src="/images/php2shell-deep-dive/cover-b-dark-navy.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解</div></div></a></div><div class="next-post pull-right"><a href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速"><img class="cover" src="/images/microsoft-digital-defense-2026/cover-minimax-light-02-soft-3d-report.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《微软2026数字防御报告》解析：AI攻击提速</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><img class="cover" src="/images/deepseek-v41-1017/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-17</div><div class="title">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81DeepInfer%EF%BC%88%E6%A8%A1%E5%9E%8B%E8%BF%90%E8%A1%8C%E6%97%B6%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、DeepInfer（模型运行时）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.1.</span> <span class="toc-text">项目定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E9%93%BE%E8%B7%AF"><span class="toc-number">1.2.</span> <span class="toc-text">执行链路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E4%B8%8E%E6%8A%A2%E5%8D%A0"><span class="toc-number">1.3.</span> <span class="toc-text">缓存与抢占</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%9C%BA%E5%88%B6"><span class="toc-number">1.4.</span> <span class="toc-text">优化机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E9%80%94%E4%B8%8E%E4%BC%98%E7%82%B9"><span class="toc-number">1.5.</span> <span class="toc-text">用途与优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E4%BC%98%E5%8C%96%E5%B0%8F%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">创新优化小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81deepseek-recipe%EF%BC%88%E5%8D%8F%E8%AE%AE%E9%80%82%E9%85%8D%E7%BB%84%E4%BB%B6%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、deepseek-recipe（协议适配组件）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9A%E4%BD%8D-2"><span class="toc-number">2.1.</span> <span class="toc-text">项目定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%B5%81%E7%A8%8B"><span class="toc-number">2.2.</span> <span class="toc-text">请求流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="toc-number">2.3.</span> <span class="toc-text">编码与输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86"><span class="toc-number">2.4.</span> <span class="toc-text">图像处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E9%80%94%E4%B8%8E%E4%BC%98%E7%82%B9-2"><span class="toc-number">2.5.</span> <span class="toc-text">用途与优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%94%B9%E8%BF%9B%E5%B0%8F%E7%BB%93"><span class="toc-number">2.6.</span> <span class="toc-text">协议改进小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E4%B8%8E%E4%B8%8A%E7%BA%BF"><span class="toc-number">3.</span> <span class="toc-text">组合与上线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E5%BB%BA%E8%AE%AE"><span class="toc-number">4.</span> <span class="toc-text">总结建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"><img src="/images/php2shell-deep-dive/cover-b-dark-navy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"/></a><div class="content"><a class="title" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解">一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解</a><time datetime="2026-10-21T08:30:00.000Z" title="发表于 2026-10-21 16:30:00">2026-10-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"><img src="/../images/deepseek-inference-magic/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"/></a><div class="content"><a class="title" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解">DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解</a><time datetime="2026-10-20T15:04:00.000Z" title="发表于 2026-10-20 23:04:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速"><img src="/images/microsoft-digital-defense-2026/cover-minimax-light-02-soft-3d-report.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《微软2026数字防御报告》解析：AI攻击提速"/></a><div class="content"><a class="title" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速">《微软2026数字防御报告》解析：AI攻击提速</a><time datetime="2026-10-20T02:00:00.000Z" title="发表于 2026-10-20 10:00:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单"><img src="/images/opencode-breach/hero-vault-keys.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenCode 被黑，用户在替黑客的账单买单"/></a><div class="content"><a class="title" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单">OpenCode 被黑，用户在替黑客的账单买单</a><time datetime="2026-10-19T02:00:00.000Z" title="发表于 2026-10-19 10:00:00">2026-10-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><img src="/images/deepseek-v41-1017/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"/></a><div class="content"><a class="title" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</a><time datetime="2026-10-17T02:00:00.000Z" title="发表于 2026-10-17 10:00:00">2026-10-17</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/../images/deepseek-inference-magic/cover.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function getGiscusTheme (theme) {
+  return theme === 'dark' ? 'dark' : 'light'
+}
+
+function loadGiscus () {
+  const config = Object.assign({
+    src: 'https://giscus.app/client.js',
+    'data-repo': 'LuckVd/LuckVd.github.io',
+    'data-repo-id': 'R_kgDOJ0Je7Q',
+    'data-category-id': 'DIC_kwDOJ0Je7c4DHfzV',
+    'data-mapping': 'pathname',
+    'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+    'data-reactions-enabled': '1',
+    crossorigin: 'anonymous',
+    async: true
+  },null)
+
+  let ele = document.createElement('script')
+  for (let key in config) {
+    ele.setAttribute(key, config[key])
+  }
+  document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function changeGiscusTheme (theme) {
+  function sendMessage(message) {
+    const iframe = document.querySelector('iframe.giscus-frame')
+    if (!iframe) return
+    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+  }
+
+  sendMessage({
+    setConfig: {
+      theme: getGiscusTheme(theme)
+    }
+  });
+}
+
+btf.addModeChange('giscus', changeGiscusTheme)
+
+if ('Giscus' === 'Giscus' || !true) {
+  if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+  else loadGiscus()
+} else {
+  function loadOtherComment () {
+    loadGiscus()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

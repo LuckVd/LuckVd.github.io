@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI安全现况：AI无法保证 AI 的安全 | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="全行业的想象是一个闭环：AI 写代码，写得快；出了漏洞，再让 AI 修；怕它不靠谱，就在提示词里加一句&quot;注意安全&quot;。三道保险，环环相扣，听起来滴水不漏。 这个闭环里的每一环，最近都被人拿数字拆过了。 一个大学团队扫了四万多条安全通告，第一次把漏洞具名归因到 AI 头上；一家密码管理公司的安全实验室跑了六千多次补丁实验，看 AI 修漏洞到底修成什么样；还有两篇互不相识的学术论文，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI安全现况：AI无法保证 AI 的安全">
+<meta property="og:url" content="https://luckvd.github.io/2026/09/15/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="全行业的想象是一个闭环：AI 写代码，写得快；出了漏洞，再让 AI 修；怕它不靠谱，就在提示词里加一句&quot;注意安全&quot;。三道保险，环环相扣，听起来滴水不漏。 这个闭环里的每一环，最近都被人拿数字拆过了。 一个大学团队扫了四万多条安全通告，第一次把漏洞具名归因到 AI 头上；一家密码管理公司的安全实验室跑了六千多次补丁实验，看 AI 修漏洞到底修成什么样；还有两篇互不相识的学术论文，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/cover.jpeg">
+<meta property="article:published_time" content="2026-09-15T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-21T16:20:25.317Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="AI 安全">
+<meta property="article:tag" content="代码安全">
+<meta property="article:tag" content="漏洞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/cover.jpeg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/09/15/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI安全现况：AI无法保证 AI 的安全',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-22 00:20:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/cover.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI安全现况：AI无法保证 AI 的安全</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-15T02:00:00.000Z" title="发表于 2026-09-15 10:00:00">2026-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-21T16:20:25.317Z" title="更新于 2026-10-22 00:20:25">2026-10-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AI安全现况：AI无法保证 AI 的安全"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>全行业的想象是一个闭环：AI 写代码，写得快；出了漏洞，再让 AI 修；怕它不靠谱，就在提示词里加一句&quot;注意安全&quot;。三道保险，环环相扣，听起来滴水不漏。</p>
+<p>这个闭环里的每一环，最近都被人拿数字拆过了。</p>
+<p>一个大学团队扫了四万多条安全通告，第一次把漏洞具名归因到 AI 头上；一家密码管理公司的安全实验室跑了六千多次补丁实验，看 AI 修漏洞到底修成什么样；还有两篇互不相识的学术论文，测了&quot;提示词里叮嘱安全&quot;到底有没有用。</p>
+<p>三拨人，三种方法，互相不知晓，结论却指向同一个地方：<strong>AI 保证不了 AI 的安全。写它的、修它的、验证它的，每一环都比你以为的更漏。</strong></p>
+<p>这篇文章把三份账单摆在一起，算一算 AI 代码安全的真实基线到底在哪。</p>
+<h2 id="证据一：写——AI-写出的漏洞，已经具名进了漏洞库">证据一：写——AI 写出的漏洞，已经具名进了漏洞库</h2>
+<p><img src="/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/fig1-cve-acceleration.png" alt="AI归因CVE增速"></p>
+<p>先看最直接的一份证据。</p>
+<p>&quot;AI 写的代码不安全&quot;这个说法流传了很久，但大多停留在基准测试和推测里。直到有研究团队换了个思路：不测模型能力，直接去安全通告数据库里数。扫了四万三千条通告，靠提交记录里的机器人署名、协作标签这类元数据，判断哪些漏洞的代码里有 AI 参与。</p>
+<p>结果是 74 个。截至发布时确认的 74 个漏洞由 AI 生成引入，其中 14 个是 critical 级，25 个是 high 级。这不是静态数字，曲线还在抬头：仅 2026 年 3 月单月就新增 35 个，超过 2025 全年的总量。</p>
+<p>比数量更值得留意的是漏洞的形态。研究者的原话是：当一个 agent 造出一个没有鉴权的东西，那不是手误，是从第一行起就焊死在设计里的缺陷。传统代码评审的直觉是抓&quot;写错&quot;，抓不住&quot;压根没写&quot;——没人觉得需要提醒 AI 加登录验证，就像没人提醒同事记得呼吸。</p>
+<p>还有一层更少被谈到的风险：模型同质化。几百万开发者用着同几个模型，意味着同一批默认缺陷被批量复制进不同的项目。漏洞不再是一个项目的运气问题，而是全行业的公共底盘问题。</p>
+<p>当然要把话说满之前先留一个口子：74 只是下限。归因依赖提交元数据，签名被洗掉就检测不到；而且&quot;Claude Code 和 Copilot 占大头&quot;这个分布，部分原因是它们留下的签名最清晰——工具曝光度高，不等于它最不安全。这两条边界，研究者自己也承认了。</p>
+<p>小结第一份账单：生成端的承诺&quot;提效&quot;成立了，&quot;安全&quot;没有。而且漏洞是设计级的、批量复制的，还在加速。</p>
+<h2 id="证据二：修——让-AI-自己修？一半以上是-带病修理">证据二：修——让 AI 自己修？一半以上是&quot;带病修理&quot;</h2>
+<p><img src="/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/fig2-flawed-distribution.png" alt="补丁结果分布"></p>
+<p>写出来的漏洞，那就让 AI 修掉，这是闭环的第二环。一家密码管理公司新组建的安全实验室决定实测这一环，他们挑了 6 个最新披露的真实 CVE——不是陈年旧题，是刚公开、攻击窗口正开着的洞——让前沿模型反复修，一共跑了 6,080 次补丁尝试。</p>
+<p>结果分三层，一层比一层难看。</p>
+<p>第一层：真正&quot;既修好了漏洞、又不破坏应用行为&quot;的干净修复，只有 26.0%。</p>
+<p>第二层：53.9% 的产出被归为 FLAWED——看起来像修复，里面嵌着新缺陷。这类补丁的可怕之处在于，它比不修更危险：不修，所有人知道洞还在；修&quot;好&quot;了，所有人以为洞没了。它制造的是已修复的假象，让人放心地放弃检查。</p>
+<p>第三层最讽刺：即便在那些&quot;成功修复&quot;里，超过三分之一也藏着脆弱点——平均 37.5% 的表面成功的补丁，实际只是挡住了测试用例里的攻击字符串，没有真正碰根因。验证集写什么，它就&quot;修&quot;什么。这是评测时代的经典陷阱在新场景复活：考什么背什么，考完就忘。</p>
+<p>实验还顺手算了一笔经济账：每次补丁尝试加验证，成本在两到三美元。便宜，便宜到可以无限重试；但失败的代价不在这两三美元里——在于你根本不知道哪一次&quot;成功&quot;是演出来的。</p>
+<p>需要说明口径：这是安全厂商自己团队的实验，不算完全独立第三方。但它把数据集和工具全部开源，并请了外部研究者评审，方法摆在明面上，谁都可以复跑。</p>
+<p>第二份账单的结论：修复环节的兜底也不成立。而且失败的方式不是&quot;修不动&quot;，是&quot;假装修好了&quot;——这恰恰是兜底最坏的形态：不是暴露风险，是掩盖风险。</p>
+<h2 id="证据三：防——提示词叮嘱和自动扫描，双半盲">证据三：防——提示词叮嘱和自动扫描，双半盲</h2>
+<p><img src="/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/fig3-prevention-detection-gap.png" alt="预防无效检测半盲"></p>
+<p>前两环都漏，那就上第三道保险：写提示词时叮嘱一句&quot;注意安全&quot;，再让扫描工具把把关。几乎所有企业的 AI 编码安全指南，第一条都是这么写的。</p>
+<p>两篇学术论文，把这条指南打了回去。</p>
+<p>第一篇用蜕变测试的方法给本地开源模型出了 3,700 道题：生成的代码里，68.8% 至少违反一条安全规则；在出现凭据的片段中，79.1% 直接硬编码。然后是全文最关键的一个数字——提示词里明确要求 secure，与实际结果的相关性是 r = −0.04。</p>
+<p>几乎零相关。统计上，说了等于没说。</p>
+<p>第二篇从另一个角度切：四种提示方法各生成四千个文件、合计一万六千个，卡方检验的结论是各方法之间，漏洞频率和密度没有统计学上的显著差异。两篇论文方法不同、模型也不同，结论一致：安全提示词是安慰剂。</p>
+<p>更有意思的是一个叫&quot;提示条件化&quot;的现象：65.5% 的提示任务，在五个不同模型上产出了方向一致的违规结果。该出事的题，换哪个模型都出事。问题不在模型的品格，在任务描述里那些没写出来的隐性前提。</p>
+<p>那不靠叮嘱，靠工具呢？研究者把四款主流静态扫描工具全开，合力只抓到了 34.2% 的真实违规——约为蜕变测试测出的一半。预防无效，检测半盲，两个缺口叠在一起，才是 AI 代码安全的真实基线。</p>
+<p>适用范围照旧要标注：第一篇只测了本地开源模型，没有闭源前沿模型，且规则判定用了大模型当裁判，本身有偏差；第二篇用的模型偏老。方向结论可信，具体数字外推要谨慎。</p>
+<h2 id="合论：三个缺口拼出同一张图">合论：三个缺口拼出同一张图</h2>
+<p><img src="/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/fig4-triangulation.png" alt="三角验证"></p>
+<p>现在把三份账单并排放：</p>
+<ul>
+<li><strong>写</strong>：四万三千条通告里数出 74 个具名 CVE，单月增量超上年全年</li>
+<li><strong>修</strong>：六千零八十次实验，干净修复率 26%，一半以上带病交付</li>
+<li><strong>防</strong>：提示词相关性零效应，扫描工具只覆盖真实违规的三分之一</li>
+</ul>
+<p>这三份证据的价值，不全在数字本身，而在&quot;独立&quot;两个字。一个是大学的数据库归因，一个是厂商的红队实测，一个是学术界的受控实验，动机、方法、对象都不一样，却在同一个论点上会师。单看任何一份都可以抬杠，三份叠在一起，抬杠的成本就太高了。</p>
+<p>它推翻的是那个流行的乐观叙事：“AI 的问题让 AI 解决”。这个叙事在每个环节都有一版——写漏了让 AI 修，修不好靠提示词，提示词不灵再等下一代模型。三份账单说明的是：这个循环的每一环都不是自动闭合的，中间缺的那块，叫验证，而验证目前只能由人来做。</p>
+<p>所以落点不是悲观，是分工。从三份账单里能带走的实操结论有三条：</p>
+<p>一，独立验证不可省。AI 起草、人定版，验证这一步必须是另一个独立视角——可以是另一个模型，可以是另一套工具，但不能是它自己。</p>
+<p>二，把&quot;要求&quot;升级为&quot;门禁&quot;。安全责任从提示词里挪出来，放进 CI 流水线：生成后强制扫描，扫描不过不许合并。提示词是请求，门禁才是约束。</p>
+<p>三，警惕&quot;已修复&quot;的假象。验证集太窄，就会奖励那些只会挡测试字符串的脆弱补丁。修没修好，不能只看测试过没过，要看根因动没动。</p>
+<p>AI 把写代码的成本打到了地板上，但验证代码的成本一分没降。在三份账单合上之前，这句话值得每个团队算进自己的成本表：省下的钱是真实的，迟早要还的债也是。</p>
+<hr>
+<h2 id="来源清单">来源清单</h2>
+<ol>
+<li>Georgia Tech 新闻稿《Bad VIBES》（2026-04-13）: <a target="_blank" rel="noopener" href="https://news.research.gatech.edu/2026/04/13/bad-vibes-ai-generated-code-vulnerable-researchers-warn">https://news.research.gatech.edu/2026/04/13/bad-vibes-ai-generated-code-vulnerable-researchers-warn</a> ——43,000+ 通告扫描、74 个确认案例（14 critical + 25 high）、2025 下半年约 18 例 vs 2026 前三月 56 例（3 月单月 35）、monoculture 与归因偏差表述。⚠️ 唯一可引来源为该校新闻稿，无独立原始论文；74 为&quot;confirmed cases so far&quot;</li>
+<li>1Password Off-by-1 Labs 博客（2026-08-06）: <a target="_blank" rel="noopener" href="https://1password.com/blog/why-ai-generated-patches-still-require-human-review">https://1password.com/blog/why-ai-generated-patches-still-require-human-review</a> + 研究论文 PDF（frontier-models-vulnerability-patches-flawed.pdf）+ 仓库 <a target="_blank" rel="noopener" href="https://github.com/Off-by-1-Labs/FLAWED">https://github.com/Off-by-1-Labs/FLAWED</a> ——6 个 CVE、6,480 次生成（6,080 有效）、S1–S5 细分（26.0/20.1/49.3/2.3/2.2，出自论文 Table 7）、干净修复 26.0%、FLAWED 53.9%、fragile 占 S1+S2 平均 37.5%（论文 Table 19）、成本 $2.11/$2.81</li>
+<li>arXiv 2607.12089《Cross-Cutting Security Analysis of LLM-Generated Code via Metamorphic Testing and Association Rule Mining》（2026-07-13）: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2607.12089">https://arxiv.org/abs/2607.12089</a> ——3,700 片段、68.8% 违规、硬编码凭据 79.1%（适用片段内）、r=−0.04（原文&quot;negligible correlation&quot;）、SAST 34.2%、65.5% 提示条件化</li>
+<li>arXiv 2605.24298《An Empirical Evaluation of LLM-Generated Code Security Across Prompting Methods》（2026-05-22）: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2605.24298">https://arxiv.org/abs/2605.24298</a> ——四方法 × 4,000 文件合计 16,000、χ² 检验、提示词方法无显著改善</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/09/15/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/">https://luckvd.github.io/2026/09/15/AI安全现况-AI无法保证AI的安全/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI-%E5%AE%89%E5%85%A8/">AI 安全</a><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/">代码安全</a><a class="post-meta__tags" href="/tags/%E6%BC%8F%E6%B4%9E/">漏洞</a></div><div class="post_share"><div class="social-share" data-image="/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/cover.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/09/16/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/" title="AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘"><img class="cover" src="/images/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/cover.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘</div></div></a></div><div class="next-post pull-right"><a href="/2026/09/13/s1ngularity%E6%97%B6%E5%88%BB-AI%E7%BC%96%E7%A0%81%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%A2%AB%E6%AD%A6%E5%99%A8%E5%8C%96/" title="s1ngularity 时刻：AI 编码工具第一次被武器化"><img class="cover" src="/images/s1ngularity%E6%97%B6%E5%88%BB-AI%E7%BC%96%E7%A0%81%E5%B7%A5%E5%85%B7%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%A2%AB%E6%AD%A6%E5%99%A8%E5%8C%96/cover-final.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">s1ngularity 时刻：AI 编码工具第一次被武器化</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/16/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/" title="AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘"><img class="cover" src="/images/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-16</div><div class="title">AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘</div></div></a></div><div><a href="/2026/10/07/AI%E6%95%B0%E5%AD%A6%E7%AA%81%E7%A0%B4%E5%91%A8-OpenAI%E4%B8%80%E5%A4%9C722%E7%AF%87-Claude%E8%AF%81%E5%87%BA%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A3%E6%9D%AF/" title="AI 数学突破周：OpenAI 一夜 722 篇，Claude 证出概率论圣杯"><img class="cover" src="/images/AI%E6%95%B0%E5%AD%A6%E7%AA%81%E7%A0%B4%E5%91%A8-OpenAI%E4%B8%80%E5%A4%9C722%E7%AF%87-Claude%E8%AF%81%E5%87%BA%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A3%E6%9D%AF/cover-style-3d-clay.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-07</div><div class="title">AI 数学突破周：OpenAI 一夜 722 篇，Claude 证出概率论圣杯</div></div></a></div><div><a href="/2026/09/17/AI%E5%B7%A8%E5%A4%B4%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%AD%A7/" title="AI巨头的安全分歧"><img class="cover" src="/images/AI%E5%B7%A8%E5%A4%B4%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%AD%A7/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-17</div><div class="title">AI巨头的安全分歧</div></div></a></div><div><a href="/2026/09/18/AI%E6%97%B6%E4%BB%A3%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E6%88%91%E4%BB%AC%E7%9C%8B%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84/" title="AI时代，如何确保我们看到的内容是真实的"><img class="cover" src="/images/AI%E6%97%B6%E4%BB%A3%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E6%88%91%E4%BB%AC%E7%9C%8B%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84/cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-18</div><div class="title">AI时代，如何确保我们看到的内容是真实的</div></div></a></div><div><a href="/2026/10/12/Claude%E5%90%91%E8%AD%A6%E5%B1%80%E6%8F%90%E4%BA%A4%E5%81%87%E5%87%B6%E6%A1%88%E7%BA%BF%E7%B4%A2-Anthropic%E5%88%87%E6%96%AD%E5%85%A8%E9%83%A8%E8%AF%84%E6%B5%8B%E8%81%94%E7%BD%91/" title="Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网"><img class="cover" src="/images/claude-unintended-actions/anthropic-report-hero.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-12</div><div class="title">Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网</div></div></a></div><div><a href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><img class="cover" src="/images/deepseek-v41-1017/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-17</div><div class="title">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%81%E6%8D%AE%E4%B8%80%EF%BC%9A%E5%86%99%E2%80%94%E2%80%94AI-%E5%86%99%E5%87%BA%E7%9A%84%E6%BC%8F%E6%B4%9E%EF%BC%8C%E5%B7%B2%E7%BB%8F%E5%85%B7%E5%90%8D%E8%BF%9B%E4%BA%86%E6%BC%8F%E6%B4%9E%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">证据一：写——AI 写出的漏洞，已经具名进了漏洞库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%81%E6%8D%AE%E4%BA%8C%EF%BC%9A%E4%BF%AE%E2%80%94%E2%80%94%E8%AE%A9-AI-%E8%87%AA%E5%B7%B1%E4%BF%AE%EF%BC%9F%E4%B8%80%E5%8D%8A%E4%BB%A5%E4%B8%8A%E6%98%AF-%E5%B8%A6%E7%97%85%E4%BF%AE%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">证据二：修——让 AI 自己修？一半以上是&quot;带病修理&quot;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%81%E6%8D%AE%E4%B8%89%EF%BC%9A%E9%98%B2%E2%80%94%E2%80%94%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%8F%AE%E5%98%B1%E5%92%8C%E8%87%AA%E5%8A%A8%E6%89%AB%E6%8F%8F%EF%BC%8C%E5%8F%8C%E5%8D%8A%E7%9B%B2"><span class="toc-number">3.</span> <span class="toc-text">证据三：防——提示词叮嘱和自动扫描，双半盲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E8%AE%BA%EF%BC%9A%E4%B8%89%E4%B8%AA%E7%BC%BA%E5%8F%A3%E6%8B%BC%E5%87%BA%E5%90%8C%E4%B8%80%E5%BC%A0%E5%9B%BE"><span class="toc-number">4.</span> <span class="toc-text">合论：三个缺口拼出同一张图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A5%E6%BA%90%E6%B8%85%E5%8D%95"><span class="toc-number">5.</span> <span class="toc-text">来源清单</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"><img src="/images/php2shell-deep-dive/cover-b-dark-navy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"/></a><div class="content"><a class="title" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解">一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解</a><time datetime="2026-10-21T08:30:00.000Z" title="发表于 2026-10-21 16:30:00">2026-10-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"><img src="/../images/deepseek-inference-magic/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"/></a><div class="content"><a class="title" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解">DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解</a><time datetime="2026-10-20T15:04:00.000Z" title="发表于 2026-10-20 23:04:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速"><img src="/images/microsoft-digital-defense-2026/cover-minimax-light-02-soft-3d-report.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《微软2026数字防御报告》解析：AI攻击提速"/></a><div class="content"><a class="title" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速">《微软2026数字防御报告》解析：AI攻击提速</a><time datetime="2026-10-20T02:00:00.000Z" title="发表于 2026-10-20 10:00:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单"><img src="/images/opencode-breach/hero-vault-keys.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenCode 被黑，用户在替黑客的账单买单"/></a><div class="content"><a class="title" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单">OpenCode 被黑，用户在替黑客的账单买单</a><time datetime="2026-10-19T02:00:00.000Z" title="发表于 2026-10-19 10:00:00">2026-10-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><img src="/images/deepseek-v41-1017/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"/></a><div class="content"><a class="title" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</a><time datetime="2026-10-17T02:00:00.000Z" title="发表于 2026-10-17 10:00:00">2026-10-17</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/cover.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function getGiscusTheme (theme) {
+  return theme === 'dark' ? 'dark' : 'light'
+}
+
+function loadGiscus () {
+  const config = Object.assign({
+    src: 'https://giscus.app/client.js',
+    'data-repo': 'LuckVd/LuckVd.github.io',
+    'data-repo-id': 'R_kgDOJ0Je7Q',
+    'data-category-id': 'DIC_kwDOJ0Je7c4DHfzV',
+    'data-mapping': 'pathname',
+    'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+    'data-reactions-enabled': '1',
+    crossorigin: 'anonymous',
+    async: true
+  },null)
+
+  let ele = document.createElement('script')
+  for (let key in config) {
+    ele.setAttribute(key, config[key])
+  }
+  document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function changeGiscusTheme (theme) {
+  function sendMessage(message) {
+    const iframe = document.querySelector('iframe.giscus-frame')
+    if (!iframe) return
+    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+  }
+
+  sendMessage({
+    setConfig: {
+      theme: getGiscusTheme(theme)
+    }
+  });
+}
+
+btf.addModeChange('giscus', changeGiscusTheme)
+
+if ('Giscus' === 'Giscus' || !true) {
+  if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+  else loadGiscus()
+} else {
+  function loadOtherComment () {
+    loadGiscus()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

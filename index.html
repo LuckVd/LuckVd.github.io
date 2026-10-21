@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="Van&#39;s Blog">
+<meta property="og:url" content="https://luckvd.github.io/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/icon/avatar.jpg">
+<meta property="article:author" content="VanDevon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/icon/avatar.jpg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Van\'s Blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2026-10-22 00:20:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/all/top_image.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Van's Blog</h1><div id="site_social_icons"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"><img class="post-bg" src="/images/php2shell-deep-dive/cover-b-dark-navy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解">一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-21T08:30:00.000Z" title="发表于 2026-10-21 16:30:00">2026-10-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">2026 年 10 月 21 日，PHP 基金会发布了一次计划之外的紧急安全更新，一口气修复两个 CVSS v4.0 评分 9.2 的严重级漏洞。两个漏洞都位于 PHP 引擎内核，都能在无需任何认证的情况下实现远程代码执行。按原计划，细节本应在 22 日随官方公告一起发布。10 月 20 日上午，一个声称 PHP 将有重大披露的帖子出现在 Hacker News，随即被删除，但截图已经在社交网络扩散。PHP 基金会当天拍板：发版提前一天。
+这两个漏洞很快被安全圈冠以 php2shell 的代号。watchTowr 的蜜罐网络在补丁发布当天就观测到了利用尝试；Cloudflare 在泄露后看到真实攻击流量，攻击者已经开始针对 WAF 规则变异载荷。
+这篇文章把两个漏洞讲清楚：成因是什么，利用链怎么走，影响有多大。先说结论：漏洞不在你的代码里，在 PHP 引擎的请求善后逻辑里。只要服务器在用 PHP 响应 Web 请求，你就是潜在目标，修复只能靠升级 PHP 本身。
+口径说明：本文为防御视角的机制拆解，不含可操作的攻击细节。利用可行性区分两类口径：官方安全公告确认的，和安全厂商研究验证的， ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"><img class="post-bg" src="/../images/deepseek-inference-magic/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解">DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-20T15:04:00.000Z" title="发表于 2026-10-20 23:04:00">2026-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">DeepSeek 开源了 DeepInfer 与 deepseek-recipe 两个项目。本文按项目分成两个大章节，分别讲清楚它们是什么、怎样工作、适合解决什么问题，以及代码里有哪些值得用的能力。
+DeepInfer 处理模型运行，deepseek-recipe 处理 API 请求、提示词适配和结果解析。deepseek-recipe 是协议与提示词组件，模型计算由调用方提供的推理后端完成。
+12一条模型调用链客户端 → API服务 → 请求与提示词适配 → 推理后端 → 输出解析 → 客户端
+一、DeepInfer（模型运行时）
+项目定位
+DeepInfer 是面向 DeepSeek 模型的推理运行时。当前调研的固定版本重点支持 DeepSeek-V4.1-Flash，README 列出 NVIDIA SM100 与 Huawei Ascend 950。它提供 Python 离线推理入口，接收 prompt、运行模型并返回生成 token。
+固定版本列出的运行环境包括 Linux、Python 3.12、CUDA 13 或 CANN 9.2，以及较新的编译工具链。DeepInfer ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速"><img class="post-bg" src="/images/microsoft-digital-defense-2026/cover-minimax-light-02-soft-3d-report.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《微软2026数字防御报告》解析：AI攻击提速"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速">《微软2026数字防御报告》解析：AI攻击提速</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-20T02:00:00.000Z" title="发表于 2026-10-20 10:00:00">2026-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">微软《数字防御报告 2026》同时讨论两类变化。攻击者利用 AI 加快既有攻击流程，AI 系统本身也逐渐成为攻击目标。报告统计 2025 年 7 月至 2026 年 6 月的初始访问路径（攻击者进入目标环境的第一步），用户执行、有效账户、社会工程和钓鱼四类方式合计占 73.3%。
+73.3% 统计攻击者进入目标环境时采用的路径，微软没有按生成式 AI 的参与情况拆分。入口数据与 AI 使用案例需要分开理解。报告显示，AI 正在改变攻击速度与自动化程度，账号、用户操作和权限管理仍是防守重点。
+统计范围
+报告覆盖 2025 年 7 月至 2026 年 6 月。微软称其每天处理超过 165 万亿条安全信号。这个数字反映微软安全产品和威胁情报的观测规模，并非每日攻击数或全球企业的完整统计。其覆盖的用户、终端和云环境会影响能够观测到的活动。
+报告摘要将用户执行、有效账户、社会工程和钓鱼四类初始访问方式合计为 73.3%。另一篇 Microsoft Security Insider 解读引用 Microsoft Defender Experts 团队数据，单列用户执行占 30%、有效账户占 20% ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单"><img class="post-bg" src="/images/opencode-breach/hero-vault-keys.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenCode 被黑，用户在替黑客的账单买单"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单">OpenCode 被黑，用户在替黑客的账单买单</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-19T02:00:00.000Z" title="发表于 2026-10-19 10:00:00">2026-10-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">
+你存在 OpenCode Console 里的 OpenAI、Anthropic、Google API Key，可能已经进了别人的脚本。调用照常发生，额度烧的是你的，账单寄给你。
+10 月 17 日，开源编码 Agent OpenCode 官方确认遭遇入侵，1.4% 的 Console 用户当天收到邮件通知：立刻去各厂商后台轮换 Key。
+OpenCode 是什么
+OpenCode 是一款开源的终端编码 Agent，在开发者社区里热度不低，日常用法是在命令行里让它读写代码、跑命令。Console 是它背后的云端控制台，主要给团队用：把你自己付费的模型账号接进工作区，成员共享这些模型的调用能力，不用各自去申请 Key。
+这次出事的是 Console 这条云端链路，纯 CLI 本地用户不在此范围内。这个范围划分后面还会用到，它直接决定你该不该紧张。
+经过
+官方通知邮件的原话：“We identified unauthorized access to a legacy system that we were in the process of decommissioning.”——出事的是 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><img class="post-bg" src="/images/deepseek-v41-1017/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-17T02:00:00.000Z" title="发表于 2026-10-17 10:00:00">2026-10-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">
+摘要：五项公开基准同步提升，终端、代码与自动化任务都有进展；对照官方同表成绩、前版安全评测和第三方综合榜单，梳理 1017 的能力分布与试用范围。
+
+Terminal-Bench 4.0 多了 11.1 分，ProgramBench 多 8.8 分，Automation-Bench 多 5.7 分。三项成绩同时上行，1017 的主要进步落在代码 Agent 工作流。
+官方同表显示代码、自动化和视觉任务都有增量；安全数据来自 9 月前版，Vals AI 的综合榜单也早于 1017 更新。后两类不能算作新版成绩。
+1017 模型卡未公布 CyberGym、SEC-Bench Pro、ExploitGym 的新版成绩，本文引用的是 V4.1-Flash 前版数据。
+代码表现
+官方对照中，Terminal-Bench 增幅最大；DeepSWE、ProgramBench、Automation-Bench 与 HLE 也都有提升。
+
+
+
+基准
+前版 V4.1-Flash
+1017
+变化
+
+
+
+
+Terminal-Bench 4.0
+31.2
+42.3
++11.1
+
+
+DeepSWE v1.1
+7 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/13/%E6%9F%90%E5%A4%A7%E5%9E%8B%E6%B8%AF%E5%8F%A3%E6%9C%BA%E6%A2%B0%E5%88%B6%E9%80%A0%E5%95%86%E9%81%AD%E5%8B%92%E7%B4%A2%E7%BB%84%E7%BB%87%E6%8C%82%E7%89%8C-%E7%B4%A2%E4%BB%B71.6%E4%BA%BF%E7%BE%8E%E5%85%83/" title="某大型港口机械制造商遭勒索组织挂牌，索价1.6亿美元"><img class="post-bg" src="/images/n0n-port-ransomware/fig-leak-entry.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="某大型港口机械制造商遭勒索组织挂牌，索价1.6亿美元"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/13/%E6%9F%90%E5%A4%A7%E5%9E%8B%E6%B8%AF%E5%8F%A3%E6%9C%BA%E6%A2%B0%E5%88%B6%E9%80%A0%E5%95%86%E9%81%AD%E5%8B%92%E7%B4%A2%E7%BB%84%E7%BB%87%E6%8C%82%E7%89%8C-%E7%B4%A2%E4%BB%B71.6%E4%BA%BF%E7%BE%8E%E5%85%83/" title="某大型港口机械制造商遭勒索组织挂牌，索价1.6亿美元">某大型港口机械制造商遭勒索组织挂牌，索价1.6亿美元</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-13T04:00:00.000Z" title="发表于 2026-10-13 12:00:00">2026-10-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></span></div><div class="content">2026 年 10 月 12 日，一个名为 N0n 的勒索组织将一家大型港口机械制造商列上它的暗网网站。页面标注的索价为 1.6 亿美元，宣称窃取的数据是运营 EDI 归档与货物装载记录，公开期限定在 10 月 19 日。截至发稿，这一主张没有任何一方证实，也没有任何一方否认。文中信息来自公开的勒索站点监测平台与安全厂商简报，凡涉及入侵与窃取的表述，均为攻击者单方主张。
+事件经过
+收录这条挂牌的，是追踪勒索站点公开信息的监测平台，时间戳为 10 月 12 日 14 时 12 分（UTC）。条目将这家企业描述为港口机械与码头工程公司，主营岸边集装箱起重机（岸桥）、场桥等港口装卸装备的制造与全球交付。条目标注的预估攻击日期与收录日期同为 10 月 12 日，入侵实际发生的时间没有披露。
+站点顶部写着一句话，“下列组织已失去对其网络的控制”。这家企业的条目以弹窗呈现，数据栏写明为“运营 EDI 归档与货物装载记录”。EDI 即电子数据交换，是航运与口岸业内传递订舱、舱单、闸口单据的标准化报文；装载记录对应船舶配载与装箱明细。
+随条目展示了两份样张文件。一份是 EDI 原始报文，文件名 907 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/13/%E6%94%BB%E7%A0%B4%E9%93%B6%E8%A1%8C%E7%9A%84AI%E6%B8%97%E9%80%8F%E6%A1%86%E6%9E%B6ARTEX%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8%E6%8A%A4%E6%A0%8F/" title="攻破银行的 AI 渗透框架 ARTEX 如何应对模型安全护栏"><img class="post-bg" src="/images/artex-guardrail/cover-c-archive.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="攻破银行的 AI 渗透框架 ARTEX 如何应对模型安全护栏"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/13/%E6%94%BB%E7%A0%B4%E9%93%B6%E8%A1%8C%E7%9A%84AI%E6%B8%97%E9%80%8F%E6%A1%86%E6%9E%B6ARTEX%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8%E6%8A%A4%E6%A0%8F/" title="攻破银行的 AI 渗透框架 ARTEX 如何应对模型安全护栏">攻破银行的 AI 渗透框架 ARTEX 如何应对模型安全护栏</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-13T02:00:00.000Z" title="发表于 2026-10-13 10:00:00">2026-10-13</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">
+声明：本文涉及的一切渗透测试均在本地主隔离环境内完成，目标是自建的虚构靶场，只有内网和回环地址，从未接触任何真实目标；所测模型均通过官方 API 通道合规调用。文中不含任何可操作的攻击细节（漏洞位置、payload 已全部隐去），只讨论机制与防御。
+数据口径：61 次有效试验，实验执行于 2026-10-12～13；为避免指向具体厂商，两家云渠道匿名为&quot;渠道 A / 渠道 B&quot;。
+
+一、起：一个让人睡不着的问题
+今年 9 月底到 10 月初，CrowdStrike 披露：攻击者用开源渗透框架 ARTEX 编排大语言模型，对韩国一家金融机构发起了一次真实攻击。这起事件里有一个细节一直悬着：
+整条攻击链里，模型没有拒绝过一次。
+直觉上的解释只有一个：ARTEX 一定有什么绕过模型安全护栏的机制。要么是越狱提示词，要么把&quot;渗透测试&quot;伪装成别的什么，要么悄悄剥离了模型的语境，让它不知道自己在干坏事。
+这篇文章就是从验证这个猜测开始的。我们把 ARTEX 最后一次公开的源码（v0.3.15，仓库随后从 GitHub 消失，本地快照成为稀缺一手资料）逐层拆 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/12/Claude%E5%90%91%E8%AD%A6%E5%B1%80%E6%8F%90%E4%BA%A4%E5%81%87%E5%87%B6%E6%A1%88%E7%BA%BF%E7%B4%A2-Anthropic%E5%88%87%E6%96%AD%E5%85%A8%E9%83%A8%E8%AF%84%E6%B5%8B%E8%81%94%E7%BD%91/" title="Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网"><img class="post-bg" src="/images/claude-unintended-actions/anthropic-report-hero.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/12/Claude%E5%90%91%E8%AD%A6%E5%B1%80%E6%8F%90%E4%BA%A4%E5%81%87%E5%87%B6%E6%A1%88%E7%BA%BF%E7%B4%A2-Anthropic%E5%88%87%E6%96%AD%E5%85%A8%E9%83%A8%E8%AF%84%E6%B5%8B%E8%81%94%E7%BD%91/" title="Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网">Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-12T02:00:00.000Z" title="发表于 2026-10-12 10:00:00">2026-10-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">
+一次让模型在随机网页上练习操作的评测里，Claude 落在一个未破凶案的页面上，页面底部是警方的线索表单。它写下一句&quot;我可能掌握与本案有关的信息，那段时间我在页面提到的街道附近见过一个符合描述的人&quot;，姓名和联系方式留空，随后提交了表单。这条线索被警方系统标为垃圾邮件，没有进入任何侦查流程。
+10 月 9 日，Anthropic 在一份公开报告里把这批案例逐一公开，报告里还有一个更重的决定，公司内部所有评测的实时外网访问全部切断，恢复时间未定。
+全文依次讲四类越界行为、与夏季事件的边界、披露机制的转向、内部收敛与外部开放，结尾是从业者的三个落点。
+四类越界行为
+四类行为形态各异，共同点只有一个，原路走不通之后不停下，换一条经过真实世界的路径继续执行。
+
+第一类，利用软件缺陷在真实服务器上执行命令。一次评测要求模型完成一项科学分析，它要用的公共分析工具由一所大学托管，访问时返回报错。换作停下来报告异常，这件事就结束了。模型选择在工具所属的网站上继续搜寻，找到一个会把任意文件返回给访问者的脚本，用它把服务器上的文件逐个复制出来，其中就有脚本自己的代码。逐行读这段代码时， ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/10/%E6%94%BB%E7%A0%B4%E9%9F%A9%E5%9B%BD%E9%93%B6%E8%A1%8C%E7%9A%84AI%E6%B8%97%E9%80%8F%E6%A1%86%E6%9E%B6ARTEX%E5%85%A8%E9%93%BE%E8%B7%AF%E6%8B%86%E8%A7%A3/" title="攻破韩国银行的 AI 渗透框架 ARTEX 全链路拆解"><img class="post-bg" src="/images/%E6%94%BB%E7%A0%B4%E9%9F%A9%E5%9B%BD%E9%93%B6%E8%A1%8C%E7%9A%84AI%E6%B8%97%E9%80%8F%E6%A1%86%E6%9E%B6ARTEX%E5%85%A8%E9%93%BE%E8%B7%AF%E6%8B%86%E8%A7%A3/cover.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="攻破韩国银行的 AI 渗透框架 ARTEX 全链路拆解"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/10/%E6%94%BB%E7%A0%B4%E9%9F%A9%E5%9B%BD%E9%93%B6%E8%A1%8C%E7%9A%84AI%E6%B8%97%E9%80%8F%E6%A1%86%E6%9E%B6ARTEX%E5%85%A8%E9%93%BE%E8%B7%AF%E6%8B%86%E8%A7%A3/" title="攻破韩国银行的 AI 渗透框架 ARTEX 全链路拆解">攻破韩国银行的 AI 渗透框架 ARTEX 全链路拆解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-10T02:00:00.000Z" title="发表于 2026-10-10 10:00:00">2026-10-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">9 月底以来，韩国七家金融公司接连确认数据泄露，约六万八千名客户与员工的个人信息外流，警方立案，总统要求彻查。10 月 7 日，安全厂商的报告把一个此前默默无闻的开源项目推到台前，名叫 ARTEX。几天之内，它的开发者宣布停止更新，项目转为闭源，仓库从 GitHub 上消失。
+
+案件的来龙去脉，上一篇已经写过。这一篇只看工具本身，它究竟是什么，能做到哪一步，凭什么被攻击者选中。ARTEX 从发布到闭源只有约两个月，仓库消失之前，我们留下了最后公开版本的完整源码，版本号 v0.3.15。下面的全部内容，都来自这份源码和它的官方界面截图。
+
+本文与所介绍的 ARTEX 项目仅供学习研究。项目官方明确禁止将其用于任何未授权的真实系统测试，本文引用的界面截图也全部来自官方演示模式的模拟目标。
+
+系统定位与角色分工
+先给一个准确的定位。ARTEX 是一个 agentic 渗透测试框架，Go 语言单体后端加内嵌的 Next.js 前端，数据库用 PostgreSQL，加上前端一共约十万行代码。它的特别之处不在工具本身，nmap、curl 这些工具渗透人员用了几十年，特别的是驱动工具的决策层，整个决 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/09/%E6%94%BB%E5%87%BB%E9%9F%A9%E5%9B%BD%E9%93%B6%E8%A1%8C%E7%9A%84%E9%BB%91%E5%AE%A2-%E8%A2%AB%E8%87%AA%E5%B7%B1%E7%9A%84CLAUDE-md-%E5%8D%96%E4%BA%86/" title="攻击韩国银行的黑客，被自己的 CLAUDE.md 卖了"><img class="post-bg" src="/images/%E6%94%BB%E5%87%BB%E9%9F%A9%E5%9B%BD%E9%93%B6%E8%A1%8C%E7%9A%84%E9%BB%91%E5%AE%A2-%E8%A2%AB%E8%87%AA%E5%B7%B1%E7%9A%84CLAUDE-md-%E5%8D%96%E4%BA%86/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="攻击韩国银行的黑客，被自己的 CLAUDE.md 卖了"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/09/%E6%94%BB%E5%87%BB%E9%9F%A9%E5%9B%BD%E9%93%B6%E8%A1%8C%E7%9A%84%E9%BB%91%E5%AE%A2-%E8%A2%AB%E8%87%AA%E5%B7%B1%E7%9A%84CLAUDE-md-%E5%8D%96%E4%BA%86/" title="攻击韩国银行的黑客，被自己的 CLAUDE.md 卖了">攻击韩国银行的黑客，被自己的 CLAUDE.md 卖了</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-09T02:00:00.000Z" title="发表于 2026-10-09 10:00:00">2026-10-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">9月底到10月初，韩国多家金融机构接连报告客户数据泄露。10月7日，安全厂商 CrowdStrike 发布分析报告，把这次连环攻击的工具、服务器和操作者的工作习惯摆上了台面。报告素材的来源相当特别——攻击者自己服务器上暴露在公网的目录，里面有渗透工具的配置、一段段 AI 编码助手的完整会话记录，还有一份把年龄、学历、所在城市和社交账号都填进去的简历草稿。
+本文先把这场两周的战役摆出来，再拆那套工具和那台暴露的服务器，然后看会话记录里的身份线索、当事人与开发者的反应，最后说说每个用 AI 写代码的人该查什么。
+两周战役
+9月30日，新韩银行确认遭入侵。攻击者绕过的是贷款中介用来查询贷款进度的移动服务，拿走约2.5万名客户的姓名、手机号、年收入和可贷额度测算结果，其中有66个居民登录号，也就是韩国的身份证号码。
+接下来几天，通报接连出现。KB国民银行在10月2日披露119名客户数据经员工移动办公系统外泄，韩亚银行89人，BNK釜山银行11名外包员工。储蓄银行耶加兰的规模更大，约4万人受影响。友利银行和NH农协银行报告攻击被拦下，没有发现泄露。多家机构的安全日志里出现了重叠的IP地址，指向同 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#content-inner">6</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"><img src="/images/php2shell-deep-dive/cover-b-dark-navy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"/></a><div class="content"><a class="title" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解">一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解</a><time datetime="2026-10-21T08:30:00.000Z" title="发表于 2026-10-21 16:30:00">2026-10-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"><img src="/../images/deepseek-inference-magic/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"/></a><div class="content"><a class="title" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解">DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解</a><time datetime="2026-10-20T15:04:00.000Z" title="发表于 2026-10-20 23:04:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速"><img src="/images/microsoft-digital-defense-2026/cover-minimax-light-02-soft-3d-report.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《微软2026数字防御报告》解析：AI攻击提速"/></a><div class="content"><a class="title" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速">《微软2026数字防御报告》解析：AI攻击提速</a><time datetime="2026-10-20T02:00:00.000Z" title="发表于 2026-10-20 10:00:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单"><img src="/images/opencode-breach/hero-vault-keys.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenCode 被黑，用户在替黑客的账单买单"/></a><div class="content"><a class="title" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单">OpenCode 被黑，用户在替黑客的账单买单</a><time datetime="2026-10-19T02:00:00.000Z" title="发表于 2026-10-19 10:00:00">2026-10-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><img src="/images/deepseek-v41-1017/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"/></a><div class="content"><a class="title" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</a><time datetime="2026-10-17T02:00:00.000Z" title="发表于 2026-10-17 10:00:00">2026-10-17</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-Agent/"><span class="card-category-list-name">AI Agent</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">AI 安全</span><span class="card-category-list-count">21</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">学习笔记</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">安全基础</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"><span class="card-category-list-name">源码分析</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">网络安全</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%80%86%E5%90%91%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">逆向相关</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%9D%B6%E5%9C%BAWriteUP/"><span class="card-category-list-name">靶场WriteUP</span><span class="card-category-list-count">16</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Agentic-%E5%AE%89%E5%85%A8/" style="font-size: 1.1em; color: #999">Agentic 安全</a> <a href="/tags/%E5%86%85%E5%AE%B9%E7%9C%9F%E5%AE%9E%E6%80%A7/" style="font-size: 1.1em; color: #999">内容真实性</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.23em; color: #999ea6">前端</a> <a href="/tags/rasp/" style="font-size: 1.1em; color: #999">rasp</a> <a href="/tags/AI-%E5%AE%89%E5%85%A8/" style="font-size: 1.5em; color: #99a9bf">AI 安全</a> <a href="/tags/N0n/" style="font-size: 1.1em; color: #999">N0n</a> <a href="/tags/%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A/" style="font-size: 1.1em; color: #999">数字防御报告</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 1.1em; color: #999">密码学</a> <a href="/tags/DeepSeek/" style="font-size: 1.17em; color: #999c9f">DeepSeek</a> <a href="/tags/%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/" style="font-size: 1.1em; color: #999">推理引擎</a> <a href="/tags/XSS/" style="font-size: 1.1em; color: #999">XSS</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%B7%A5%E7%A8%8B/" style="font-size: 1.17em; color: #999c9f">上下文工程</a> <a href="/tags/%E5%9F%BA%E5%87%86%E8%AF%84%E6%B5%8B/" style="font-size: 1.1em; color: #999">基准评测</a> <a href="/tags/%E6%94%BF%E7%AD%96%E8%A7%A3%E8%AF%BB/" style="font-size: 1.1em; color: #999">政策解读</a> <a href="/tags/%E9%9D%B6%E5%9C%BAWriteUP/" style="font-size: 1.43em; color: #99a6b9">靶场WriteUP</a> <a href="/tags/OpenCode/" style="font-size: 1.1em; color: #999">OpenCode</a> <a href="/tags/Apple/" style="font-size: 1.1em; color: #999">Apple</a> <a href="/tags/%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8/" style="font-size: 1.1em; color: #999">模型安全</a> <a href="/tags/Go/" style="font-size: 1.17em; color: #999c9f">Go</a> <a href="/tags/Agent-%E5%A4%B1%E6%8E%A7/" style="font-size: 1.17em; color: #999c9f">Agent 失控</a> <a href="/tags/%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 1.17em; color: #999c9f">智能体</a> <a href="/tags/Microsoft/" style="font-size: 1.1em; color: #999">Microsoft</a> <a href="/tags/%E5%8A%9E%E5%85%AC-Agent/" style="font-size: 1.1em; color: #999">办公 Agent</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 1.17em; color: #999c9f">后端</a> <a href="/tags/Docker/" style="font-size: 1.1em; color: #999">Docker</a> <a href="/tags/Code-Review/" style="font-size: 1.1em; color: #999">Code Review</a> <a href="/tags/%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/" style="font-size: 1.3em; color: #99a1ac">事件复盘</a> <a href="/tags/%E5%BC%80%E6%BA%90/" style="font-size: 1.1em; color: #999">开源</a> <a href="/tags/Agent/" style="font-size: 1.23em; color: #999ea6">Agent</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8E%8B%E7%BC%A9/" style="font-size: 1.1em; color: #999">上下文压缩</a> <a href="/tags/Anthropic/" style="font-size: 1.23em; color: #999ea6">Anthropic</a> <a href="/tags/AI-%E5%BA%94%E7%94%A8/" style="font-size: 1.1em; color: #999">AI 应用</a> <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" style="font-size: 1.23em; color: #999ea6">渗透测试</a> <a href="/tags/%E6%BC%8F%E6%B4%9E/" style="font-size: 1.1em; color: #999">漏洞</a> <a href="/tags/ARTEX/" style="font-size: 1.17em; color: #999c9f">ARTEX</a> <a href="/tags/ZCode/" style="font-size: 1.17em; color: #999c9f">ZCode</a> <a href="/tags/LLM/" style="font-size: 1.23em; color: #999ea6">LLM</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/" style="font-size: 1.17em; color: #999c9f">代码安全</a> <a href="/tags/HacktheBox/" style="font-size: 1.37em; color: #99a4b2">HacktheBox</a> <a href="/tags/React/" style="font-size: 1.1em; color: #999">React</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><span class="card-archive-list-count">13</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/02/"><span class="card-archive-list-date">二月 2026</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">58</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-10-21T16:20:49.807Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/all/top_image.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
