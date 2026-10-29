@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶 | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="摘要：五项公开基准同步提升，终端、代码与自动化任务都有进展；对照官方同表成绩、前版安全评测和第三方综合榜单，梳理 1017 的能力分布与试用范围。  Terminal-Bench 4.0 多了 11.1 分，ProgramBench 多 8.8 分，Automation-Bench 多 5.7 分。三项成绩同时上行，1017 的主要进步落在代码 Agent 工作流。 官方同表显示代码、自动化和视">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶">
+<meta property="og:url" content="https://luckvd.github.io/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="摘要：五项公开基准同步提升，终端、代码与自动化任务都有进展；对照官方同表成绩、前版安全评测和第三方综合榜单，梳理 1017 的能力分布与试用范围。  Terminal-Bench 4.0 多了 11.1 分，ProgramBench 多 8.8 分，Automation-Bench 多 5.7 分。三项成绩同时上行，1017 的主要进步落在代码 Agent 工作流。 官方同表显示代码、自动化和视">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/deepseek-v41-1017/cover.png">
+<meta property="article:published_time" content="2026-10-17T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-29T02:00:50.439Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="AI 安全">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="DeepSeek">
+<meta property="article:tag" content="基准评测">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/deepseek-v41-1017/cover.png"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-29 10:00:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/deepseek-v41-1017/cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-17T02:00:00.000Z" title="发表于 2026-10-17 10:00:00">2026-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-29T02:00:50.439Z" title="更新于 2026-10-29 10:00:50">2026-10-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>摘要：五项公开基准同步提升，终端、代码与自动化任务都有进展；对照官方同表成绩、前版安全评测和第三方综合榜单，梳理 1017 的能力分布与试用范围。</p>
+</blockquote>
+<p>Terminal-Bench 4.0 多了 11.1 分，ProgramBench 多 8.8 分，Automation-Bench 多 5.7 分。三项成绩同时上行，1017 的主要进步落在代码 Agent 工作流。</p>
+<p>官方同表显示代码、自动化和视觉任务都有增量；安全数据来自 9 月前版，Vals AI 的综合榜单也早于 1017 更新。后两类不能算作新版成绩。</p>
+<p>1017 模型卡未公布 CyberGym、SEC-Bench Pro、ExploitGym 的新版成绩，本文引用的是 V4.1-Flash 前版数据。</p>
+<h2 id="代码表现">代码表现</h2>
+<p>官方对照中，Terminal-Bench 增幅最大；DeepSWE、ProgramBench、Automation-Bench 与 HLE 也都有提升。</p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th style="text-align:right">前版 V4.1-Flash</th>
+<th style="text-align:right">1017</th>
+<th style="text-align:right">变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Terminal-Bench 4.0</td>
+<td style="text-align:right">31.2</td>
+<td style="text-align:right">42.3</td>
+<td style="text-align:right">+11.1</td>
+</tr>
+<tr>
+<td>DeepSWE v1.1</td>
+<td style="text-align:right">74.2</td>
+<td style="text-align:right">77.0</td>
+<td style="text-align:right">+2.8</td>
+</tr>
+<tr>
+<td>ProgramBench</td>
+<td style="text-align:right">20.3</td>
+<td style="text-align:right">29.1</td>
+<td style="text-align:right">+8.8</td>
+</tr>
+<tr>
+<td>Automation-Bench</td>
+<td style="text-align:right">54.8</td>
+<td style="text-align:right">60.5</td>
+<td style="text-align:right">+5.7</td>
+</tr>
+<tr>
+<td>HLE（无工具）</td>
+<td style="text-align:right">36.8</td>
+<td style="text-align:right">42.6</td>
+<td style="text-align:right">+5.8</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/deepseek-v41-1017/fig1-benchmark-delta.png" alt="V4.1-Flash-1017 与前版的官方基准分数对照"></p>
+<p>同表比较时，1017 在 Terminal-Bench 4.0 得分 42.3，高于 GPT-5.6 Sol 的 39.9 和 GLM-5.3 的 37.9；Opus 5 得分 51.8。DeepSWE v1.1 上，1017 的 77.0 高于 Opus 5 的 74.0 和 GPT-5.6 Sol 的 73.0。</p>
+<p><img src="/images/deepseek-v41-1017/fig2-competitor-ranking.png" alt="1017 与同表模型在终端、代码修复和通用推理任务上的成绩"></p>
+<p>HLE 无工具成绩为 42.6，纯文本子集为 44.0；同表 GPT-5.6 Sol 为 44.5，Opus 5 为 56.3。代码 Agent 是 1017 更占优势的方向，通用推理暂时不是它的领先项。</p>
+<p>在自动化测试中，Automation-Bench 得分 60.5，高于同表 Opus 5 的 50.3 和 GPT-5.6 Sol 的 45.8；Agents’ Last Exam 为 35.4，高于 Opus 5 的 28.6；Apex Bench 为 72.1，也超过 Opus 5 的 65.8。这几项都来自厂商同表，尚无独立盲测复核。</p>
+<p>官方模型卡还列出 NL2Repo-Bench 68.2（前版 65.4），以及带工具视觉测试 Chartography 83.0、BabyVision 92.5（前版分别为 78.9、89.6）。这些分数补充了仓库生成和视觉 Agent 的表现；Chartography 与 BabyVision 仍略低于同表 Opus 5 的 84.0 和 94.1。</p>
+<p><img src="/images/deepseek-v41-1017/fig3-additional-benchmarks.png" alt="NL2Repo-Bench、考试型 Agent 与带工具视觉测试的补充成绩"></p>
+<h2 id="成绩条件">成绩条件</h2>
+<p>这两项基准都在 Agent 框架里运行：Terminal-Bench 4.0 用 Claude Code harness，DeepSWE v1.1 用 Mini-SWE-V2。成绩因此同时受模型、工具、上下文和执行框架影响。</p>
+<p><img src="/images/deepseek-v41-1017/fig4-score-composition.png" alt="Agent 基准成绩由模型、脚手架、工具和任务共同决定"></p>
+<p>DeepSeek 还称 1017 缩短了运行时间、减少了输出长度，但模型卡没有列出各基准的完整参数、重复次数、平均耗时和任务级 token。读分数时，仍要把对应的 harness 和任务条件一起看。</p>
+<h2 id="安全基准">安全基准</h2>
+<p>V4.1-Flash 前版的模型卡公布过三项安全成绩：CyberGym 88.1，SEC-Bench Pro 62.8，ExploitGym 15.3，均为 Pass@1。它们不是 1017 的新成绩，官方 1017 对照表没有更新这几项。</p>
+<p><img src="/images/deepseek-v41-1017/fig5-security-threshold.png" alt="漏洞复现、长程安全任务与盲测发现并不是同一条能力线"></p>
+<p>CyberGym 会提供漏洞描述和漏洞前代码，要求模型产出可复现问题的 PoC。88.1 是这类“拿到线索后复现已知漏洞”的成绩，不能读成模型在陌生仓库里自主发现了 88.1% 的漏洞。</p>
+<p>SEC-Bench Pro 测复杂代码库中的长程安全任务；ExploitGym 则要求模型从已知漏洞和触发线索推进到可验证的利用结果。三项分数对应不同环节，不能拼成“网络安全总分”。CyberGym 的 88.1 和 ExploitGym 的 15.3 也不能直接相减；两项任务本身不同，但从已知漏洞复现走到利用验证，需要另一类能力。</p>
+<h2 id="成本参照">成本参照</h2>
+<p>官方 API 单价没有随 1017 上调。峰时与非峰时的输入、输出价格如下，单位均为每百万 token：缓存命中输入 $0.006 / $0.003，未命中输入 $0.30 / $0.15，输出 $1.20 / $0.60。</p>
+<p><img src="/images/deepseek-v41-1017/fig6-api-pricing.png" alt="DeepSeek API 峰时与非峰时单价，每百万 token"></p>
+<p>单价低不自动等于任务总成本低。DeepSeek 称 1017 的运行时间和输出长度下降，但没有公布各项基准的任务级 token、平均耗时或账单；实际节省多少，还得看任务成功率、重试次数和输出量。</p>
+<p>DeepSWE v1.1 的公开排行榜把 Pass@1 与每任务成本放在同一张图里。图以 2026-09-22 的榜单为底，1017 的 77.0% 点在版本更新后补入；横轴按人民币/任务计价并使用对数刻度，美元费用按 2026-10-16 的汇率换算。同一模型的 low、high、max 设置分布在不同成本和通过率位置，推理设置也要和成绩一起看。这张图适合做公开对照，不等同于所有模型在同一时间、同一配置下完成的复测。</p>
+<p><img src="/images/deepseek-v41-1017/fig7-deepswe-cost.jpeg" alt="DeepSWE v1.1 Pass@1 与每任务平均成本的公开对照"></p>
+<p>Vals AI 的数据可以作为另一项独立参照，不过最新一条早于 1017 更新。10 月 16 日的综合榜单里，V4.1-Flash 得分 51.32±1.13，排第 26/49；每项测试约 0.33 美元，耗时约 27 分 53 秒。旧 V4-Flash-0731 得分 47.96±1.24，排第 36/49，约 0.85 美元、43 分 6 秒。</p>
+<p><img src="/images/deepseek-v41-1017/fig8-vals-index.png" alt="Vals AI 对 V4.1-Flash 前版与 V4-Flash-0731 的综合评测"></p>
+<p>Vals AI 评测覆盖金融、编程、法律和税务，不是安全测试，也没有测到 1017。它说明前版 V4.1-Flash 在综合质量/成本上有竞争力；新版是否延续，还要看第三方复测。</p>
+<h2 id="斩杀判据">斩杀判据</h2>
+<p>“斩杀线”不是统一的模型评测术语。我把它分成两层：代码 Agent 基准竞争和安全工作流替代。1017 在几个代码子项达到第一梯队；它能否替代一段安全工作，目前还缺数据。</p>
+<p>我们建议把“能否替代一段安全工作”放进盲测里判断：使用同一套脚手架跑至少 30 个未公开任务，再按执行结果和人工复核验收。正确率应不低于现有流程，误报率不超过 5%，每个有效结果的总成本不超过人工基线的三分之一。这个门槛是项目试点建议，不是行业标准。</p>
+<p>再往上，要说它能自主发现未知漏洞，任务里就不能附漏洞描述、补丁或已知 PoC；结果必须能在隔离环境里复现，并由独立人员核验。当前没有 1017 在这条线上可复核的公开成绩。</p>
+<h2 id="落地建议">落地建议</h2>
+<p>1017 在代码 Agent 任务上有多项增量，Terminal-Bench、DeepSWE、ProgramBench 和 Automation-Bench 均高于前版，API 单价也维持原位。安全团队可以先在受控任务中试用它，例如仓库修复、已知问题复现或代码审查辅助，再按团队流程验收结果。公开的安全基准仍是前版数据，不能直接代表 1017。</p>
+<p>后续第三方复测若能公布模型快照、harness、任务定义和重复次数，再报告命中、误报、拒绝、token 与耗时，就能把代码基准的提升和安全工作流的实际收益分开衡量。</p>
+<p>如果你也在评估 Agent 的安全能力，先把版本、脚手架、任务类型和误报记进试点表，别只留一个总分。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>DeepSeek：V4.1-Flash-1017 模型卡、API 更新记录与价格表（2026-10-17）</li>
+<li>DeepSeek：V4.1-Flash 技术报告与模型卡（2026-09-10）</li>
+<li>DataCurve：DeepSWE v1.1 公共排行榜（2026-09-22）</li>
+<li>Vals AI：Vals Index 与 DeepSeek 模型评测页（2026-10-16）</li>
+<li>Wang 等：CyberGym（2025）、ExploitGym（2026）；Lee 等：SEC-Bench Pro（2026）</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/">https://luckvd.github.io/2026/10/17/DeepSeek-1017五项基准齐升代码Agent再上一个台阶/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI-%E5%AE%89%E5%85%A8/">AI 安全</a><a class="post-meta__tags" href="/tags/Agent/">Agent</a><a class="post-meta__tags" href="/tags/DeepSeek/">DeepSeek</a><a class="post-meta__tags" href="/tags/%E5%9F%BA%E5%87%86%E8%AF%84%E6%B5%8B/">基准评测</a></div><div class="post_share"><div class="social-share" data-image="/images/deepseek-v41-1017/cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单"><img class="cover" src="/images/opencode-breach/hero-vault-keys.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">OpenCode 被黑，用户在替黑客的账单买单</div></div></a></div><div class="next-post pull-right"><a href="/2026/10/13/%E6%9F%90%E5%A4%A7%E5%9E%8B%E6%B8%AF%E5%8F%A3%E6%9C%BA%E6%A2%B0%E5%88%B6%E9%80%A0%E5%95%86%E9%81%AD%E5%8B%92%E7%B4%A2%E7%BB%84%E7%BB%87%E6%8C%82%E7%89%8C-%E7%B4%A2%E4%BB%B71.6%E4%BA%BF%E7%BE%8E%E5%85%83/" title="某大型港口机械制造商遭勒索组织挂牌，索价1.6亿美元"><img class="cover" src="/images/n0n-port-ransomware/fig-leak-entry.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">某大型港口机械制造商遭勒索组织挂牌，索价1.6亿美元</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/09/16/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/" title="AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘"><img class="cover" src="/images/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-16</div><div class="title">AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘</div></div></a></div><div><a href="/2026/09/15/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/" title="AI安全现况：AI无法保证 AI 的安全"><img class="cover" src="/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-15</div><div class="title">AI安全现况：AI无法保证 AI 的安全</div></div></a></div><div><a href="/2026/09/17/AI%E5%B7%A8%E5%A4%B4%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%AD%A7/" title="AI巨头的安全分歧"><img class="cover" src="/images/AI%E5%B7%A8%E5%A4%B4%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%AD%A7/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-17</div><div class="title">AI巨头的安全分歧</div></div></a></div><div><a href="/2026/10/07/AI%E6%95%B0%E5%AD%A6%E7%AA%81%E7%A0%B4%E5%91%A8-OpenAI%E4%B8%80%E5%A4%9C722%E7%AF%87-Claude%E8%AF%81%E5%87%BA%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A3%E6%9D%AF/" title="AI 数学突破周：OpenAI 一夜 722 篇，Claude 证出概率论圣杯"><img class="cover" src="/images/AI%E6%95%B0%E5%AD%A6%E7%AA%81%E7%A0%B4%E5%91%A8-OpenAI%E4%B8%80%E5%A4%9C722%E7%AF%87-Claude%E8%AF%81%E5%87%BA%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A3%E6%9D%AF/cover-style-3d-clay.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-07</div><div class="title">AI 数学突破周：OpenAI 一夜 722 篇，Claude 证出概率论圣杯</div></div></a></div><div><a href="/2026/09/18/AI%E6%97%B6%E4%BB%A3%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E6%88%91%E4%BB%AC%E7%9C%8B%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84/" title="AI时代，如何确保我们看到的内容是真实的"><img class="cover" src="/images/AI%E6%97%B6%E4%BB%A3%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E6%88%91%E4%BB%AC%E7%9C%8B%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84/cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-18</div><div class="title">AI时代，如何确保我们看到的内容是真实的</div></div></a></div><div><a href="/2026/10/12/Claude%E5%90%91%E8%AD%A6%E5%B1%80%E6%8F%90%E4%BA%A4%E5%81%87%E5%87%B6%E6%A1%88%E7%BA%BF%E7%B4%A2-Anthropic%E5%88%87%E6%96%AD%E5%85%A8%E9%83%A8%E8%AF%84%E6%B5%8B%E8%81%94%E7%BD%91/" title="Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网"><img class="cover" src="/images/claude-unintended-actions/anthropic-report-hero.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-12</div><div class="title">Claude 向警局提交假凶案线索，Anthropic 切断全部评测联网</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">75</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A1%A8%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">代码表现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E7%BB%A9%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">成绩条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E5%9F%BA%E5%87%86"><span class="toc-number">3.</span> <span class="toc-text">安全基准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%90%E6%9C%AC%E5%8F%82%E7%85%A7"><span class="toc-number">4.</span> <span class="toc-text">成本参照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%A9%E6%9D%80%E5%88%A4%E6%8D%AE"><span class="toc-number">5.</span> <span class="toc-text">斩杀判据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%90%BD%E5%9C%B0%E5%BB%BA%E8%AE%AE"><span class="toc-number">6.</span> <span class="toc-text">落地建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程"><img src="/images/phantom-ai-ransomware/cover-04-ransomware-laptop.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Phantom：勒索团伙如何把 AI 接入入侵流程"/></a><div class="content"><a class="title" href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程">Phantom：勒索团伙如何把 AI 接入入侵流程</a><time datetime="2026-10-29T01:00:00.000Z" title="发表于 2026-10-29 09:00:00">2026-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"><img src="/images/php2shell-deep-dive/cover-b-dark-navy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"/></a><div class="content"><a class="title" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解">一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解</a><time datetime="2026-10-21T08:30:00.000Z" title="发表于 2026-10-21 16:30:00">2026-10-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"><img src="/../images/deepseek-inference-magic/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"/></a><div class="content"><a class="title" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解">DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解</a><time datetime="2026-10-20T15:04:00.000Z" title="发表于 2026-10-20 23:04:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速"><img src="/images/microsoft-digital-defense-2026/cover-minimax-light-02-soft-3d-report.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《微软2026数字防御报告》解析：AI攻击提速"/></a><div class="content"><a class="title" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速">《微软2026数字防御报告》解析：AI攻击提速</a><time datetime="2026-10-20T02:00:00.000Z" title="发表于 2026-10-20 10:00:00">2026-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单"><img src="/images/opencode-breach/hero-vault-keys.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenCode 被黑，用户在替黑客的账单买单"/></a><div class="content"><a class="title" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单">OpenCode 被黑，用户在替黑客的账单买单</a><time datetime="2026-10-19T02:00:00.000Z" title="发表于 2026-10-19 10:00:00">2026-10-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/deepseek-v41-1017/cover.png')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function getGiscusTheme (theme) {
+  return theme === 'dark' ? 'dark' : 'light'
+}
+
+function loadGiscus () {
+  const config = Object.assign({
+    src: 'https://giscus.app/client.js',
+    'data-repo': 'LuckVd/LuckVd.github.io',
+    'data-repo-id': 'R_kgDOJ0Je7Q',
+    'data-category-id': 'DIC_kwDOJ0Je7c4DHfzV',
+    'data-mapping': 'pathname',
+    'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+    'data-reactions-enabled': '1',
+    crossorigin: 'anonymous',
+    async: true
+  },null)
+
+  let ele = document.createElement('script')
+  for (let key in config) {
+    ele.setAttribute(key, config[key])
+  }
+  document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function changeGiscusTheme (theme) {
+  function sendMessage(message) {
+    const iframe = document.querySelector('iframe.giscus-frame')
+    if (!iframe) return
+    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+  }
+
+  sendMessage({
+    setConfig: {
+      theme: getGiscusTheme(theme)
+    }
+  });
+}
+
+btf.addModeChange('giscus', changeGiscusTheme)
+
+if ('Giscus' === 'Giscus' || !true) {
+  if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+  else loadGiscus()
+} else {
+  function loadOtherComment () {
+    loadGiscus()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
