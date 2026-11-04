@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <image href="bg.jpg" x="0" y="0" width="1280" height="720"/>
+  <text x="640" y="330" font-family="WenQuanYi Micro Hei" font-size="96" font-weight="bold" fill="#1E293B" text-anchor="middle">AI 安全周报</text>
+  <text x="640" y="440" font-family="WenQuanYi Micro Hei" font-size="56" fill="#3B5BDB" text-anchor="middle">9.28 – 10.7</text>
+</svg>
