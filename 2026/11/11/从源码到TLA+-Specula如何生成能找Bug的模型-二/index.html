@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二） | Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="先看两条真实的不变量。Etcd-Raft 要求已提交记录进入多数节点的持久存储；MongoDB 只要求进入内存日志。同源 Raft，检查条件只差一个变量，给出的保证差一档，而且各自都对。生成一条能做出这种级别判断的流水线，就是本篇要拆的东西。  先看整机在哪里 Specula 处理一个并发或分布式系统，走五个阶段。第一篇画过全程地图，本篇只进前两个阶段：代码分析和规约生成。 直接让 Agent 读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）">
+<meta property="og:url" content="https://luckvd.github.io/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:description" content="先看两条真实的不变量。Etcd-Raft 要求已提交记录进入多数节点的持久存储；MongoDB 只要求进入内存日志。同源 Raft，检查条件只差一个变量，给出的保证差一档，而且各自都对。生成一条能做出这种级别判断的流水线，就是本篇要拆的东西。  先看整机在哪里 Specula 处理一个并发或分布式系统，走五个阶段。第一篇画过全程地图，本篇只进前两个阶段：代码分析和规约生成。 直接让 Agent 读">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg">
+<meta property="article:published_time" content="2026-11-11T09:30:00.000Z">
+<meta property="article:modified_time" content="2026-11-11T15:34:32.781Z">
+<meta property="article:author" content="VanDevon">
+<meta property="article:tag" content="AI 安全">
+<meta property="article:tag" content="形式化验证">
+<meta property="article:tag" content="TLA+">
+<meta property="article:tag" content="模型检查">
+<meta property="article:tag" content="Specula">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-11 23:34:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-11T09:30:00.000Z" title="发表于 2026-11-11 17:30:00">2026-11-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-11T15:34:32.781Z" title="更新于 2026-11-11 23:34:32">2026-11-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>先看两条真实的不变量。Etcd-Raft 要求已提交记录进入多数节点的持久存储；MongoDB 只要求进入内存日志。同源 Raft，检查条件只差一个变量，给出的保证差一档，而且各自都对。生成一条能做出这种级别判断的流水线，就是本篇要拆的东西。</p>
+<p><img src="/images/specula-02-generation/fig1-overview.png" alt="生成阶段在流水线中的位置"></p>
+<h2 id="先看整机在哪里">先看整机在哪里</h2>
+<p>Specula 处理一个并发或分布式系统，走五个阶段。第一篇画过全程地图，本篇只进前两个阶段：代码分析和规约生成。</p>
+<p>直接让 Agent 读源码写模型是行不通的，细节留多了状态爆炸，砍狠了照不出真实偏差，论文把这称为模型与代码之间的鸿沟。Specula 的替代方案如上图：一条产物接力线，不变量、场景、建模简报、参考模型、场景模型加配置，每个产物有固定格式和证据要求。Agent 在线上工作，不自由发挥。</p>
+<h2 id="对错标准从两头取证">对错标准从两头取证</h2>
+<p>不变量是 TLC 判定对错的标准，接力线第一个产物。协议说明与文档给协议级条件；源码、测试、问题单和修订历史给代码级条件，覆盖操作原子性、容量上限、提交位置单调性这类模式。分析只总结系统级行为，API 参数、变量类型这类局部检查不进模型。</p>
+<p><img src="/images/specula-02-generation/fig2-invariants.png" alt="同一协议推导出两条不变量"></p>
+<p>开头那对不变量是这样来的。Etcd-Raft 遵循标准协议，条件写作持久存储：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CommittedInDurableStorage ==</span><br><span class="line">  \A s \in Server :</span><br><span class="line">    commitIndex[s] &lt;= durable_storage[s]</span><br></pre></td></tr></table></figure>
+<p>MongoDB 为降低写延迟，配置允许多数节点保存在内存中即确认提交，不等落盘。设计用持久性换了写延迟，换来另一条保证：节点不会确认一条还没写进自己日志的记录。Specula 从修订历史找到那次变更，换成弱一格的条件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CommittedInLog ==</span><br><span class="line">  \A s \in Server :</span><br><span class="line">    commitIndex[s] &lt;= Len(log[s])</span><br></pre></td></tr></table></figure>
+<p>套错条件，模型会把设计允许的行为报成错误，检查白跑。所以每条不变量强制附带证据：代码位置、提交号、问题单或测试断言。Agent 后续修改检查条件时必须回到证据说明理由，不能拿检查通过当放宽依据。</p>
+<p>不变量还要声明故障模型：允许进程崩溃还是断电。同一条不变量在两种故障模型下，结论强度不同。</p>
+<p>系统按并发模型分两类，分析路径随之分叉。消息协调的分布式系统关注请求、确认与落盘的顺序；共享内存的并发系统关注读取与更新之间其他线程能否插入，以及内存回收、所有权转移、唤醒路径。变量设计也随类型分叉，前者围绕协议状态，后者围绕线程本地快照、回收状态、交接标记、缓存视图。</p>
+<h2 id="代码考古圈定执行路径">代码考古圈定执行路径</h2>
+<p>不变量定了检查什么，场景决定往模型里放哪些执行路径。来源是代码考古，工程指南对深度有量化要求。</p>
+<p>Git 历史按关键词挖掘，修复、竞态、死锁、崩溃、损坏、泄漏、不一致，触碰核心文件的缺陷修复提交要全部分析，不许抽样。问题单要读完整讨论串，中等规模项目目标精读三十个以上，并统计口径：收集多少、精读多少、确证多少、误报排除多少。</p>
+<p>假线索靠上下文排除。标题声称缺陷、讨论里确认是配置错误的，记录排除；看似漏了判空的代码，顺执行链找到上游早已挡住输入的，也记录排除。</p>
+<p>立住一个场景要凑齐三个条件：</p>
+<ul>
+<li>机制上，有多处修复或修复互不一致的痕迹</li>
+<li>代码上，能指出具体的路径分歧</li>
+<li>后果上，能讲出到可观测故障的因果链</li>
+</ul>
+<p>缺一样，降级为待查疑点。</p>
+<p>场景按机制归组，不按文件归组，五个可执行的机制场景胜过十七条平铺的发现。</p>
+<p>论文中的场景条目来自 ScyllaDB 的 Raft 实现，三个触发信号：</p>
+<ul>
+<li>同一机制被三个提交反复修复，围绕联合配置时期的投票者跟踪</li>
+<li>两处代码处理不一致：发送读确认请求的路径（<a target="_blank" rel="noopener" href="http://fsm.cc:1052">fsm.cc:1052</a>）用缓存的投票标记决定发给谁，判定确认是否足够的路径（<a target="_blank" rel="noopener" href="http://tracker.cc:178">tracker.cc:178</a>）同时查看新旧两套名单</li>
+<li>组合成一条因果链：成员降级时节点在旧名单有投票权、新名单没有，缓存只反映新身份，请求漏发旧名单仍计入的节点，读请求可能停滞</li>
+</ul>
+<p>这个问题问请求最终能否完成，属于活性，不是丢数据那样的安全违例。场景条目据此列出建模建议：</p>
+<ul>
+<li>变量：config、voters、canVote</li>
+<li>动作：EnterJoint、ReadBarrier</li>
+<li>不变量：ReadBarrierProgress已修复的问题作背景保留，重新复现旧缺陷不算新发现。</li>
+</ul>
+<h2 id="建模简报是唯一交接物">建模简报是唯一交接物</h2>
+<p><img src="/images/specula-02-generation/fig3-brief.png" alt="建模简报是两个阶段之间的交接物"></p>
+<p>场景和证据打包成建模简报，交给规约生成 Agent。它是两个阶段之间唯一的交接物，格式固定：证据、变量、动作、不变量，外加排除项，对应上图三块。论文给出 ScyllaDB 那条场景的简报原文：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Scenario. Joint consensus quorum tracking on voter demotion</span><br><span class="line">Evidence:</span><br><span class="line">  history: Three fixes reworked joint-config voter tracking</span><br><span class="line">  code:    broadcast_read_quorum (fsm.cc:1052) sends a read</span><br><span class="line">           quorum to followers whose cached vote flag is set</span><br><span class="line">           committed&lt;read_id&gt; (tracker.cc:178) commits a read</span><br><span class="line">           on acks from both current and previous voter sets</span><br><span class="line">Modeling proposal:</span><br><span class="line">  variables: config[s], voters[s][c], canVote[s]</span><br><span class="line">  actions:   EnterJoint, LeaveJoint, ReadBarrier, ...</span><br><span class="line">  invariant: ReadBarrierProgress -- an issued read barrier</span><br><span class="line">             eventually commits</span><br></pre></td></tr></table></figure>
+<p>简报还做两件事。</p>
+<ul>
+<li>分流：每个发现标注验证方式，需要探索多节点、多线程交错顺序的进模型检查，日志格式或性能问题交给测试和代码审查，暂时答不了的列为未决问题</li>
+<li>划界：每项排除附原因，规约生成阶段不得自行扩回简报是后续覆盖核对的唯一基准，简报没提的不进检查范围。</li>
+</ul>
+<p>规约生成 Agent 只精读简报引用的函数，不重读整个代码库。简报说两条路径用了不同的身份信息，Agent 要核对各自何时更新、用哪个字段。只有这些差别进入模型，TLC 才有机会走到出错的路径。</p>
+<p>每条发现进简报前都要过核实关：回读确切代码行，找补偿机制，确认它不是写明的设计决定。未经核实的怀疑不许写进简报。</p>
+<h2 id="建模实现，不建模论文">建模实现，不建模论文</h2>
+<p>参考模型是所有场景共享的底座。保什么砍什么，由不变量决定。Papaya 是并发哈希表，要检查条目不丢失，模型保留每个槽位的元数据和条目指针，两者不一致就是丢失；哈希函数不进模型，因为没有不变量依赖它的计算结果。</p>
+<p>总原则一条：建模实现，不建模论文。实现与参考算法的偏差正是 bug 藏身之处，MongoDB 那条弱一格的不变量就是偏差的直接产物。Agent 觉得代码怪而顺手改回论文写法的那一刻，模型就照不出这个系统的真问题了。</p>
+<p>动作设计有三条硬规则：</p>
+<ul>
+<li>按实现的语义边界拆分。模型里的动作是原子的，其他动作插不进中间，源码里先读状态、再确认、后更新的三步合并成一步，就抹掉了竞态可能藏身的窗口。预留与发布、停用与释放，源码分开，模型也分开</li>
+<li>动作以实现函数命名，方便模型与代码逐块对照</li>
+<li>每个逻辑块的守卫、分支和更新标注源码行号，后续轨迹核对要靠行号定位</li>
+</ul>
+<p>模型骨架三块：</p>
+<ul>
+<li>状态变量，承接实现字段和数据结构</li>
+<li>Init，描述系统起动时的合法取值</li>
+<li>Next，列出所有动作，规定每一步之后变量如何变化</li>
+</ul>
+<p>结构不变量始终启用，检查变量取值是否合法，不找 bug，只保证模型没写坏。</p>
+<p>对称性约减让 TLC 把镜像状态当作一个，省下等价搜索量。规模控制反向操作：沉默动作不加约束会状态爆炸，要收到最小；扩展变量必须有场景支撑，简报里没有的不许加。</p>
+<h2 id="从底座裁出小模型">从底座裁出小模型</h2>
+<p><img src="/images/specula-02-generation/fig4-projection.png" alt="三种投影操作从参考模型裁出场景模型"></p>
+<p>参考模型包含全部行为，每次都搜全部组合成本过高。场景投影从它裁出针对单个场景的小模型，参考模型本身不动，如上图三种操作。以 Etcd-Raft 租约读场景为例，旧主节点误判租约仍有效，继续响应读取，返回过期数据。</p>
+<p>动作选择靠计数器限制次数，写在配置里：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CrashLimit = 0        \* 崩溃被禁用</span><br><span class="line">ReadRequestLimit = 2  \* 保留两次租约读</span><br></pre></td></tr></table></figure>
+<p>动作粗化把多步过程换成一步。场景需要合法主节点但不检查选举，请求投票、等待、重选换成一步直接产生当选者，保留候选节点日志不落后于多数的约束，中间状态删掉。序列约束把两个相邻动作串成一次原子转换，保留两者逻辑，不再允许其他动作插入。</p>
+<p>前一种是配置，后两种改变动作语义，不能混同。</p>
+<p>裁剪有一条底线：小模型找到的违例必须也是参考模型的违例，不能裁出原模型不存在的错误路径。裁多少取决于目标。查租约读可以裁掉选举，查选举与成员变更的交互，中间状态就必须保留；缺陷若依赖处理与发送之间的插入，串接两步就藏掉了触发窗口。</p>
+<p>故障包装层同样依目标而定。指南反对从别的案例复制包装器的名字和形状，每个包装器要从目标自己的代码证据推导，说不清要回答什么具体问题就不写。</p>
+<p>指南举过反例：某个旧规约把一个已撤销的历史提交建了模，等于用规约重放一次合入又回退的变更，跑不出新信息。并发系统的尺度也要压：线程两到三个，缓冲区和键集取最小，无关动作上限收到零或一，目标交错路径才可达。</p>
+<h2 id="定义了不等于检查了">定义了不等于检查了</h2>
+<p>先看一次真实事故。Agent 定义了场景不变量，先在标准配置里注释掉，打算稍后放进专用配置，最后没做。TLC 跑了很久，实际只检查变量类型这类结构条件，要找的错误一次都没查。指南把这称为最后一环的脱扣，算力一分不少，产出为零。</p>
+<p>事故的根源是没分清两类配置。模型定义了检查条件，TLC 不一定检查它，每次运行检查什么由配置决定。产出分两类：</p>
+<ul>
+<li>标准配置，在收敛阶段用，查结构条件和基础安全性质，场景不变量先注释掉</li>
+<li>逐场景配置，每个场景一份，只启用目标不变量加核心安全性质，无关动作边界收到零或一</li>
+</ul>
+<p>配置的另一面是给事件设上限。崩溃、超时、消息丢失这类引入新分支的事件可以限次，计数器在同一个转换里先检查再递增，两步分开，上限形同虚设。处理已收到的消息、推进提交位置这类反应步骤不能限，否则模型会人为制造无法进展的假象。</p>
+<p>基础模型的动作粒度在参考模型里定死，包装层不许悄悄合并或拆分动作来腾挪状态空间。</p>
+<p>顺序也有讲究：先收敛，后猎虫。模型刚写完就用猎虫配置跑，未经核对的扩展不变量一起上线，错误的不变量报出假违例，反过来污染场景结论。</p>
+<p>生成结束前做覆盖核对，以建模简报为唯一基准：</p>
+<ul>
+<li>每条安全性质，是否至少在一个逐场景配置中启用，而不是只出现在定义文件里</li>
+<li>每个场景，是否有对应的配置，合并进其他场景的要写明</li>
+<li>每个待验证问题，其故障设置是否让它可达</li>
+</ul>
+<p>缺口要么补上，要么写明为何不覆盖，不粉饰。</p>
+<p>走完这条线，产物是一套模型加配置。每个环节都在防同一类错误：</p>
+<ul>
+<li>不变量，靠证据锚住</li>
+<li>场景，靠机制归组和量化深度</li>
+<li>简报，靠固定格式防范围扩张</li>
+<li>模型，靠语义边界防竞态窗口被抹掉</li>
+<li>投影，靠 soundness 底线防假路径</li>
+<li>配置，靠覆盖核对防性质定义了却没人查</li>
+</ul>
+<p>语言本身不保证模型忠于代码，纪律才保证。</p>
+<p>TLC 在这套产物上搜索。完整搜完给定范围且未发现违例，结论只适用于该模型与配置；因预算终止而未找到反例，不等于没有。模型反例是否对应真实 bug，要回到代码复现确认，那是第 4 篇的内容。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li>Qian Cheng 等：Specula: Scaling Formal Specifications for Autonomous Model Checking of System Code，arXiv:2607.25333v2（2026-08-03）</li>
+<li>Specula 项目：Code Analysis Workflow（bug 考古深度要求、发现分流与建模简报规范，main @ 830f4c0）</li>
+<li>Specula 项目：TLA+ Spec Generation Guide 与 MC Spec Pattern、Brief Coverage Checklist（main @ 830f4c0）</li>
+<li>Specula 项目：ScyllaDB Raft 案例分析与运行记录（case-studies @ 6266eb05）</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/">VanDevon</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luckvd.github.io/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/">https://luckvd.github.io/2026/11/11/从源码到TLA+-Specula如何生成能找Bug的模型-二/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luckvd.github.io" target="_blank">Van's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI-%E5%AE%89%E5%85%A8/">AI 安全</a><a class="post-meta__tags" href="/tags/%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81/">形式化验证</a><a class="post-meta__tags" href="/tags/TLA/">TLA+</a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E5%9E%8B%E6%A3%80%E6%9F%A5/">模型检查</a><a class="post-meta__tags" href="/tags/Specula/">Specula</a></div><div class="post_share"><div class="social-share" data-image="/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"><img class="cover" src="/images/specula-01-overview/cover-a-flat-state.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"><img class="cover" src="/images/specula-01-overview/cover-a-flat-state.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-09</div><div class="title">先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）</div></div></a></div><div><a href="/2026/09/16/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/" title="AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘"><img class="cover" src="/images/AI%E4%BB%A3%E7%90%86%E5%8D%81%E5%B0%8F%E6%97%B6%E6%89%93%E7%A9%BF%E4%B8%80%E5%AE%B6%E4%BC%81%E4%B8%9A-%E9%A6%96%E4%BE%8B%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%A5%E4%BE%B5%E4%BA%8B%E4%BB%B6%E5%A4%8D%E7%9B%98/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-16</div><div class="title">AI 代理十小时打穿一家企业：首例多智能体入侵事件复盘</div></div></a></div><div><a href="/2026/09/15/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/" title="AI安全现况：AI无法保证 AI 的安全"><img class="cover" src="/images/AI%E5%AE%89%E5%85%A8%E7%8E%B0%E5%86%B5-AI%E6%97%A0%E6%B3%95%E4%BF%9D%E8%AF%81AI%E7%9A%84%E5%AE%89%E5%85%A8/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-15</div><div class="title">AI安全现况：AI无法保证 AI 的安全</div></div></a></div><div><a href="/2026/09/17/AI%E5%B7%A8%E5%A4%B4%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%AD%A7/" title="AI巨头的安全分歧"><img class="cover" src="/images/AI%E5%B7%A8%E5%A4%B4%E7%9A%84%E5%AE%89%E5%85%A8%E5%88%86%E6%AD%A7/cover.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-17</div><div class="title">AI巨头的安全分歧</div></div></a></div><div><a href="/2026/10/07/AI%E6%95%B0%E5%AD%A6%E7%AA%81%E7%A0%B4%E5%91%A8-OpenAI%E4%B8%80%E5%A4%9C722%E7%AF%87-Claude%E8%AF%81%E5%87%BA%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A3%E6%9D%AF/" title="AI 数学突破周：OpenAI 一夜 722 篇，Claude 证出概率论圣杯"><img class="cover" src="/images/AI%E6%95%B0%E5%AD%A6%E7%AA%81%E7%A0%B4%E5%91%A8-OpenAI%E4%B8%80%E5%A4%9C722%E7%AF%87-Claude%E8%AF%81%E5%87%BA%E6%A6%82%E7%8E%87%E8%AE%BA%E5%9C%A3%E6%9D%AF/cover-style-3d-clay.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-07</div><div class="title">AI 数学突破周：OpenAI 一夜 722 篇，Claude 证出概率论圣杯</div></div></a></div><div><a href="/2026/09/18/AI%E6%97%B6%E4%BB%A3%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E6%88%91%E4%BB%AC%E7%9C%8B%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84/" title="AI时代，如何确保我们看到的内容是真实的"><img class="cover" src="/images/AI%E6%97%B6%E4%BB%A3%E5%A6%82%E4%BD%95%E7%A1%AE%E4%BF%9D%E6%88%91%E4%BB%AC%E7%9C%8B%E5%88%B0%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF%E7%9C%9F%E5%AE%9E%E7%9A%84/cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-18</div><div class="title">AI时代，如何确保我们看到的内容是真实的</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E7%9C%8B%E6%95%B4%E6%9C%BA%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-number">1.</span> <span class="toc-text">先看整机在哪里</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E9%94%99%E6%A0%87%E5%87%86%E4%BB%8E%E4%B8%A4%E5%A4%B4%E5%8F%96%E8%AF%81"><span class="toc-number">2.</span> <span class="toc-text">对错标准从两头取证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%80%83%E5%8F%A4%E5%9C%88%E5%AE%9A%E6%89%A7%E8%A1%8C%E8%B7%AF%E5%BE%84"><span class="toc-number">3.</span> <span class="toc-text">代码考古圈定执行路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E6%A8%A1%E7%AE%80%E6%8A%A5%E6%98%AF%E5%94%AF%E4%B8%80%E4%BA%A4%E6%8E%A5%E7%89%A9"><span class="toc-number">4.</span> <span class="toc-text">建模简报是唯一交接物</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E6%A8%A1%E5%AE%9E%E7%8E%B0%EF%BC%8C%E4%B8%8D%E5%BB%BA%E6%A8%A1%E8%AE%BA%E6%96%87"><span class="toc-number">5.</span> <span class="toc-text">建模实现，不建模论文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%BA%95%E5%BA%A7%E8%A3%81%E5%87%BA%E5%B0%8F%E6%A8%A1%E5%9E%8B"><span class="toc-number">6.</span> <span class="toc-text">从底座裁出小模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%8D%E7%AD%89%E4%BA%8E%E6%A3%80%E6%9F%A5%E4%BA%86"><span class="toc-number">7.</span> <span class="toc-text">定义了不等于检查了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/" title="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）"><img src="/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）"/></a><div class="content"><a class="title" href="/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/" title="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）">从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）</a><time datetime="2026-11-11T09:30:00.000Z" title="发表于 2026-11-11 17:30:00">2026-11-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"><img src="/images/specula-01-overview/cover-a-flat-state.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"/></a><div class="content"><a class="title" href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）">先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）</a><time datetime="2026-11-09T02:00:00.000Z" title="发表于 2026-11-09 10:00:00">2026-11-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/04/weight-space-programming/" title="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍"><img src="/images/weight-space-programming/cover-b-brain-xiaohei.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍"/></a><div class="content"><a class="title" href="/2026/11/04/weight-space-programming/" title="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍">LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍</a><time datetime="2026-11-04T00:00:00.000Z" title="发表于 2026-11-04 08:00:00">2026-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/03/Superagent%20%E7%9A%84%E8%87%AA%E4%B8%BB%E8%BE%B9%E7%95%8C%EF%BC%9A%E5%B0%91%E6%89%93%E6%89%B0%E4%BA%BA%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%9D%A0%E9%95%BF%E5%AF%B9%E8%AF%9D%E5%AE%8C%E6%88%90%E9%95%BF%E4%BB%BB%E5%8A%A1/" title="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务"><img src="/images/deepseek-superagent-autonomy/cover-superagent-autonomy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务"/></a><div class="content"><a class="title" href="/2026/11/03/Superagent%20%E7%9A%84%E8%87%AA%E4%B8%BB%E8%BE%B9%E7%95%8C%EF%BC%9A%E5%B0%91%E6%89%93%E6%89%B0%E4%BA%BA%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%9D%A0%E9%95%BF%E5%AF%B9%E8%AF%9D%E5%AE%8C%E6%88%90%E9%95%BF%E4%BB%BB%E5%8A%A1/" title="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务">Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务</a><time datetime="2026-11-03T02:10:33.000Z" title="发表于 2026-11-03 10:10:33">2026-11-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程"><img src="/images/phantom-ai-ransomware/cover-04-ransomware-laptop.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Phantom：勒索团伙如何把 AI 接入入侵流程"/></a><div class="content"><a class="title" href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程">Phantom：勒索团伙如何把 AI 接入入侵流程</a><time datetime="2026-10-29T01:00:00.000Z" title="发表于 2026-10-29 09:00:00">2026-10-29</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function getGiscusTheme (theme) {
+  return theme === 'dark' ? 'dark' : 'light'
+}
+
+function loadGiscus () {
+  const config = Object.assign({
+    src: 'https://giscus.app/client.js',
+    'data-repo': 'LuckVd/LuckVd.github.io',
+    'data-repo-id': 'R_kgDOJ0Je7Q',
+    'data-category-id': 'DIC_kwDOJ0Je7c4DHfzV',
+    'data-mapping': 'pathname',
+    'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+    'data-reactions-enabled': '1',
+    crossorigin: 'anonymous',
+    async: true
+  },null)
+
+  let ele = document.createElement('script')
+  for (let key in config) {
+    ele.setAttribute(key, config[key])
+  }
+  document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin',ele)
+}
+
+function changeGiscusTheme (theme) {
+  function sendMessage(message) {
+    const iframe = document.querySelector('iframe.giscus-frame')
+    if (!iframe) return
+    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+  }
+
+  sendMessage({
+    setConfig: {
+      theme: getGiscusTheme(theme)
+    }
+  });
+}
+
+btf.addModeChange('giscus', changeGiscusTheme)
+
+if ('Giscus' === 'Giscus' || !true) {
+  if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+  else loadGiscus()
+} else {
+  function loadOtherComment () {
+    loadGiscus()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

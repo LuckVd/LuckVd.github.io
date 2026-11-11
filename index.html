@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Van's Blog</title><meta name="author" content="VanDevon"><meta name="copyright" content="VanDevon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="Van&#39;s Blog">
+<meta property="og:url" content="https://luckvd.github.io/index.html">
+<meta property="og:site_name" content="Van&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luckvd.github.io/images/icon/avatar.jpg">
+<meta property="article:author" content="VanDevon">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckvd.github.io/images/icon/avatar.jpg"><link rel="shortcut icon" href="/images/icon/favicon.png"><link rel="canonical" href="https://luckvd.github.io/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Van\'s Blog',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2026-11-11 23:34:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/iconfont.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Van's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/images/all/top_image.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Van's Blog"><span class="site-name">Van's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Van's Blog</h1><div id="site_social_icons"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/" title="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）"><img class="post-bg" src="/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/" title="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）">从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-11-11T09:30:00.000Z" title="发表于 2026-11-11 17:30:00">2026-11-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">先看两条真实的不变量。Etcd-Raft 要求已提交记录进入多数节点的持久存储；MongoDB 只要求进入内存日志。同源 Raft，检查条件只差一个变量，给出的保证差一档，而且各自都对。生成一条能做出这种级别判断的流水线，就是本篇要拆的东西。
+
+先看整机在哪里
+Specula 处理一个并发或分布式系统，走五个阶段。第一篇画过全程地图，本篇只进前两个阶段：代码分析和规约生成。
+直接让 Agent 读源码写模型是行不通的，细节留多了状态爆炸，砍狠了照不出真实偏差，论文把这称为模型与代码之间的鸿沟。Specula 的替代方案如上图：一条产物接力线，不变量、场景、建模简报、参考模型、场景模型加配置，每个产物有固定格式和证据要求。Agent 在线上工作，不自由发挥。
+对错标准从两头取证
+不变量是 TLC 判定对错的标准，接力线第一个产物。协议说明与文档给协议级条件；源码、测试、问题单和修订历史给代码级条件，覆盖操作原子性、容量上限、提交位置单调性这类模式。分析只总结系统级行为，API 参数、变量类型这类局部检查不进模型。
+
+开头那对不变量是这样来的。Etcd-Raft 遵循标准协议，条件写作持久 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"><img class="post-bg" src="/images/specula-01-overview/cover-a-flat-state.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）">先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-11-09T02:00:00.000Z" title="发表于 2026-11-09 10:00:00">2026-11-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">软件里最难抓的一类 bug，只在特定的线程交错、消息顺序或崩溃时序下现身。测试碰到这组条件靠概率，工程上靠日志、超时、重试兜底，兜不住的就成了线上偶发事故。形式化验证走的是另一条路，把系统行为和正确性条件写成数学对象，让工具做穷举检查，测试碰运气的地方，工具把所有可能都走一遍。
+形式化验证的运用现状
+形式化规约分两部分，模型描述系统允许出现哪些行为，不变量描述每个可达状态必须成立的性质。以并发系统的常用语言 TLA+ 为例，模型写成一组状态变量加一个动作集合，每个动作是一次原子状态更新；工具端的核心是模型检查器，TLC 会穷举模型的所有可达状态，逐个状态核对不变量。发现违反不变量的状态时，TLC 给出一条反例，即从初始状态到违规状态的完整动作序列，每一步做什么、状态怎么变，全部列出来。
+
+这套方法抓并发缺陷有天然优势。libgomp 里有一个真实案例，一个死锁在 GCC 的 OpenMP 运行时库里潜伏了五年以上，触发条件苛刻到需要外部线程恰好在所有其他线程都停进 barrier 等待环之后，才完成一个分离任务（detached task）；此时一条唤醒路径漏掉了标记待办任务的调用，被 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/11/04/weight-space-programming/" title="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍"><img class="post-bg" src="/images/weight-space-programming/cover-b-brain-xiaohei.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/11/04/weight-space-programming/" title="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍">LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-11-04T00:00:00.000Z" title="发表于 2026-11-04 08:00:00">2026-11-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">17,253 个权重，是一个神经网络的全部参数，没人说明它被训练来玩哪款游戏。Astra 只看数字，说出答案：Breakout。四个网络、四款游戏，全对。
+Qwen3.5-0.8B 的数学成绩只有 7.9 分，病根是思考死循环，93% 的回答写到 32,768 个 token 还在原地打转。Astra 定位病灶，改掉 0.016% 的权重，分数涨到 48.1。
+权重全部从零开始，不给数据，不给梯度，不许试跑，Astra 写出一个打 Breakout 的网络，拿 517.4 分。训练了 1 亿步的 PPO 只有 15.8 分。
+这三件事出自同一篇论文。MIT CSAIL 团队 11 月 2 日发布《Sparks of Weight-Space Programming》，把这套做法命名为权重空间编程，一句话能说清，让通用的 LLM 绕开优化器，直接读写神经网络的权重。标题里的 sparks 是火花，作者自己留的余地，这是早期信号，不是定论。全文拆开它的 8 个主实验和 1 个附加实验，看它能做什么、怎么做到、哪里做不到。
+
+一条新的优化路径
+过去两年，LLM 在深度学习里干的活一步步往深处 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/11/03/Superagent%20%E7%9A%84%E8%87%AA%E4%B8%BB%E8%BE%B9%E7%95%8C%EF%BC%9A%E5%B0%91%E6%89%93%E6%89%B0%E4%BA%BA%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%9D%A0%E9%95%BF%E5%AF%B9%E8%AF%9D%E5%AE%8C%E6%88%90%E9%95%BF%E4%BB%BB%E5%8A%A1/" title="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务"><img class="post-bg" src="/images/deepseek-superagent-autonomy/cover-superagent-autonomy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/11/03/Superagent%20%E7%9A%84%E8%87%AA%E4%B8%BB%E8%BE%B9%E7%95%8C%EF%BC%9A%E5%B0%91%E6%89%93%E6%89%B0%E4%BA%BA%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%9D%A0%E9%95%BF%E5%AF%B9%E8%AF%9D%E5%AE%8C%E6%88%90%E9%95%BF%E4%BB%BB%E5%8A%A1/" title="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务">Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-11-03T02:10:33.000Z" title="发表于 2026-11-03 10:10:33">2026-11-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务
+DeepSeek 公开的 dsh-superagent-prototype 面向一个 GitHub 仓库。获准的用户可以在 Issue 评论中向它提出任务；系统判断后创建工作项，由 Executor 在独立会话和工作目录中处理，再回到原对话反馈结果，例如提交 Pull Request。
+这条链路看起来像“@机器人修 Issue”。文章聚焦三件事：谁能派活，一个任务如何接着做，什么时候该叫人回来。README 将它定位为研究原型，提醒用户不要直接用于生产。项目说明
+用途定位
+dsh-superagent 是围绕代码仓库工作的主动式编程 Agent。它监听 GitHub，也可以选配飞书；收到符合规则的请求后，把任务交给执行会话，最后把结果带回原来的协作渠道。它面向单个 GitHub 仓库，重点是团队的 Issue 和 PR 工作流。
+一次任务大致经过“消息进入 → 权限判断 → 建立 Ticket → 执行 → 返回结果”。Ticket 像一张持续存在的工作单，记录任务内容、授权范围和执行状态。Executor 是负责读 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程"><img class="post-bg" src="/images/phantom-ai-ransomware/cover-04-ransomware-laptop.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Phantom：勒索团伙如何把 AI 接入入侵流程"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程">Phantom：勒索团伙如何把 AI 接入入侵流程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-29T01:00:00.000Z" title="发表于 2026-10-29 09:00:00">2026-10-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">
+SOCRadar 的调查把模型、攻击工具、目标知识和人工审批放进同一套工作流。
+
+2026 年 10 月 20 日前后，SOCRadar Threat Research Unit 发布《INC and The Gentlemen Ransomware: Exposed AI Infrastructure》。报告称，研究人员发现与 INC Ransomware、The Gentlemen 关联操作者有关的 AI 驱动入侵生态，并从暴露的攻击基础设施中取得工具、AI 会话记录和行动知识。
+公开报道转述的记录包括 133 个 OpenCode 会话、8,257 条消息。它们让 Phantom 有了具体轮廓：攻击者把商业模型接入日常任务，由人类操作员设定目标、审阅步骤，再通过工具链推进工作。
+事件披露
+SOCRadar 称，团队在暴露的公网服务器上发现 AI 会话、工具和目标追踪记录，并将相关操作者与 INC Ransomware、The Gentlemen 联系起来。
+SOCRadar 及其转述将其中一名操作人员描述为俄语使用者。公开材料提供的是语言画像，国籍和国家背景仍未确认。
+SOCR ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"><img class="post-bg" src="/images/php2shell-deep-dive/cover-b-dark-navy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/21/php2shell-deep-dive/" title="一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解">一个上传请求打穿 PHP 引擎：php2shell 双漏洞拆解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-21T08:30:00.000Z" title="发表于 2026-10-21 16:30:00">2026-10-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">2026 年 10 月 21 日，PHP 基金会发布了一次计划之外的紧急安全更新，一口气修复两个 CVSS v4.0 评分 9.2 的严重级漏洞。两个漏洞都位于 PHP 引擎内核，都能在无需任何认证的情况下实现远程代码执行。按原计划，细节本应在 22 日随官方公告一起发布。10 月 20 日上午，一个声称 PHP 将有重大披露的帖子出现在 Hacker News，随即被删除，但截图已经在社交网络扩散。PHP 基金会当天拍板：发版提前一天。
+这两个漏洞很快被安全圈冠以 php2shell 的代号。watchTowr 的蜜罐网络在补丁发布当天就观测到了利用尝试；Cloudflare 在泄露后看到真实攻击流量，攻击者已经开始针对 WAF 规则变异载荷。
+这篇文章把两个漏洞讲清楚：成因是什么，利用链怎么走，影响有多大。先说结论：漏洞不在你的代码里，在 PHP 引擎的请求善后逻辑里。只要服务器在用 PHP 响应 Web 请求，你就是潜在目标，修复只能靠升级 PHP 本身。
+口径说明：本文为防御视角的机制拆解，不含可操作的攻击细节。利用可行性区分两类口径：官方安全公告确认的，和安全厂商研究验证的， ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"><img class="post-bg" src="/../images/deepseek-inference-magic/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/20/deepseek-inference-magic/" title="DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解">DeepSeek开源推理“魔法”：DeepInfer与deepseek-recipe拆解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-20T15:04:00.000Z" title="发表于 2026-10-20 23:04:00">2026-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-Agent/">AI Agent</a></span></div><div class="content">DeepSeek 开源了 DeepInfer 与 deepseek-recipe 两个项目。本文按项目分成两个大章节，分别讲清楚它们是什么、怎样工作、适合解决什么问题，以及代码里有哪些值得用的能力。
+DeepInfer 处理模型运行，deepseek-recipe 处理 API 请求、提示词适配和结果解析。deepseek-recipe 是协议与提示词组件，模型计算由调用方提供的推理后端完成。
+12一条模型调用链客户端 → API服务 → 请求与提示词适配 → 推理后端 → 输出解析 → 客户端
+一、DeepInfer（模型运行时）
+项目定位
+DeepInfer 是面向 DeepSeek 模型的推理运行时。当前调研的固定版本重点支持 DeepSeek-V4.1-Flash，README 列出 NVIDIA SM100 与 Huawei Ascend 950。它提供 Python 离线推理入口，接收 prompt、运行模型并返回生成 token。
+固定版本列出的运行环境包括 Linux、Python 3.12、CUDA 13 或 CANN 9.2，以及较新的编译工具链。DeepInfer ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速"><img class="post-bg" src="/images/microsoft-digital-defense-2026/cover-minimax-light-02-soft-3d-report.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《微软2026数字防御报告》解析：AI攻击提速"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/20/%E5%BE%AE%E8%BD%AF2026%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A%E8%A7%A3%E6%9E%90-AI%E6%94%BB%E5%87%BB%E6%8F%90%E9%80%9F/" title="《微软2026数字防御报告》解析：AI攻击提速">《微软2026数字防御报告》解析：AI攻击提速</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-20T02:00:00.000Z" title="发表于 2026-10-20 10:00:00">2026-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">微软《数字防御报告 2026》同时讨论两类变化。攻击者利用 AI 加快既有攻击流程，AI 系统本身也逐渐成为攻击目标。报告统计 2025 年 7 月至 2026 年 6 月的初始访问路径（攻击者进入目标环境的第一步），用户执行、有效账户、社会工程和钓鱼四类方式合计占 73.3%。
+73.3% 统计攻击者进入目标环境时采用的路径，微软没有按生成式 AI 的参与情况拆分。入口数据与 AI 使用案例需要分开理解。报告显示，AI 正在改变攻击速度与自动化程度，账号、用户操作和权限管理仍是防守重点。
+统计范围
+报告覆盖 2025 年 7 月至 2026 年 6 月。微软称其每天处理超过 165 万亿条安全信号。这个数字反映微软安全产品和威胁情报的观测规模，并非每日攻击数或全球企业的完整统计。其覆盖的用户、终端和云环境会影响能够观测到的活动。
+报告摘要将用户执行、有效账户、社会工程和钓鱼四类初始访问方式合计为 73.3%。另一篇 Microsoft Security Insider 解读引用 Microsoft Defender Experts 团队数据，单列用户执行占 30%、有效账户占 20% ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单"><img class="post-bg" src="/images/opencode-breach/hero-vault-keys.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenCode 被黑，用户在替黑客的账单买单"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/19/OpenCode%E8%A2%AB%E9%BB%91-%E7%94%A8%E6%88%B7%E5%9C%A8%E6%9B%BF%E9%BB%91%E5%AE%A2%E7%9A%84%E8%B4%A6%E5%8D%95%E4%B9%B0%E5%8D%95/" title="OpenCode 被黑，用户在替黑客的账单买单">OpenCode 被黑，用户在替黑客的账单买单</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-19T02:00:00.000Z" title="发表于 2026-10-19 10:00:00">2026-10-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">
+你存在 OpenCode Console 里的 OpenAI、Anthropic、Google API Key，可能已经进了别人的脚本。调用照常发生，额度烧的是你的，账单寄给你。
+10 月 17 日，开源编码 Agent OpenCode 官方确认遭遇入侵，1.4% 的 Console 用户当天收到邮件通知：立刻去各厂商后台轮换 Key。
+OpenCode 是什么
+OpenCode 是一款开源的终端编码 Agent，在开发者社区里热度不低，日常用法是在命令行里让它读写代码、跑命令。Console 是它背后的云端控制台，主要给团队用：把你自己付费的模型账号接进工作区，成员共享这些模型的调用能力，不用各自去申请 Key。
+这次出事的是 Console 这条云端链路，纯 CLI 本地用户不在此范围内。这个范围划分后面还会用到，它直接决定你该不该紧张。
+经过
+官方通知邮件的原话：“We identified unauthorized access to a legacy system that we were in the process of decommissioning.”——出事的是 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"><img class="post-bg" src="/images/deepseek-v41-1017/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶"></a></div><div class="recent-post-info"><a class="article-title" href="/2026/10/17/DeepSeek-1017%E4%BA%94%E9%A1%B9%E5%9F%BA%E5%87%86%E9%BD%90%E5%8D%87%E4%BB%A3%E7%A0%81Agent%E5%86%8D%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%8F%B0%E9%98%B6/" title="DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶">DeepSeek 1017：五项基准齐升，代码 Agent 再上一个台阶</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-10-17T02:00:00.000Z" title="发表于 2026-10-17 10:00:00">2026-10-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/AI-%E5%AE%89%E5%85%A8/">AI 安全</a></span></div><div class="content">
+摘要：五项公开基准同步提升，终端、代码与自动化任务都有进展；对照官方同表成绩、前版安全评测和第三方综合榜单，梳理 1017 的能力分布与试用范围。
+
+Terminal-Bench 4.0 多了 11.1 分，ProgramBench 多 8.8 分，Automation-Bench 多 5.7 分。三项成绩同时上行，1017 的主要进步落在代码 Agent 工作流。
+官方同表显示代码、自动化和视觉任务都有增量；安全数据来自 9 月前版，Vals AI 的综合榜单也早于 1017 更新。后两类不能算作新版成绩。
+1017 模型卡未公布 CyberGym、SEC-Bench Pro、ExploitGym 的新版成绩，本文引用的是 V4.1-Flash 前版数据。
+代码表现
+官方对照中，Terminal-Bench 增幅最大；DeepSWE、ProgramBench、Automation-Bench 与 HLE 也都有提升。
+
+
+
+基准
+前版 V4.1-Flash
+1017
+变化
+
+
+
+
+Terminal-Bench 4.0
+31.2
+42.3
++11.1
+
+
+DeepSWE v1.1
+7 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">VanDevon</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">82</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuckVd"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="iconfont icon-rss"></i></a><a class="social-icon" href="https://github.com/LuckVd" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:VanDevon7478@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/" title="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）"><img src="/images/specula-02-generation/cover-c-ink-sketch-v2.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）"/></a><div class="content"><a class="title" href="/2026/11/11/%E4%BB%8E%E6%BA%90%E7%A0%81%E5%88%B0TLA+-Specula%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E8%83%BD%E6%89%BEBug%E7%9A%84%E6%A8%A1%E5%9E%8B-%E4%BA%8C/" title="从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）">从源码到 TLA+：Specula 如何生成能找 Bug 的模型（二）</a><time datetime="2026-11-11T09:30:00.000Z" title="发表于 2026-11-11 17:30:00">2026-11-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"><img src="/images/specula-01-overview/cover-a-flat-state.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）"/></a><div class="content"><a class="title" href="/2026/11/09/%E5%85%88%E5%86%99%E8%AF%81%E6%98%8E-%E5%86%8D%E6%89%BEBug-Specula%E6%8A%8A%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81%E5%81%9A%E6%88%90%E7%BC%96%E7%A0%81Agent%E7%9A%84%E6%B5%81%E6%B0%B4%E7%BA%BF-%E4%B8%80/" title="先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）">先写证明，再找 Bug：Specula 把形式化验证做成编码 Agent 的流水线（一）</a><time datetime="2026-11-09T02:00:00.000Z" title="发表于 2026-11-09 10:00:00">2026-11-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/04/weight-space-programming/" title="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍"><img src="/images/weight-space-programming/cover-b-brain-xiaohei.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍"/></a><div class="content"><a class="title" href="/2026/11/04/weight-space-programming/" title="LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍">LLM 徒手改权重：修改 0.016% 参数，数学成绩提升 6 倍</a><time datetime="2026-11-04T00:00:00.000Z" title="发表于 2026-11-04 08:00:00">2026-11-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/03/Superagent%20%E7%9A%84%E8%87%AA%E4%B8%BB%E8%BE%B9%E7%95%8C%EF%BC%9A%E5%B0%91%E6%89%93%E6%89%B0%E4%BA%BA%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%9D%A0%E9%95%BF%E5%AF%B9%E8%AF%9D%E5%AE%8C%E6%88%90%E9%95%BF%E4%BB%BB%E5%8A%A1/" title="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务"><img src="/images/deepseek-superagent-autonomy/cover-superagent-autonomy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务"/></a><div class="content"><a class="title" href="/2026/11/03/Superagent%20%E7%9A%84%E8%87%AA%E4%B8%BB%E8%BE%B9%E7%95%8C%EF%BC%9A%E5%B0%91%E6%89%93%E6%89%B0%E4%BA%BA%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%9D%A0%E9%95%BF%E5%AF%B9%E8%AF%9D%E5%AE%8C%E6%88%90%E9%95%BF%E4%BB%BB%E5%8A%A1/" title="Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务">Superagent 的自主边界：少打扰人，如何不靠长对话完成长任务</a><time datetime="2026-11-03T02:10:33.000Z" title="发表于 2026-11-03 10:10:33">2026-11-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程"><img src="/images/phantom-ai-ransomware/cover-04-ransomware-laptop.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Phantom：勒索团伙如何把 AI 接入入侵流程"/></a><div class="content"><a class="title" href="/2026/10/29/phantom-ai-ransomware/" title="Phantom：勒索团伙如何把 AI 接入入侵流程">Phantom：勒索团伙如何把 AI 接入入侵流程</a><time datetime="2026-10-29T01:00:00.000Z" title="发表于 2026-10-29 09:00:00">2026-10-29</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-Agent/"><span class="card-category-list-name">AI Agent</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/AI-%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">AI 安全</span><span class="card-category-list-count">27</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span class="card-category-list-name">学习笔记</span><span class="card-category-list-count">9</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AE%89%E5%85%A8%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">安全基础</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"><span class="card-category-list-name">源码分析</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"><span class="card-category-list-name">网络安全</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%80%86%E5%90%91%E7%9B%B8%E5%85%B3/"><span class="card-category-list-name">逆向相关</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%9D%B6%E5%9C%BAWriteUP/"><span class="card-category-list-name">靶场WriteUP</span><span class="card-category-list-count">16</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/HacktheBox/" style="font-size: 1.39em; color: #99a4b4">HacktheBox</a> <a href="/tags/React/" style="font-size: 1.1em; color: #999">React</a> <a href="/tags/%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81/" style="font-size: 1.16em; color: #999b9e">形式化验证</a> <a href="/tags/%E5%9F%BA%E5%87%86%E8%AF%84%E6%B5%8B/" style="font-size: 1.1em; color: #999">基准评测</a> <a href="/tags/Jev/" style="font-size: 1.1em; color: #999">Jev</a> <a href="/tags/Claude/" style="font-size: 1.1em; color: #999">Claude</a> <a href="/tags/OpenAI/" style="font-size: 1.27em; color: #99a0a9">OpenAI</a> <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" style="font-size: 1.21em; color: #999ea4">渗透测试</a> <a href="/tags/Apple/" style="font-size: 1.1em; color: #999">Apple</a> <a href="/tags/OffSec/" style="font-size: 1.33em; color: #99a2af">OffSec</a> <a href="/tags/Docker/" style="font-size: 1.1em; color: #999">Docker</a> <a href="/tags/%E5%AE%89%E5%85%A8%E6%8A%A4%E6%A0%8F/" style="font-size: 1.1em; color: #999">安全护栏</a> <a href="/tags/%E5%86%85%E5%AD%98%E5%AE%89%E5%85%A8/" style="font-size: 1.1em; color: #999">内存安全</a> <a href="/tags/AI-%E5%BA%94%E7%94%A8/" style="font-size: 1.1em; color: #999">AI 应用</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8/" style="font-size: 1.16em; color: #999b9e">代码安全</a> <a href="/tags/ZCode/" style="font-size: 1.16em; color: #999b9e">ZCode</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 1.1em; color: #999">密码学</a> <a href="/tags/Microsoft/" style="font-size: 1.1em; color: #999">Microsoft</a> <a href="/tags/TLA/" style="font-size: 1.16em; color: #999b9e">TLA+</a> <a href="/tags/%E6%BC%8F%E6%B4%9E/" style="font-size: 1.1em; color: #999">漏洞</a> <a href="/tags/docker-compose-yml/" style="font-size: 1.1em; color: #999">docker-compose.yml</a> <a href="/tags/Agent-%E5%A4%B1%E6%8E%A7/" style="font-size: 1.16em; color: #999b9e">Agent 失控</a> <a href="/tags/%E6%95%B0%E5%AD%97%E9%98%B2%E5%BE%A1%E6%8A%A5%E5%91%8A/" style="font-size: 1.1em; color: #999">数字防御报告</a> <a href="/tags/%E5%8F%96%E8%AF%81%E5%88%86%E6%9E%90/" style="font-size: 1.1em; color: #999">取证分析</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 1.1em; color: #999">逆向</a> <a href="/tags/%E6%A8%A1%E5%9E%8B%E5%AE%89%E5%85%A8/" style="font-size: 1.1em; color: #999">模型安全</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.21em; color: #999ea4">前端</a> <a href="/tags/Anthropic/" style="font-size: 1.21em; color: #999ea4">Anthropic</a> <a href="/tags/AI-Agent/" style="font-size: 1.21em; color: #999ea4">AI Agent</a> <a href="/tags/SAST/" style="font-size: 1.16em; color: #999b9e">SAST</a> <a href="/tags/%E9%9D%B6%E5%9C%BAWriteUP/" style="font-size: 1.44em; color: #99a7ba">靶场WriteUP</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 1.16em; color: #999b9e">后端</a> <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" style="font-size: 1.1em; color: #999">漏洞分析</a> <a href="/tags/CodeQL/" style="font-size: 1.1em; color: #999">CodeQL</a> <a href="/tags/Code-Review/" style="font-size: 1.1em; color: #999">Code Review</a> <a href="/tags/%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90/" style="font-size: 1.1em; color: #999">污点分析</a> <a href="/tags/WEBGOAT/" style="font-size: 1.1em; color: #999">WEBGOAT</a> <a href="/tags/AI-%E5%AE%89%E5%85%A8/" style="font-size: 1.5em; color: #99a9bf">AI 安全</a> <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 1.1em; color: #999">大模型</a> <a href="/tags/%E6%94%BF%E7%AD%96%E8%A7%A3%E8%AF%BB/" style="font-size: 1.1em; color: #999">政策解读</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><span class="card-archive-list-count">14</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/09/"><span class="card-archive-list-date">九月 2026</span><span class="card-archive-list-count">14</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/08/"><span class="card-archive-list-date">八月 2026</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/02/"><span class="card-archive-list-date">二月 2026</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">65</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-11-11T15:34:54.332Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/images/all/top_image.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By VanDevon</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
